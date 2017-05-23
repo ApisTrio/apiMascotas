@@ -49,3 +49,4 @@ Temporary Items
 /vendor/
 /logs/*
 !/logs/README.md
+/info
