@@ -4,10 +4,10 @@ namespace App\Model;
 use App\Lib\Database;
 use App\Lib\Response;
 
-class PruebaModel
+class Vacuna
 {
     private $db;
-    private $table = 'prueba';
+    private $table = 'vacunas';
     private $response;
     
     public function __CONSTRUCT()
@@ -43,7 +43,7 @@ class PruebaModel
 		{
 			$result = array();
 
-			$stm = $this->db->prepare("SELECT * FROM $this->table WHERE idPrueba = ?");
+			$stm = $this->db->prepare("SELECT * FROM $this->table WHERE idVacuna = ?");
 			$stm->execute(array($id));
 
 			$this->response->setResponse(true);
@@ -62,28 +62,28 @@ class PruebaModel
     {
 		try 
 		{
-            if(isset($data['idPrueba']))
+            if(isset($data['idVacuna']))
             {
                 $sql = "UPDATE $this->table SET 
-                            campo = ?
-                        WHERE idPrueba = ?";
+                            vacuna = ?
+                        WHERE idVacuna = ?";
                 
                 $this->db->prepare($sql)
                      ->execute(
                         array(
-                            $data['campo'],
-                            $data['idPrueba']
+                            $data['vacuna'],
+                            $data['idVacuna']
                         )
                     );
             }
             else
             {
                 $sql = "INSERT INTO $this->table
-                            (campo)
+                            (vacuna)
                             VALUES (?)";
                 
             $this->db->prepare($sql)
-                     ->execute(array($data['campo'])); 
+                     ->execute(array($data['vacuna'])); 
               		 
               $this->response->idInsertado = $this->db->lastInsertId();
             }
@@ -101,7 +101,7 @@ class PruebaModel
 		try 
 		{
 			$stm = $this->db
-			            ->prepare("DELETE FROM $this->table WHERE idPrueba = ?");			          
+			            ->prepare("DELETE FROM $this->table WHERE idVacuna = ?");			          
 
 			$stm->execute(array($id));
             

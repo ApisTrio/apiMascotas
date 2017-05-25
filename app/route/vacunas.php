@@ -1,7 +1,7 @@
 <?php
-use App\Model\PruebaModel;
+use App\Model\Vacuna;
 
-$app->group('/prueba/', function () {
+$app->group('/vacunas/', function () {
     
     $this->get('test', function ($req, $res, $args) {
         return $res->getBody()
@@ -9,7 +9,7 @@ $app->group('/prueba/', function () {
     });
     
     $this->get('lista', function ($req, $res, $args) {
-        $um = new PruebaModel();
+        $um = new Vacuna();
         
         return $res
            ->withHeader('Content-type', 'application/json')
@@ -23,7 +23,7 @@ $app->group('/prueba/', function () {
 
     
     $this->get('datos/{id}', function ($req, $res, $args) {
-        $um = new PruebaModel();
+        $um = new Vacuna();
         
         return $res
            ->withHeader('Content-type', 'application/json')
@@ -36,7 +36,7 @@ $app->group('/prueba/', function () {
     });
     
     $this->post('registro', function ($req, $res) {
-        $um = new PruebaModel();
+        $um = new Vacuna();
         
         return $res
            ->withHeader('Content-type', 'application/json')
@@ -51,7 +51,7 @@ $app->group('/prueba/', function () {
     });
     
     $this->get('borrar/{id}', function ($req, $res, $args) {
-        $um = new PruebaModel();
+        $um = new Vacuna();
         
         return $res
            ->withHeader('Content-type', 'application/json')
