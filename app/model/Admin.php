@@ -43,7 +43,7 @@ class Admin
 		{
 			$result = array();
 
-			$stm = $this->db->prepare("SELECT * FROM $this->table WHERE idPrueba = ?");
+			$stm = $this->db->prepare("SELECT * FROM $this->table WHERE idAdmin = ?");
 			$stm->execute(array($id));
 
 			$this->response->setResponse(true);

@@ -1,5 +1,5 @@
 <?php
-use App\Model\AdminModel;
+use App\Model\Admin;
 use App\Lib\Token;
 
 $jwtAuth = new \Slim\Middleware\JwtAuthentication([
@@ -16,10 +16,10 @@ $jwtAuth = new \Slim\Middleware\JwtAuthentication([
 ]);
 
 $app->group('/admin/', function () {
-    
     $this->post('login', function ($req, $res, $args) {
-        $args = $req->getParsedBody();
-        if(Admin::login($args)){
+     $um = new Admin();
+        $DD = $req->getParsedBody();
+        if($um->login($DD)){
           $token = Token::generar($usuario);
           $datos["token"] = $token;
           return $response->withStatus(200)
@@ -29,7 +29,7 @@ $app->group('/admin/', function () {
     });
     
     $this->get('lista', function ($req, $res, $args) {
-        $um = new PruebaModel();
+        $um = new Admin();
         
         return $res
            ->withHeader('Content-type', 'application/json')
@@ -43,7 +43,7 @@ $app->group('/admin/', function () {
 
     
     $this->get('datos/{id}', function ($req, $res, $args) {
-        $um = new PruebaModel();
+        $um = new Admin();
         
         return $res
            ->withHeader('Content-type', 'application/json')
