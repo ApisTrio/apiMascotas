@@ -16,16 +16,27 @@ $jwtAuth = new \Slim\Middleware\JwtAuthentication([
 ]);
 
 $app->group('/admin/', function () {
+    
     $this->post('login', function ($req, $res, $args) {
-     $um = new Admin();
-        $DD = $req->getParsedBody();
-        if($um->login($DD)){
-          $token = Token::generar($usuario);
+        
+        $mo = new Admin;
+        $args = $req->getParsedBody();
+        $result = $mo->login($args);
+
+        if($result->response){
+
+          $token = Token::generar($result->result);
           $datos["token"] = $token;
-          return $response->withStatus(200)
+          $datos["usuario"] = $result->result;
+          
+          return $res->withStatus(200)
               ->withHeader("Content-Type", "application/json")
-              ->withJson($data);
+              ->withJson($datos);
         }
+
+        return $res->withStatus(404)
+              ->withHeader("Content-Type", "application/json")
+              ->withJson($result);
     });
     
     $this->get('lista', function ($req, $res, $args) {
@@ -36,14 +47,14 @@ $app->group('/admin/', function () {
            ->getBody()
            ->write(
             json_encode(
-                $um->GetAll()
+                $um->getAll()
             )
         );
     });
 
     
     $this->get('datos/{id}', function ($req, $res, $args) {
-        $um = new Admin();
+        $um = new PruebaModel();
         
         return $res
            ->withHeader('Content-type', 'application/json')

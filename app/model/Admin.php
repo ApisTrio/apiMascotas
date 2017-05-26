@@ -22,13 +22,23 @@ class Admin
 		{
 			$result = array();
 
-			$stm = $this->db->prepare("SELECT * FROM $this->table");
-			$stm->execute();
-            
-			$this->response->setResponse(true);
-            $this->response->result = $stm->fetchAll();
-            
+			$stm = $this->db->prepare("SELECT * FROM admin WHERE usuario = ? LIMIT 1");
+			$stm->execute([$args['usuario']]);
+
+            $usuario = $stm->fetch();
+
+            if( password_verify($args['pass'], $usuario->pass ) ){
+
+                $this->response->setResponse(true);
+                $this->response->result = $usuario;
+                return $this->response;
+
+            }
+
+            $this->response->setResponse(false, 'Datos invalidos');
             return $this->response;
+
+            
 		}
 		catch(Exception $e)
 		{
@@ -37,18 +47,17 @@ class Admin
 		}
     }
     
-    public function Get($id)
+    public function getAll()
     {
 		try
 		{
 			$result = array();
 
-			$stm = $this->db->prepare("SELECT * FROM $this->table WHERE idAdmin = ?");
-			$stm->execute(array($id));
+			$stm = $this->db->prepare("SELECT * FROM $this->table");
+			$stm->execute();
 
 			$this->response->setResponse(true);
-            $this->response->result = $stm->fetch();
-            
+            $this->response->result = $stm->fetchAll();
             return $this->response;
 		}
 		catch(Exception $e)
@@ -56,6 +65,26 @@ class Admin
 			$this->response->setResponse(false, $e->getMessage());
             return $this->response;
 		}  
+    }
+
+    public function get($id)
+    {
+        try
+        {
+            $result = array();
+
+            $stm = $this->db->prepare("SELECT * FROM $this->table WHERE idAdmin = ? LIMIT 1");
+            $stm->execute([$id]);
+
+            $this->response->setResponse(true);
+            $this->response->result = $stm->fetchAll();
+            return $this->response;
+        }
+        catch(Exception $e)
+        {
+            $this->response->setResponse(false, $e->getMessage());
+            return $this->response;
+        }  
     }
     
     public function InsertOrUpdate($data)
