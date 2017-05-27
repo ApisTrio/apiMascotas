@@ -92,21 +92,24 @@ class Usuario
         }  
     }
     
-    public function InsertOrUpdate($data)
+    public function insertOrUpdate($data)
     {
 		try 
 		{
             if(isset($data['idUsuario'])){
 
-                $sql = "UPDATE $this->table SET campo = ? WHERE idUsuario = ?";
+                $sql = "UPDATE $this->table SET 
+                            usuario = ?
+                            WHERE idUsuario = ?";
                 $query = $this->db->prepare($sql);
-                $query->execute([$data['campo'],$data['idUsuario']]);
+                $query->execute([$data['usuario'],$data['idUsuario']]);
 
             } else {
 
-                $sql = "INSERT INTO $this->table (campo) VALUES (?)";
+                $sql = "INSERT INTO $this->table (idUsuario, usuario, pass, borrado, creado, actualizado, duenos_idDueno) 
+                        VALUES (NULL, ?, ?, NULL, ?, NULL, ?)";
                 $query = $this->db->prepare($sql);
-                $query->execute([$data['campo']]); 
+                $query->execute([$data['usuario'], password_hash($data['pass'], PASSWORD_DEFAULT), date('Y-m-d H:i:s'), $data['idDueno']]); 
               		 
                 $this->response->idInsertado = $this->db->lastInsertId();
 
@@ -121,12 +124,12 @@ class Usuario
 		}
     }
     
-    public function Delete($id)
+    public function delete($id)
     {
 		try 
 		{
-			$query = $this->db->prepare("DELETE FROM $this->table WHERE idUsuario = ?");
-			$query->execute([$id]);
+			$query = $this->db->prepare("UPDATE $this->table SET borrado = ? WHERE idUsuario = ?");
+			$query->execute([date('Y-m-d H:i:s'),$id]);
             
 			$this->response->setResponse(true);
             return $this->response;

@@ -47,7 +47,7 @@ $app->group('/admin/', function () {
 		return $res->withStatus(200)
 			->withHeader('Content-type', 'application/json')
 			->getBody()
-			->withJson($model->insertOrUpdate($req->getParsedBody());
+			->withJson($model->insertOrUpdate($req->getParsedBody()));
 
 	});
 	

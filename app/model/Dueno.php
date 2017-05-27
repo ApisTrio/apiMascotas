@@ -56,7 +56,7 @@ class Dueno
         }  
     }
     
-    public function InsertOrUpdate($data)
+    public function insertOrUpdate($data)
     {
 		try 
 		{
@@ -68,9 +68,12 @@ class Dueno
 
             } else {
 
-                $sql = "INSERT INTO $this->table (campo) VALUES (?)";
+                $fields = "idDueno, nombre, apellido, telefono, email, nacimiento, direccion, borrado, creado, actualizado"
+                $sql = "INSERT INTO $this->table ($fields) VALUES (NULL, ?, ?, ?, ?, ?, ?, NULL, ?, NULL)";
                 $query = $this->db->prepare($sql);
-                $query->execute([$data['campo']]); 
+
+                $values = [$data['nombre'], $data['apellido'], $data['telefono'], $data['email'], date('Y-m-d',strtotime($data['nacimiento'])), $data['direccion'], date('Y-m-d H:i:s')]
+                $query->execute($values); 
               		 
                 $this->response->idInsertado = $this->db->lastInsertId();
 
@@ -85,12 +88,12 @@ class Dueno
 		}
     }
     
-    public function Delete($id)
+    public function delete($id)
     {
 		try 
 		{
-			$query = $this->db->prepare("DELETE FROM $this->table WHERE idDueno = ?");
-			$query->execute([$id]);
+			$query = $this->db->prepare("UPDATE $this->table SET borrado = ? WHERE idUsuario = ?");
+            $query->execute([date('Y-m-d H:i:s'),$id]);
             
 			$this->response->setResponse(true);
             return $this->response;
