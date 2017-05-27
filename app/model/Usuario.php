@@ -4,10 +4,10 @@ namespace App\Model;
 use App\Lib\Database;
 use App\Lib\Response;
 
-class Admin
+class Usuario
 {
     private $db;
-    private $table = 'admin';
+    private $table = 'usuarios';
     private $response;
     
     public function __CONSTRUCT()
@@ -16,20 +16,20 @@ class Admin
         $this->response = new Response();
     }
     
-    public function login($args)
+    public function login($data)
     {
 		try
 		{
-            $result = array();
+			$result = array();
 
-            $query = $this->db->prepare("SELECT * FROM admin WHERE usuario = ? LIMIT 1");
-            $query->execute([$args['usuario']]);
+			$query = $this->db->prepare("SELECT * FROM $this->table WHERE usuario = ? LIMIT 1");
+			$query->execute([$data['usuario']]);
 
             $usuario = $query->fetch();
 
             if($usuario->borrado == NULL){
 
-                if( password_verify($args['pass'], $usuario->pass ) ){
+                if( password_verify($data['pass'], $usuario->pass ) ){
 
                     $this->response->setResponse(true);
                     $this->response->result = $usuario;
@@ -44,27 +44,45 @@ class Admin
 
             $this->response->setResponse(false, 'Su usuario no existe');
             return $this->response;
-
-            
-        }
-        catch(Exception $e)
-        {
+		}
+		catch(Exception $e)
+		{
             $this->response->setResponse(false, $e->getMessage());
             return $this->response;
-        }
+		}
     }
     
+    public function getAll()
+    {
+		try
+		{
+			$result = array();
+
+			$query = $this->db->prepare("SELECT * FROM $this->table");
+			$query->execute();
+
+			$this->response->setResponse(true);
+            $this->response->result = $query->fetchAll();
+            return $this->response;
+		}
+		catch(Exception $e)
+		{
+			$this->response->setResponse(false, $e->getMessage());
+            return $this->response;
+		}  
+    }
+
     public function get($id)
     {
         try
         {
             $result = array();
 
-            $query = $this->db->prepare("SELECT * FROM $this->table WHERE idAdmin = ? LIMIT 1");
+            $query = $this->db->prepare("SELECT * FROM $this->table WHERE idUsuario = ? LIMIT 1");
             $query->execute([$id]);
 
             $this->response->setResponse(true);
-            $this->response->result = $query->fetchAll();
+            $this->response->result = $query->fetch();
             return $this->response;
         }
         catch(Exception $e)
@@ -74,39 +92,48 @@ class Admin
         }  
     }
     
-    public function insertOrUpdate($data)
+    public function InsertOrUpdate($data)
     {
 		try 
 		{
-            if(isset($data['idPrueba'])){
+            if(isset($data['idUsuario'])){
 
-                $sql = "UPDATE $this->table SET 
-                            campo = ?
-                        WHERE idAdmin = ?";
-                
+                $sql = "UPDATE $this->table SET campo = ? WHERE idUsuario = ?";
                 $query = $this->db->prepare($sql);
-                $query->execute( [$data['campo'], $data['idAdmin']] );
-            
+                $query->execute([$data['campo'],$data['idUsuario']]);
+
             } else {
 
-                $sql = "INSERT INTO $this->table
-                            (campo)
-                            VALUES (?)";
-                
+                $sql = "INSERT INTO $this->table (campo) VALUES (?)";
                 $query = $this->db->prepare($sql);
                 $query->execute([$data['campo']]); 
               		 
                 $this->response->idInsertado = $this->db->lastInsertId();
-            
+
             }
             
 			$this->response->setResponse(true);
             return $this->response;
-        }
+		}
         catch (Exception $e) 
 		{
             $this->response->setResponse(false, $e->getMessage());
 		}
     }
-
+    
+    public function Delete($id)
+    {
+		try 
+		{
+			$query = $this->db->prepare("DELETE FROM $this->table WHERE idUsuario = ?");
+			$query->execute([$id]);
+            
+			$this->response->setResponse(true);
+            return $this->response;
+		} 
+        catch (Exception $e) 
+		{
+			$this->response->setResponse(false, $e->getMessage());
+		}
+    }
 }
