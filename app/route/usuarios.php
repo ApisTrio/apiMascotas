@@ -8,7 +8,6 @@ use App\Lib\Token;
 
 $app->group('/usuarios/', function () {
 
-
 	$this->post('login', function ($req, $res, $args) {
 		
 		$model = new Usuario;
@@ -48,7 +47,9 @@ $app->group('/usuarios/', function () {
 						
 		}
 
-		return $res->withStatus(401);
+		return $res->withStatus(401)
+					->withHeader("Content-Type", "application/json")
+					->withJson($data);
 
 
 	})->add(new \Slim\Middleware\JwtAuthentication([
@@ -80,7 +81,9 @@ $app->group('/usuarios/', function () {
 				 
 		}
 
-		return $res->withStatus(401);
+		return $res->withStatus(401)
+					->withHeader("Content-Type", "application/json")
+					->withJson($data);
 
 	})->add(new \Slim\Middleware\JwtAuthentication([
 			"path" => "/",
@@ -103,13 +106,34 @@ $app->group('/usuarios/', function () {
 
 		$data = $req->getParsedBody();
 
-		$model_d->insertOrUpdate($data);
-		$data['idDueno'] = $model_d->idInsertado;
-		
-		return $res->withStatus(200)
-			 ->withHeader('Content-type', 'application/json')
-			 ->getBody()
-			 ->withJson($model_u->insertOrUpdate($data));
+		$rd = $model_d->insertOrUpdate($data);
+
+		if($rd->response){
+			
+			$data['idDueno'] = $rd->idInsertado;
+
+			$ru = $model_u->insertOrUpdate($data);
+
+			if($ru->response){
+
+				return $res->withStatus(200)
+					 ->withHeader('Content-type', 'application/json')
+					 ->withJson($ru);
+
+			}
+
+			$model_d->delete($model_d->idInsertado);
+
+			return $res->withStatus(401)
+				->withHeader("Content-Type", "application/json")
+				->withJson($ru);
+
+		}
+
+		return $res->withStatus(401)
+				->withHeader("Content-Type", "application/json")
+				->withJson($rd);
+
 
 	});
 	
@@ -128,7 +152,9 @@ $app->group('/usuarios/', function () {
 				 ->withJson($model->delete($args['id']));
 		}
 
-		return $res->withStatus(401);
+		return $res->withStatus(401)
+					->withHeader("Content-Type", "application/json")
+					->withJson($data);
 
 	})->add(new \Slim\Middleware\JwtAuthentication([
 			"path" => "/",
@@ -143,5 +169,25 @@ $app->group('/usuarios/', function () {
 						->withJson($data);
 			}
 		]));
+
+
+	$this->get('check/{usuario}', function ($req, $res, $args) {
+			
+		$model = new Usuario();
+
+		$r = $model->check($args['usuario']);
+
+		if($r->response){
+			
+			return $res->withStatus(200)
+				 ->withHeader('Content-type', 'application/json')
+				 ->withJson($r);
+		}
+
+		return $res->withStatus(401)
+					->withHeader("Content-Type", "application/json")
+					->withJson($r);
+
+	});
 	
 });

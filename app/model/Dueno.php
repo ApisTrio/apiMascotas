@@ -68,11 +68,11 @@ class Dueno
 
             } else {
 
-                $fields = "idDueno, nombre, apellido, telefono, email, nacimiento, direccion, borrado, creado, actualizado"
+                $fields = "idDueno, nombre, apellido, telefono, email, nacimiento, direccion, borrado, creado, actualizado";
                 $sql = "INSERT INTO $this->table ($fields) VALUES (NULL, ?, ?, ?, ?, ?, ?, NULL, ?, NULL)";
                 $query = $this->db->prepare($sql);
 
-                $values = [$data['nombre'], $data['apellido'], $data['telefono'], $data['email'], date('Y-m-d',strtotime($data['nacimiento'])), $data['direccion'], date('Y-m-d H:i:s')]
+                $values = [$data['nombre'], $data['apellido'], $data['telefono'], $data['email'], date('Y-m-d',strtotime($data['nacimiento'])), $data['direccion'], date('Y-m-d H:i:s')];
                 $query->execute($values); 
               		 
                 $this->response->idInsertado = $this->db->lastInsertId();

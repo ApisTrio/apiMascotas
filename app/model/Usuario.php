@@ -106,10 +106,12 @@ class Usuario
 
             } else {
 
-                $sql = "INSERT INTO $this->table (idUsuario, usuario, pass, borrado, creado, actualizado, duenos_idDueno) 
-                        VALUES (NULL, ?, ?, NULL, ?, NULL, ?)";
+                $fields = "idUsuario, usuario, pass, borrado, creado, actualizado, duenos_idDueno";
+                $sql = "INSERT INTO $this->table ($fields) VALUES (NULL, ?, ?, NULL, ?, NULL, ?)";
                 $query = $this->db->prepare($sql);
-                $query->execute([$data['usuario'], password_hash($data['pass'], PASSWORD_DEFAULT), date('Y-m-d H:i:s'), $data['idDueno']]); 
+
+                $values = [$data['usuario'], password_hash($data['pass'], PASSWORD_DEFAULT), date('Y-m-d H:i:s'), $data['idDueno']];
+                $query->execute($values); 
               		 
                 $this->response->idInsertado = $this->db->lastInsertId();
 
@@ -138,5 +140,26 @@ class Usuario
 		{
 			$this->response->setResponse(false, $e->getMessage());
 		}
+    }
+
+
+    public function check($usuario)
+    {
+        try
+        {
+            $result = array();
+
+            $query = $this->db->prepare("SELECT * FROM $this->table WHERE usuario = ? LIMIT 1");
+            $query->execute([$usuario]);
+
+            $this->response->setResponse(true);
+            $this->response->result = $query->fetch();
+            return $this->response;
+        }
+        catch(Exception $e)
+        {
+            $this->response->setResponse(false, $e->getMessage());
+            return $this->response;
+        }      
     }
 }
