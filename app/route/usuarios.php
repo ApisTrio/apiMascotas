@@ -28,7 +28,7 @@ $app->group('/usuarios/', function () {
 
 		return $res->withStatus(404)
 					->withHeader("Content-Type", "application/json")
-					->withJson($result);
+					->withJson($r);
 
 	});
 	
@@ -68,36 +68,24 @@ $app->group('/usuarios/', function () {
 	
 	$this->get('datos/{id}', function ($req, $res, $args) {
 
-		$decode = Token::verificar(explode(' ', $req->getHeader('Authorization')[0])[1]);
-		$data = (array) $decode['data'];
-		
-		if(!$data['is_admin'] || $data['id'] == $args['id']){
+		$model = new Usuario;
 
-			$model = new Usuario;
+		$r = $model->get($args['id'])
+		
+		if($r->response){
 
 			return $res->withStatus(200)
 				 ->withHeader('Content-type', 'application/json')
-				 ->withJson($model->get($args['id']));
+				 ->withJson($r);
 				 
 		}
 
+
 		return $res->withStatus(401)
 					->withHeader("Content-Type", "application/json")
-					->withJson($data);
+					->withJson($r);
 
-	})->add(new \Slim\Middleware\JwtAuthentication([
-			"path" => "/",
-			"secret" => '$&NFJU·deruw23',
-			"passthrough" => "/token",
-			"algorithm" => ["HS256", "HS384"],
-			"error" => function ($request, $response, $arguments) {
-				$data["status"] = "error";
-				$data["message"] = $arguments["message"];
-				return $response->withStatus(401)
-						->withHeader("Content-Type", "application/json")
-						->withJson($data);
-			}
-		]));
+	});
 	
 	$this->post('registro', function ($req, $res) {
 			
@@ -134,7 +122,6 @@ $app->group('/usuarios/', function () {
 				->withHeader("Content-Type", "application/json")
 				->withJson($rd);
 
-
 	});
 	
 	$this->get('borrar/{id}', function ($req, $res, $args) {
@@ -142,17 +129,28 @@ $app->group('/usuarios/', function () {
 		$decode = Token::verificar(explode(' ', $req->getHeader('Authorization')[0])[1]);
 		$data = (array) $decode['data'];
 		
-		if($data['is_admin']){
+		if($data['is_admin'] || $data['id' == $args['id']]){
 			
 			$model = new Usuario();
 			
-			return $res->withStatus(200)
-				 ->withHeader('Content-type', 'application/json')
-				 ->getBody()
-				 ->withJson($model->delete($args['id']));
+			$r = $model->delete($args['id'])
+
+			if($r->response){
+
+				return $res->withStatus(200)
+					 	->withHeader('Content-type', 'application/json')
+					 	->getBody()
+					 	->withJson($r);
+
+			}
+
+			return $res->withStatus(401)
+					->withHeader("Content-Type", "application/json")
+					->withJson($data);
+				
 		}
 
-		return $res->withStatus(401)
+			return $res->withStatus(401)
 					->withHeader("Content-Type", "application/json")
 					->withJson($data);
 
