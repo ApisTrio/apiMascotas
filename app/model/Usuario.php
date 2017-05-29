@@ -58,7 +58,7 @@ class Usuario
 		{
 			$result = array();
 
-			$query = $this->db->prepare("SELECT * FROM $this->table");
+			$query = $this->db->prepare("SELECT * FROM $this->table WHERE borrado IS NULL");
 			$query->execute();
 
 			$this->response->setResponse(true);
@@ -78,7 +78,7 @@ class Usuario
         {
             $result = array();
 
-            $query = $this->db->prepare("SELECT * FROM $this->table WHERE idUsuario = ? LIMIT 1");
+            $query = $this->db->prepare("SELECT * FROM $this->table WHERE idUsuario = ? AND borrado IS NULL LIMIT 1");
             $query->execute([$id]);
 
             $this->response->setResponse(true);
@@ -98,9 +98,7 @@ class Usuario
 		{
             if(isset($data['idUsuario'])){
 
-                $sql = "UPDATE $this->table SET 
-                            usuario = ?
-                            WHERE idUsuario = ?";
+                $sql = "UPDATE $this->table SET usuario = ? WHERE idUsuario = ? AND borrado IS NULL";
                 $query = $this->db->prepare($sql);
                 $query->execute([$data['usuario'],$data['idUsuario']]);
 
