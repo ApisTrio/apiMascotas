@@ -1,7 +1,7 @@
 <?php
-use App\Model\Vacuna;
+use App\Model\Especie;
 
-$app->group('/vacunas/', function () {
+$app->group('/especies/', function () {
     
     $this->get('test', function ($req, $res, $args) {
         return $res->getBody()
@@ -9,7 +9,7 @@ $app->group('/vacunas/', function () {
     });
     
     $this->get('lista', function ($req, $res, $args) {
-        $um = new Vacuna();
+        $um = new Especie();
         
         return $res
            ->withHeader('Content-type', 'application/json')
@@ -23,7 +23,7 @@ $app->group('/vacunas/', function () {
 
     
     $this->get('datos/{id}', function ($req, $res, $args) {
-        $um = new Vacuna();
+        $um = new Especie();
         
         return $res
            ->withHeader('Content-type', 'application/json')
@@ -36,7 +36,7 @@ $app->group('/vacunas/', function () {
     });
     
     $this->post('registro', function ($req, $res) {
-        $um = new Vacuna();
+        $um = new Especie();
         
         return $res
            ->withHeader('Content-type', 'application/json')
@@ -51,7 +51,7 @@ $app->group('/vacunas/', function () {
     });
     
     $this->post('borrar', function ($req, $res, $args) {
-        $um = new Vacuna();
+        $um = new Especie();
         
         return $res
            ->withHeader('Content-type', 'application/json')
@@ -64,7 +64,7 @@ $app->group('/vacunas/', function () {
     });
 
     $this->post('eliminar', function ($req, $res, $args) {
-        $um = new Vacuna();
+        $um = new Especie();
         
         return $res
            ->withHeader('Content-type', 'application/json')

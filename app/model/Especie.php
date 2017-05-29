@@ -4,10 +4,10 @@ namespace App\Model;
 use App\Lib\Database;
 use App\Lib\Response;
 
-class Vacuna
+class Especie
 {
     private $db;
-    private $table = 'vacunas';
+    private $table = 'especies';
     private $response;
     
     public function __CONSTRUCT()
@@ -43,7 +43,7 @@ class Vacuna
 		{
 			$result = array();
 
-			$stm = $this->db->prepare("SELECT * FROM $this->table WHERE idVacuna = ?");
+			$stm = $this->db->prepare("SELECT * FROM $this->table WHERE idEspecie = ?");
 			$stm->execute(array($id));
 
 			$this->response->setResponse(true);
@@ -62,28 +62,28 @@ class Vacuna
     {
 		try 
 		{
-            if(isset($data['idVacuna']))
+            if(isset($data['idEspecie']))
             {
                 $sql = "UPDATE $this->table SET 
-                            vacuna = ?
-                        WHERE idVacuna = ?";
+                            especie = ?
+                        WHERE idEspecie = ?";
                 
                 $this->db->prepare($sql)
                      ->execute(
                         array(
-                            $data['vacuna'],
-                            $data['idVacuna']
+                            $data['especie'],
+                            $data['idEspecie']
                         )
                     );
             }
             else
             {
                 $sql = "INSERT INTO $this->table
-                            (vacuna)
+                            (especie)
                             VALUES (?)";
                 
             $this->db->prepare($sql)
-                     ->execute(array($data['vacuna'])); 
+                     ->execute(array($data['especie'])); 
               		 
               $this->response->idInsertado = $this->db->lastInsertId();
             }
@@ -101,9 +101,9 @@ class Vacuna
 		try 
 		{
 			$stm = $this->db
-			            ->prepare("DELETE FROM $this->table WHERE idVacuna = ?");			          
+			            ->prepare("DELETE FROM $this->table WHERE idEspecie = ?");			          
 
-			$stm->execute(array($id['idVacuna']));
+			$stm->execute(array($id['idEspecie']));
             
 			$this->response->setResponse(true);
             return $this->response;
@@ -120,9 +120,9 @@ class Vacuna
             $stm = $this->db
                         ->prepare("UPDATE $this->table SET 
                             borrado = NOW()
-                        WHERE idVacuna = ?");                     
+                        WHERE idEspecie = ?");                     
 
-            $stm->execute(array($id['idVacuna']));
+            $stm->execute(array($id['idEspecie']));
             
             $this->response->setResponse(true);
             return $this->response;
