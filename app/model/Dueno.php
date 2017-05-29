@@ -85,6 +85,7 @@ class Dueno
         catch (Exception $e) 
 		{
             $this->response->setResponse(false, $e->getMessage());
+            return $this->response;
 		}
     }
     
@@ -101,6 +102,27 @@ class Dueno
         catch (Exception $e) 
 		{
 			$this->response->setResponse(false, $e->getMessage());
+            return $this->response;
 		}
+    }
+
+    public function check($field,$value)
+    {
+        try
+        {
+            $result = array();
+
+            $query = $this->db->prepare("SELECT * FROM $this->table WHERE $field = ? AND borrado IS NULL LIMIT 1");
+            $query->execute([$value]);
+
+            $this->response->setResponse(true);
+            $this->response->result = $query->fetch();
+            return $this->response;
+        }
+        catch(Exception $e)
+        {
+            $this->response->setResponse(false, $e->getMessage());
+            return $this->response;
+        }      
     }
 }

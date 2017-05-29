@@ -22,7 +22,7 @@ class Usuario
 		{
 			$result = array();
 
-			$query = $this->db->prepare("SELECT * FROM $this->table WHERE usuario = ? LIMIT 1");
+			$query = $this->db->prepare("SELECT idUsuario, usuario, borrado, creado, actualizado, duenos_idDueno FROM $this->table WHERE usuario = ? LIMIT 1");
 			$query->execute([$data['usuario']]);
 
             $usuario = $query->fetch();
@@ -58,7 +58,7 @@ class Usuario
 		{
 			$result = array();
 
-			$query = $this->db->prepare("SELECT * FROM $this->table WHERE borrado IS NULL");
+			$query = $this->db->prepare("SELECT idUsuario, usuario, borrado, creado, actualizado, duenos_idDueno FROM $this->table WHERE borrado IS NULL");
 			$query->execute();
 
 			$this->response->setResponse(true);
@@ -78,7 +78,7 @@ class Usuario
         {
             $result = array();
 
-            $query = $this->db->prepare("SELECT * FROM $this->table WHERE idUsuario = ? AND borrado IS NULL LIMIT 1");
+            $query = $this->db->prepare("SELECT idUsuario, usuario, borrado, creado, actualizado, duenos_idDueno FROM $this->table WHERE idUsuario = ? AND borrado IS NULL LIMIT 1");
             $query->execute([$id]);
 
             $this->response->setResponse(true);
@@ -121,6 +121,7 @@ class Usuario
         catch (Exception $e) 
 		{
             $this->response->setResponse(false, $e->getMessage());
+            return $this->response;
 		}
     }
     
@@ -137,18 +138,19 @@ class Usuario
         catch (Exception $e) 
 		{
 			$this->response->setResponse(false, $e->getMessage());
+            return $this->response;
 		}
     }
 
 
-    public function check($usuario)
+    public function check($field,$value)
     {
         try
         {
             $result = array();
 
-            $query = $this->db->prepare("SELECT * FROM $this->table WHERE usuario = ? LIMIT 1");
-            $query->execute([$usuario]);
+            $query = $this->db->prepare("SELECT idUsuario, usuario, borrado, creado, actualizado, duenos_idDueno FROM $this->table WHERE $field = ? AND borrado IS NULL LIMIT 1");
+            $query->execute([$value]);
 
             $this->response->setResponse(true);
             $this->response->result = $query->fetch();

@@ -70,7 +70,7 @@ $app->group('/usuarios/', function () {
 
 		$model = new Usuario;
 
-		$r = $model->get($args['id'])
+		$r = $model->get($args['id']);
 		
 		if($r->response){
 
@@ -133,7 +133,7 @@ $app->group('/usuarios/', function () {
 			
 			$model = new Usuario();
 			
-			$r = $model->delete($args['id'])
+			$r = $model->delete($args['id']);
 
 			if($r->response){
 
@@ -169,11 +169,11 @@ $app->group('/usuarios/', function () {
 		]));
 
 
-	$this->get('check/{usuario}', function ($req, $res, $args) {
+	$this->get('check/{field}/{value}', function ($req, $res, $args) {
 			
 		$model = new Usuario();
 
-		$r = $model->check($args['usuario']);
+		$r = $model->check($args['field'],$args['value']);
 
 		if($r->response){
 			
