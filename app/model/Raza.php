@@ -79,11 +79,11 @@ class Raza
             else
             {
                 $sql = "INSERT INTO $this->table
-                            (raza)
-                            VALUES (?)";
+                            (raza,especies_idEspecie)
+                            VALUES (?,?)";
                 
             $this->db->prepare($sql)
-                     ->execute(array($data['raza'])); 
+                     ->execute(array($data['raza'],$data['especies_idEspecie'])); 
               		 
               $this->response->idInsertado = $this->db->lastInsertId();
             }

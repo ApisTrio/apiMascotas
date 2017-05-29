@@ -1,7 +1,7 @@
 <?php
 use App\Model\Raza;
 
-$app->group('/Razas/', function () {
+$app->group('/razas/', function () {
     
     $this->get('test', function ($req, $res, $args) {
         return $res->getBody()
