@@ -98,6 +98,7 @@ class Usuario
 		{
             if(isset($data['idUsuario'])){
 
+                $fields = "usuario = ?, pass = ?, actualizado, duenos_idDueno";
                 $sql = "UPDATE $this->table SET usuario = ? WHERE idUsuario = ? AND borrado IS NULL";
                 $query = $this->db->prepare($sql);
                 $query->execute([$data['usuario'],$data['idUsuario']]);
