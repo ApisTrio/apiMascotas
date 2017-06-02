@@ -58,10 +58,45 @@ class Mascota
 		}  
     }
     
-    public function InsertOrUpdate($data)
+    public function Insert($data)
     {
 		try 
 		{
+                $sql = "INSERT INTO $this->table
+                            ( nombre,
+                            foto,
+                            genero,
+                            peso,
+                            comentarios,
+                            fecha_nacimiento,
+                            chip,
+                            razas_idRaza)
+                            VALUES (?,?,?,?,?,STR_TO_DATE( ?, '%d/%m/%Y'),?,?)";
+                
+            $this->db->prepare($sql)
+                     ->execute(array($data['nombre'],
+                            $data['foto'],
+                            $data['genero'],
+                            $data['peso'],
+                            $data['comentarios'],
+                            $data['fecha_nacimiento'],
+                            $data['chip'],
+                            $data['razas_idRaza'])); 
+              		 
+              $this->response->idInsertado = $this->db->lastInsertId();
+            
+			$this->response->setResponse(true);
+            return $this->response;
+		}catch (Exception $e) 
+		{
+            $this->response->setResponse(false, $e->getMessage());
+		}
+    }
+
+     public function Update($data)
+    {
+        try 
+        {
             if(isset($data['idMascota']))
             {
                 $sql = "UPDATE $this->table SET 
@@ -70,12 +105,7 @@ class Mascota
                             genero = ?,
                             peso = ?,
                             comentarios = ?,
-                            desparacitacion_i = STR_TO_DATE( ?, '%d/%m/%Y'),
-                            desparacitacion_e = STR_TO_DATE( ?, '%d/%m/%Y'),
-                            centro = ?,
-                            veterinario = ?,
-                            direccion_veterinario = ?,
-                            telefono_veterinario = ?,
+                            fecha_nacimiento = ?,
                             chip = ?,
                             razas_idRaza = ?
                         WHERE idMascota = ?";
@@ -88,60 +118,20 @@ class Mascota
                             $data['genero'],
                             $data['peso'],
                             $data['comentarios'],
-                            $data['desparacitacion_i'],
-                            $data['desparacitacion_e'],
-                            $data['centro'],
-                            $data['veterinario'],
-                            $data['direccion_veterinario'],
-                            $data['telefono_veterinario'],
+                            $data['fecha_nacimiento'],
                             $data['chip'],
                             $data['razas_idRaza'],
                             $data['idMascota']
                         )
                     );
             }
-            else
-            {
-                $sql = "INSERT INTO $this->table
-                            ( nombre,
-                            foto,
-                            genero,
-                            peso,
-                            comentarios,
-                            desparasitacion_i,
-                            desparasitacion_e,
-                            centro,
-                            veterinario,
-                            direccion_veterinario,
-                            telefono_veterinario,
-                            chip,
-                            razas_idRaza)
-                            VALUES (?,?,?,?,?,STR_TO_DATE( ?, '%d/%m/%Y'),STR_TO_DATE( ?, '%d/%m/%Y'),?,?,?,?,?,?)";
-                
-            $this->db->prepare($sql)
-                     ->execute(array($data['nombre'],
-                            $data['foto'],
-                            $data['genero'],
-                            $data['peso'],
-                            $data['comentarios'],
-                            $data['desparasitacion_i'],
-                            $data['desparasitacion_e'],
-                            $data['centro'],
-                            $data['veterinario'],
-                            $data['direccion_veterinario'],
-                            $data['telefono_veterinario'],
-                            $data['chip'],
-                            $data['razas_idRaza'])); 
-              		 
-              $this->response->idInsertado = $this->db->lastInsertId();
-            }
             
-			$this->response->setResponse(true);
+            $this->response->setResponse(true);
             return $this->response;
-		}catch (Exception $e) 
-		{
+        }catch (Exception $e) 
+        {
             $this->response->setResponse(false, $e->getMessage());
-		}
+        }
     }
     
     public function Delete($id)
@@ -175,6 +165,40 @@ class Mascota
             $this->response->setResponse(true);
             return $this->response;
         } catch (Exception $e) 
+        {
+            $this->response->setResponse(false, $e->getMessage());
+        }
+    }
+
+
+    ////////////////////////
+
+    public function InsertVacuna($data)
+    {
+        try 
+        {
+                $sql = "INSERT INTO $this->table
+                            ( fecha,
+                            recordatorio,
+                            activo,
+                            vacunas_idVacuna,
+                            mascotas_idMascota
+                            )
+                            VALUES (STR_TO_DATE( ?, '%d/%m/%Y'),?,?,?,?)";
+                
+            $this->db->prepare($sql)
+                     ->execute(array($data['nombre'],
+                            $data['fecha'],
+                            $data['recordatorio'],
+                            $data['activo'],
+                            $data['vacunas_idVacuna'],
+                            $data['mascotas_idMascota'])); 
+                     
+              $this->response->idInsertado = $this->db->lastInsertId();
+            
+            $this->response->setResponse(true);
+            return $this->response;
+        }catch (Exception $e) 
         {
             $this->response->setResponse(false, $e->getMessage());
         }

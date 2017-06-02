@@ -43,7 +43,37 @@ $app->group('/mascotas/', function () {
            ->getBody()
            ->write(
             json_encode(
-                $um->InsertOrUpdate(
+                $um->Insert(
+                    $req->getParsedBody()
+                )
+            )
+        );
+    });
+
+    $this->post('perdidas/registro', function ($req, $res) {
+        $um = new Mascota();
+        
+        return $res
+           ->withHeader('Content-type', 'application/json')
+           ->getBody()
+           ->write(
+            json_encode(
+                $um->InsertPerdida(
+                    $req->getParsedBody()
+                )
+            )
+        );
+    });
+
+    $this->post('modificar', function ($req, $res) {
+        $um = new Mascota();
+        
+        return $res
+           ->withHeader('Content-type', 'application/json')
+           ->getBody()
+           ->write(
+            json_encode(
+                $um->Update(
                     $req->getParsedBody()
                 )
             )
