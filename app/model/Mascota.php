@@ -43,7 +43,7 @@ class Mascota
 		{
 			$result = array();
 
-			$stm = $this->db->prepare("SELECT * FROM $this->table WHERE idMascota = ?");
+			$stm = $this->db->prepare("SELECT * FROM $this->table WHERE idMascota = ? ");
 			$stm->execute(array($id));
 
 			$this->response->setResponse(true);

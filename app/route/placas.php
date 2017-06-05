@@ -24,7 +24,7 @@ $app->group('/placas/', function () {
     });
 
     
-    $this->get('datos/{id}', function ($req, $res, $args) {
+    $this->get('datos/{codigo}', function ($req, $res, $args) {
         $um = new Placa();
         
         return $res
@@ -32,7 +32,7 @@ $app->group('/placas/', function () {
            ->getBody()
            ->write(
             json_encode(
-                $um->Get($args['id'])
+                $um->Datos($args['codigo'])
             )
         );
     });
@@ -135,7 +135,7 @@ $app->group('/placas/', function () {
           //  $objWriter->save('php://output');
             exit; 
 
-        //////////////////7
+        //////////////////
 
 
         return $res
@@ -146,7 +146,8 @@ $app->group('/placas/', function () {
         );
     });
 
-    $this->post('borrar', function ($req, $res, $args) {
+
+    $this->post('bloquear', function ($req, $res, $args) {
         $um = new Placa();
         
         return $res
@@ -154,20 +155,71 @@ $app->group('/placas/', function () {
            ->getBody()
            ->write(
             json_encode(
-                $um->Borrar( $req->getParsedBody())
+                $um->Bloquear( $req->getParsedBody())
+            )
+        );
+    });
+    $this->post('desbloquear', function ($req, $res, $args) {
+        $um = new Placa();
+        
+        return $res
+           ->withHeader('Content-type', 'application/json')
+           ->getBody()
+           ->write(
+            json_encode(
+                $um->Desbloquear( $req->getParsedBody())
+            )
+        );
+    });
+/////////////////////////////////////////////////////////////////////////////////////////////
+    $this->get('verificar/{codigo}', function ($req, $res, $args) {
+        $um = new Placa();
+        
+        return $res
+           ->withHeader('Content-type', 'application/json')
+           ->getBody()
+           ->write(
+            json_encode(
+                $um->VerificarAsignada($args['codigo'])
             )
         );
     });
 
-    $this->post('eliminar', function ($req, $res, $args) {
+    $this->post('asignar', function ($req, $res) {
         $um = new Placa();
-        
+        $datos = $req->getParsedBody();
+
+        $asignada = $um->VerificarAsignada($datos["codigo"]);
+
+        if ($asignada->response){
+          $r =  array('response' => false,'msg'=> 'Placa ya esta asignada');
+        }
+
+        else{
+          $existe = $um->Datos($datos["codigo"]);
+            if ($existe->response){
+
+                if($existe->result->bloqueado == NULL){
+                $datos["placas_idPlaca"] = $existe->result->idPlaca;
+                $r = $um->Asignar($datos);
+                }
+
+                else{
+                   $r =  array('response' => false,'msg'=> 'Placa bloqueada');
+                }
+
+            }
+            else{
+              $r =  $existe;
+            }
+        }
+
         return $res
            ->withHeader('Content-type', 'application/json')
            ->getBody()
            ->write(
             json_encode(
-                $um->Delete( $req->getParsedBody())
+                $r
             )
         );
     });
