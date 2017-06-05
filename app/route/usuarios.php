@@ -1,6 +1,7 @@
 <?php
 use App\Model\Usuario;
 use App\Model\Dueno;
+use App\Model\Mascota;
 
 
 use App\Lib\Token;
@@ -91,30 +92,46 @@ $app->group('/usuarios/', function () {
 			
 		$model_d = new Dueno;
 		$model_u = new Usuario;
+		$model_m = new Mascota;
 
 		$data = $req->getParsedBody();
 
-		$rd = $model_d->insertOrUpdate($data);
-
+		$rd = $model_d->insertOrUpdate($data['dueno']);
 		if($rd->response){
 			
-			$data['idDueno'] = $rd->idInsertado;
+			$data['usuario']['idDueno'] = $rd->idInsertado;
 
-			$ru = $model_u->insertOrUpdate($data);
-
+			$ru = $model_u->insertOrUpdate($data['usuario']);
 			if($ru->response){
 
-				return $res->withStatus(200)
-					 ->withHeader('Content-type', 'application/json')
-					 ->withJson($ru);
+				$rm = $model_m->Insert($data['mascota']);
+				if ($rm->response) {
+				
+					$rmd =  $model_d->hasMascota($rd->idInsertado, $rm->idInsertado);
+					if($rmd->response){
+
+						$duenos = $data['duenos'];
+						foreach ($duenos as $dueno) {
+
+							$r	= $model_d->hasMascota($model_d->insertOrUpdate($dueno)->idInsertado, $rm->idInsertado);
+
+						}
+
+						return $res->withStatus(200)
+						 ->withHeader('Content-type', 'application/json')
+						 ->withJson($rm);
+
+					}
+
+					$model_m->Borrar($rm->idInsertado);
+
+				}
+
+				$model_u->delete($ru->idInsertado);
 
 			}
 
-			$model_d->delete($model_d->idInsertado);
-
-			return $res->withStatus(401)
-				->withHeader("Content-Type", "application/json")
-				->withJson($ru);
+			$model_d->delete($rd->idInsertado);
 
 		}
 

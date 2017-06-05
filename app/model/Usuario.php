@@ -98,18 +98,17 @@ class Usuario
 		{
             if(isset($data['idUsuario'])){
 
-                $fields = "usuario = ?, pass = ?, actualizado, duenos_idDueno";
-                $sql = "UPDATE $this->table SET usuario = ? WHERE idUsuario = ? AND borrado IS NULL";
+                $sql = "UPDATE $this->table SET usuario = ?, WHERE idUsuario = ? AND borrado IS NULL";
                 $query = $this->db->prepare($sql);
                 $query->execute([$data['usuario'],$data['idUsuario']]);
 
             } else {
 
-                $fields = "idUsuario, usuario, pass, borrado, creado, actualizado, duenos_idDueno";
-                $sql = "INSERT INTO $this->table ($fields) VALUES (NULL, ?, ?, NULL, ?, NULL, ?)";
+                $fields = "idUsuario, usuario, pass, duenos_idDueno";
+                $sql = "INSERT INTO $this->table ($fields) VALUES (?, ?, ?, ?)";
                 $query = $this->db->prepare($sql);
 
-                $values = [$data['usuario'], password_hash($data['pass'], PASSWORD_DEFAULT), date('Y-m-d H:i:s'), $data['idDueno']];
+                $values = [NULL, $data['usuario'], password_hash($data['pass'], PASSWORD_DEFAULT), $data['idDueno']];
                 $query->execute($values); 
               		 
                 $this->response->idInsertado = $this->db->lastInsertId();
@@ -130,8 +129,8 @@ class Usuario
     {
 		try 
 		{
-			$query = $this->db->prepare("UPDATE $this->table SET borrado = ? WHERE idUsuario = ?");
-			$query->execute([date('Y-m-d H:i:s'),$id]);
+			$query = $this->db->prepare("UPDATE $this->table SET borrado = NOW() WHERE idUsuario = ?");
+			$query->execute([$id]);
             
 			$this->response->setResponse(true);
             return $this->response;

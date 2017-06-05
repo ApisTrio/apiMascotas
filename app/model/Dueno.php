@@ -68,11 +68,11 @@ class Dueno
 
             } else {
 
-                $fields = "idDueno, nombre, apellido, telefono, email, nacimiento, direccion, borrado, creado, actualizado";
-                $sql = "INSERT INTO $this->table ($fields) VALUES (NULL, ?, ?, ?, ?, ?, ?, NULL, ?, NULL)";
+                $fields = "idDueno, nombre, apellido, telefono, email, nacimiento, direccion, pais, provincia, ciudad, codigo_postal";
+                $sql = "INSERT INTO $this->table ($fields) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
                 $query = $this->db->prepare($sql);
 
-                $values = [$data['nombre'], $data['apellido'], $data['telefono'], $data['email'], date('Y-m-d',strtotime($data['nacimiento'])), $data['direccion'], date('Y-m-d H:i:s')];
+                $values = [NULL, $data['nombre'], $data['apellido'], $data['telefono'], $data['email'], date('Y-m-d',strtotime($data['nacimiento'])), $data['direccion'], $data['pais'], $data['provincia'], $data['ciudad'], $data['codigo_postal']];
                 $query->execute($values); 
               		 
                 $this->response->idInsertado = $this->db->lastInsertId();
@@ -93,8 +93,8 @@ class Dueno
     {
 		try 
 		{
-			$query = $this->db->prepare("UPDATE $this->table SET borrado = ? WHERE idUsuario = ?");
-            $query->execute([date('Y-m-d H:i:s'),$id]);
+			$query = $this->db->prepare("UPDATE $this->table SET borrado = NOW() WHERE idUsuario = ?");
+            $query->execute([$id]);
             
 			$this->response->setResponse(true);
             return $this->response;
@@ -124,5 +124,26 @@ class Dueno
             $this->response->setResponse(false, $e->getMessage());
             return $this->response;
         }      
+    }
+
+
+    public function hasMascota($idd, $idm)
+    {
+        try
+        {
+            $result = array();
+
+            $query = $this->db->prepare("INSERT INTO duenos_has_mascotas (duenos_idDueno, mascotas_idMascota) VALUES (?,?)");
+            $query->execute([$idd, $idm]);
+
+            $this->response->setResponse(true);
+            return $this->response;
+        }
+        catch(Exception $e)
+        {
+            $this->response->setResponse(false, $e->getMessage());
+            return $this->response;
+        }  
+   
     }
 }

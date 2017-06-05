@@ -71,7 +71,7 @@ class Mascota
                             fecha_nacimiento,
                             chip,
                             razas_idRaza)
-                            VALUES (?,?,?,?,?,STR_TO_DATE( ?, '%d/%m/%Y'),?,?)";
+                            VALUES (?,?,?,?,?,STR_TO_DATE( ?, '%Y-%m-%d'),?,?)";
                 
             $this->db->prepare($sql)
                      ->execute(array($data['nombre'],
