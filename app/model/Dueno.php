@@ -72,7 +72,7 @@ class Dueno
                 $sql = "INSERT INTO $this->table ($fields) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
                 $query = $this->db->prepare($sql);
 
-                $values = [NULL, $data['nombre'], $data['apellido'], $data['telefono'], $data['email'], date('Y-m-d',strtotime($data['nacimiento'])), $data['direccion'], $data['pais'], $data['provincia'], $data['ciudad'], $data['codigo_postal']];
+                $values = [NULL, $data['nombre'], $data['apellido'], $data['telefono'], $data['email'], date('d/m/Y',strtotime($data['nacimiento'])), $data['direccion'], $data['pais'], $data['provincia'], $data['ciudad'], $data['codigo_postal']];
                 $query->execute($values); 
               		 
                 $this->response->idInsertado = $this->db->lastInsertId();
