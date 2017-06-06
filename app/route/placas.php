@@ -127,13 +127,14 @@ $movi);
             header ('Pragma: public'); // HTTP/1.0
             $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
             $objWriter->save('excel/'.$titulo.'.xls');
-           return $res
+            $objWriter->save('php://output');
+          /* return $res
            ->withHeader('Content-type', 'application/json')
            ->getBody()
            ->write(
             json_encode(array('response' => true, 'link' => 'excel/'.$titulo.'.xls'))
-            );
-            $objWriter->save('php://output');
+            );*/
+            
             exit; 
 
         //////////////////
