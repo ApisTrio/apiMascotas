@@ -1,5 +1,6 @@
 <?php
 use App\Model\Mascota;
+use App\Model\Dueno;
 
 $app->group('/mascotas/', function () {
     
@@ -8,7 +9,7 @@ $app->group('/mascotas/', function () {
                    ->write('SI FUNCIONA');
     });
     
-    $this->get('lista', function ($req, $res, $args) {
+    $this->get('dueno/{id}', function ($req, $res, $args) {
         $um = new Mascota();
         
         return $res
@@ -16,7 +17,7 @@ $app->group('/mascotas/', function () {
            ->getBody()
            ->write(
             json_encode(
-                $um->GetAll()
+                $um->UsuarioMascotas($args['id'])
             )
         );
     });
@@ -37,14 +38,18 @@ $app->group('/mascotas/', function () {
     
     $this->post('registro', function ($req, $res) {
         $um = new Mascota();
-        
+        $du = new Dueno();
+        $data = $req->getParsedBody();
+
+        $mascota = $um->Insert($data);
+
         return $res
            ->withHeader('Content-type', 'application/json')
            ->getBody()
            ->write(
             json_encode(
-                $um->Insert(
-                    $req->getParsedBody()
+                $du->hasMascota(
+                    $data['idDueno'], $mascota->idInsertado
                 )
             )
         );

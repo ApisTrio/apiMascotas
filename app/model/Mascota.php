@@ -16,25 +16,32 @@ class Mascota
         $this->response = new Response();
     }
     
-    public function GetAll()
+    public function UsuarioMascotas($id)
     {
-		try
-		{
-			$result = array();
+        try
+        {
+            $result = array();
 
-			$stm = $this->db->prepare("SELECT * FROM $this->table WHERE borrado IS NULL");
-			$stm->execute();
+            $stm = $this->db->prepare("SELECT mascotas.nombre, fecha_nacimiento, foto, genero, peso, comentarios, chip, raza, especie
+                FROM mascotas
+                INNER JOIN razas on razas_idRaza = idRaza 
+                INNER JOIN especies on especies_idEspecie = idEspecie
+                INNER JOIN duenos_has_mascotas on mascotas_idMascota = idMascota
+                INNER JOIN duenos on duenos_has_mascotas.duenos_idDueno = idDueno
+                WHERE  idDueno = ?
+                AND mascotas.borrado IS NULL");
+            $stm->execute(array($id));
             
-			$this->response->setResponse(true);
+            $this->response->setResponse(true);
             $this->response->result = $stm->fetchAll();
             
             return $this->response;
-		}
-		catch(Exception $e)
-		{
-			$this->response->setResponse(false, $e->getMessage());
+        }
+        catch(Exception $e)
+        {
+            $this->response->setResponse(false, $e->getMessage());
             return $this->response;
-		}
+        }
     }
     
     public function Get($id)

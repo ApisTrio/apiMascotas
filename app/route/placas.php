@@ -37,9 +37,9 @@ $app->group('/placas/', function () {
         );
     });
 
-    $this->post('generar', function ($req, $res) {
+    $this->get('generar/{cantidad}', function ($req, $res, $args) {
         $um = new Placa();
-        $datos = $req->getParsedBody();
+        $datos = $args['cantidad'];
         $codigosGenerados = array();
         $codigoPlacas =  $um->Codigos();
 
@@ -51,7 +51,7 @@ $app->group('/placas/', function () {
 
         $longitudCodigo=6;
 
-        for ($i=1; $i <= $datos["cantidad"]; $i++) 
+        for ($i=1; $i <= $datos; $i++) 
         { 
           $continue = True;
 
@@ -105,7 +105,8 @@ $app->group('/placas/', function () {
 
                $objPHPExcel->setActiveSheetIndex(0)
                         ->setCellValue('A'.$y, $movi)
-                        ->setCellValue('B'.$y, $movi);
+                        ->setCellValue('B'.$y, 'http://www.dinbeat.com/qr/'.
+$movi);
                         $y++;
             }
 
@@ -132,7 +133,7 @@ $app->group('/placas/', function () {
            ->write(
             json_encode(array('response' => true, 'link' => 'excel/'.$titulo.'.xls'))
             );
-          //  $objWriter->save('php://output');
+            $objWriter->save('php://output');
             exit; 
 
         //////////////////
