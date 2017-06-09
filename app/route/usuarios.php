@@ -2,6 +2,8 @@
 use App\Model\Usuario;
 use App\Model\Dueno;
 use App\Model\Mascota;
+use App\Model\Placa;
+use App\Lib\Mail;
 
 
 use App\Lib\Token;
@@ -19,8 +21,9 @@ $app->group('/usuarios/', function () {
 			$token_data = ['id' => $r->result->idUsuario, 'is_admin' => false];
 			$token = Token::generar($token_data);
 
-			$data["token"] = $token;
-			$data["usuario"] = $r->result;
+			$data['token'] = $token;
+			$data['usuario'] = $r->result['usuario'];
+			$data['dueno'] = $r->result['dueno'];
 			
 			return $res->withStatus(200)
 					->withHeader("Content-Type", "application/json")
@@ -93,37 +96,57 @@ $app->group('/usuarios/', function () {
 		$model_d = new Dueno;
 		$model_u = new Usuario;
 		$model_m = new Mascota;
+		$model_p = new Placa;
 
 		$data = $req->getParsedBody();
 
 		$rd = $model_d->insertOrUpdate($data['dueno']);
 		if($rd->response){
 			
-			$data['usuario']['idDueno'] = $rd->idInsertado;
+			$data['usuario']['duenos_idDueno'] = $rd->idInsertado;
 
 			$ru = $model_u->insertOrUpdate($data['usuario']);
 			if($ru->response){
 
 				$rm = $model_m->Insert($data['mascota']);
 				if ($rm->response) {
-				
-					$rmd =  $model_d->hasMascota($rd->idInsertado, $rm->idInsertado);
-					if($rmd->response){
+					
+					$rp = $model_p->Insert($data['placa']);
+					if ($rp->response) {
 
-						$duenos = $data['duenos'];
-						foreach ($duenos as $dueno) {
+						$data['placa']['placas_idPlaca'] = $rp->idInsertado;
+						$data['placa']['mascotas_idMascota'] = $rm->idInsertado;
 
-							$r	= $model_d->hasMascota($model_d->insertOrUpdate($dueno)->idInsertado, $rm->idInsertado);
+						$rmp =  $model_p->Asignar($data['placa']);
+						if($rmp->response){
+
+							$rmd =  $model_d->hasMascota($rd->idInsertado, $rm->idInsertado);
+							if($rmd->response){
+
+								$duenos = $data['duenos'];
+								foreach ($duenos as $dueno) {
+
+									$r	= $model_d->hasMascota($model_d->insertOrUpdate($dueno)->idInsertado, $rm->idInsertado);
+
+								}
+
+								if(Mail::send("Hola desde Mascotas", ["xarias13@gmail.com", "danieljtorres94@gmail.com"], "<h1>Hola gafo</h1>")){
+
+									return $res->withStatus(200)
+									 ->withHeader('Content-type', 'application/json')
+								 	->withJson($rm);
+
+								}
+
+							}
 
 						}
 
-						return $res->withStatus(200)
-						 ->withHeader('Content-type', 'application/json')
-						 ->withJson($rm);
+						$model_p->Delete($rm->idInsertado);
 
 					}
 
-					$model_m->Borrar($rm->idInsertado);
+					$model_m->Delete($rm->idInsertado);
 
 				}
 
@@ -167,9 +190,9 @@ $app->group('/usuarios/', function () {
 				
 		}
 
-			return $res->withStatus(401)
-					->withHeader("Content-Type", "application/json")
-					->withJson($data);
+		return $res->withStatus(401)
+				->withHeader("Content-Type", "application/json")
+				->withJson($data);
 
 	})->add(new \Slim\Middleware\JwtAuthentication([
 			"path" => "/",
@@ -204,5 +227,41 @@ $app->group('/usuarios/', function () {
 					->withJson($r);
 
 	});
+
+	$this->get('testmail', function ($req, $res, $args) {
+
+		$mail = new Mail;
+
+		$body = $mail->render('confirmacion-cuenta.ml', ['nombre' => 'Daniel', 'apellido' => 'Torres', 'email' => 'danieljtorres94@gmail.com']);
+
+		//return $res->withStatus(200)->write($body);
+
+		if($mail->send("Hola desde Mascotas", ["xarias13@gmail.com", "danieljtorres94@gmail.com"])){
+
+			return $res->withStatus(200)->write($body);
+
+		}
+
+		
+
+		/* Create the Transport
+		$transport = (new Swift_SmtpTransport('smtp.gmail.com', 587, 'tls'));
+		$transport->setUsername('danieljtorres94@gmail.com');
+		$transport->setPassword('ugbmmdejbszjycdb');
+
+		// Create the Mailer using your created Transport
+		$mailer = new Swift_Mailer($transport);
+
+		// Create a message
+		$message = new Swift_Message('Wonderful Subject');
+		$message->setFrom(['john@doe.com' => 'John Doe']);
+		$message->setTo(["xarias13@gmail.com", "danieljtorres94@gmail.com"]);
+		$message->setBody('Here is the message itself');
+
+		// Send the message
+		$result = $mailer->send($message);*/
+
+	});
+			
 	
 });

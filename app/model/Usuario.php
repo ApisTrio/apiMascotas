@@ -31,8 +31,13 @@ class Usuario
 
                 if( password_verify($data['pass'], $usuario->pass ) ){
 
+                    $query2 = $this->db->prepare("SELECT * FROM duenos WHERE ususarios_idUsuario = ? LIMIT 1");
+                    $query2->execute([$usuario->idUsuario]);
+
+                    $dueno = $query2->fetch();
+
                     $this->response->setResponse(true);
-                    $this->response->result = $usuario;
+                    $this->response->result = ['usuario' => $usuario, 'dueno' => $dueno];
                     return $this->response;
 
                 }
@@ -104,11 +109,16 @@ class Usuario
 
             } else {
 
-                $fields = "idUsuario, usuario, pass, duenos_idDueno";
+                $fields = "usuario, pass, token, duenos_idDueno";
                 $sql = "INSERT INTO $this->table ($fields) VALUES (?, ?, ?, ?)";
                 $query = $this->db->prepare($sql);
 
-                $values = [NULL, $data['usuario'], password_hash($data['pass'], PASSWORD_DEFAULT), $data['idDueno']];
+                $values = [
+                    $data['usuario'], 
+                    password_hash($data['pass'], PASSWORD_DEFAULT), 
+                    substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 16),
+                    $data['duenos_idDueno']
+                ];
                 $query->execute($values); 
               		 
                 $this->response->idInsertado = $this->db->lastInsertId();
@@ -125,7 +135,7 @@ class Usuario
 		}
     }
     
-    public function delete($id)
+    public function softDelete($id)
     {
 		try 
 		{
@@ -140,6 +150,23 @@ class Usuario
 			$this->response->setResponse(false, $e->getMessage());
             return $this->response;
 		}
+    }
+
+    public function delete($id)
+    {
+        try 
+        {
+            $query = $this->db->prepare("DELETE FROM $this->table WHERE idUsuario = ?");
+            $query->execute([$id]);
+            
+            $this->response->setResponse(true);
+            return $this->response;
+        } 
+        catch (Exception $e) 
+        {
+            $this->response->setResponse(false, $e->getMessage());
+            return $this->response;
+        }
     }
 
 

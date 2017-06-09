@@ -68,11 +68,11 @@ class Dueno
 
             } else {
 
-                $fields = "idDueno, nombre, apellido, telefono, email, nacimiento, direccion, pais, provincia, ciudad, codigo_postal";
+                $fields = "nombre, apellido, telefono, email, nacimiento, direccion, pais, provincia, ciudad, codigo_postal, sexo";
                 $sql = "INSERT INTO $this->table ($fields) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
                 $query = $this->db->prepare($sql);
 
-                $values = [NULL, $data['nombre'], $data['apellido'], $data['telefono'], $data['email'], date('d/m/Y',strtotime($data['nacimiento'])), $data['direccion'], $data['pais'], $data['provincia'], $data['ciudad'], $data['codigo_postal']];
+                $values = [$data['nombre'], $data['apellido'], $data['telefono'], $data['email'], date('d/m/Y',strtotime($data['nacimiento'])), $data['direccion'], $data['pais'], $data['provincia'], $data['ciudad'], $data['codigo_postal'], $data['sexo']];
                 $query->execute($values); 
               		 
                 $this->response->idInsertado = $this->db->lastInsertId();
@@ -89,7 +89,7 @@ class Dueno
 		}
     }
     
-    public function delete($id)
+    public function softDelete($id)
     {
 		try 
 		{
@@ -104,6 +104,23 @@ class Dueno
 			$this->response->setResponse(false, $e->getMessage());
             return $this->response;
 		}
+    }
+
+    public function delete($id)
+    {
+        try 
+        {
+            $query = $this->db->prepare("DELETE FROM $this->table WHERE idUsuario = ?");
+            $query->execute([$id]);
+            
+            $this->response->setResponse(true);
+            return $this->response;
+        } 
+        catch (Exception $e) 
+        {
+            $this->response->setResponse(false, $e->getMessage());
+            return $this->response;
+        }
     }
 
     public function check($field,$value)
