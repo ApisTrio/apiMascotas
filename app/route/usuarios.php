@@ -234,32 +234,13 @@ $app->group('/usuarios/', function () {
 
 		$body = $mail->render('confirmacion-cuenta.ml', ['nombre' => 'Daniel', 'apellido' => 'Torres', 'email' => 'danieljtorres94@gmail.com']);
 
-		//return $res->withStatus(200)->write($body);
+		return $res->withStatus(200)->write($body);
 
 		if($mail->send("Hola desde Mascotas", ["xarias13@gmail.com", "danieljtorres94@gmail.com"])){
 
 			return $res->withStatus(200)->write($body);
 
 		}
-
-		
-
-		/* Create the Transport
-		$transport = (new Swift_SmtpTransport('smtp.gmail.com', 587, 'tls'));
-		$transport->setUsername('danieljtorres94@gmail.com');
-		$transport->setPassword('ugbmmdejbszjycdb');
-
-		// Create the Mailer using your created Transport
-		$mailer = new Swift_Mailer($transport);
-
-		// Create a message
-		$message = new Swift_Message('Wonderful Subject');
-		$message->setFrom(['john@doe.com' => 'John Doe']);
-		$message->setTo(["xarias13@gmail.com", "danieljtorres94@gmail.com"]);
-		$message->setBody('Here is the message itself');
-
-		// Send the message
-		$result = $mailer->send($message);*/
 
 	});
 			
