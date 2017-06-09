@@ -130,11 +130,23 @@ $app->group('/usuarios/', function () {
 
 								}
 
-								if(Mail::send("Hola desde Mascotas", ["xarias13@gmail.com", "danieljtorres94@gmail.com"], "<h1>Hola gafo</h1>")){
+								$mail = new Mail;
+
+								$datamail = [
+									'nombre' => $data['usuario']['nombre'],
+									'apellido' => $data['usuario']['apellido'],
+									'email' => $data['usuario']['emailU'],
+									'enlace' => 'localhost/appMascats/confirmar/'.$model_u->get($ru->idInsertado)->result->token,
+								]
+
+								$body = $mail->render('confirmacion-cuenta.ml', $datamail);
+
+
+								if($mail->send("Hola desde Mascotas", ["xarias13@gmail.com", "danieljtorres94@gmail.com"])){
 
 									return $res->withStatus(200)
-									 ->withHeader('Content-type', 'application/json')
-								 	->withJson($rm);
+									 	->withHeader('Content-type', 'application/json')
+									 	->withJson($ru);
 
 								}
 
@@ -208,6 +220,7 @@ $app->group('/usuarios/', function () {
 			}
 		]));
 
+//MISC----------------------------------------------------------------------------
 
 	$this->get('check/{field}/{value}', function ($req, $res, $args) {
 			
@@ -228,11 +241,31 @@ $app->group('/usuarios/', function () {
 
 	});
 
+	$this->get('confirmar/{token}', function ($req, $res, $args) {
+			
+		$model = new Usuario();
+
+		$r = $model->check('token',$args['token']);
+
+		if($r->response){
+
+			
+			return $res->withStatus(200)
+				 ->withHeader('Content-type', 'application/json')
+				 ->withJson($r);
+		}
+
+		return $res->withStatus(401)
+					->withHeader("Content-Type", "application/json")
+					->withJson($r);
+
+	});
+
 	$this->get('testmail', function ($req, $res, $args) {
 
 		$mail = new Mail;
 
-		$body = $mail->render('confirmacion-cuenta.ml', ['nombre' => 'Daniel', 'apellido' => 'Torres', 'email' => 'danieljtorres94@gmail.com']);
+		$body = $mail->render('cambiar-contrasena.ml', ['nombre' => 'Daniel', 'apellido' => 'Torres', 'email' => 'danieljtorres94@gmail.com']);
 
 		return $res->withStatus(200)->write($body);
 
@@ -243,6 +276,8 @@ $app->group('/usuarios/', function () {
 		}
 
 	});
+
+
 			
 	
 });

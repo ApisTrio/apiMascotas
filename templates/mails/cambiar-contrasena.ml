@@ -58,18 +58,17 @@
 		</div>
 		<div class="block text-left padding">
 			<p>Hola {!nombre!} {!apellido!},</p>
-			<p>Necesitamos que verifiques tu cuenta</p>
-			<p>Confirma la dirección de email con la que te has registrado para activarla. 
+			<p>¿Has olvidado tu contraseña? No te preocupes, ¡te ayudamos a recuperarla! Pulsa el botón o pega el enlace de abajo en tu navegador para configurar una nueva:</p>
 			<br>
 			<p style="text-align: center; ">
-				<a href="{!enlace!}" class="boton-verde">CONFIRMAR</a>
+				<a href="#" class="boton-verde">RECUPERAR CONTRASEÑA</a>
 			</p>
 			<br>
-			<p>Gracias por registrarte. Haz click en el botón para confirmar que {!email!} es tu dirección de email y empezar a usar DinbeatQR.</p>
-			<p>¿Tienes problemas con los enlaces de este email? Copia y pega este enlace en tu navegador para verificar tu cuenta:
-			<br>
-			<a href="{!enlace!}" style="font-size: 16px;">{!enlace!}</a>
+			<p>
+				<a href="#" style="font-size: 16px;">http://dinbet/qr/cambiar-contrasena/f$232V97vh%b2mp=qwe</a>
 			</p>
+			<br>
+			<p>Si tienes alguna duda ¡Te ayudamos! Contacta con el servicio de atención al cliente qr@dinbeat.com y te contestaremos lo antes posible. <br> ¡Gracias por confiar en DinbeatQR!</p>
 		</div>
 		<div class="block text-left padding" style="margin: 70px 0;">
 			<p>--

@@ -109,13 +109,14 @@ class Usuario
 
             } else {
 
-                $fields = "usuario, pass, token, duenos_idDueno";
+                $fields = "usuario, pass, emailU, token, duenos_idDueno";
                 $sql = "INSERT INTO $this->table ($fields) VALUES (?, ?, ?, ?)";
                 $query = $this->db->prepare($sql);
 
                 $values = [
                     $data['usuario'], 
                     password_hash($data['pass'], PASSWORD_DEFAULT), 
+                    $data['emailU'],
                     substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 16),
                     $data['duenos_idDueno']
                 ];
