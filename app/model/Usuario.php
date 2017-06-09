@@ -103,6 +103,7 @@ class Usuario
 		{
             if(isset($data['idUsuario'])){
 
+                $fields = "usuario, pass, emailU, token, duenos_idDueno";
                 $sql = "UPDATE $this->table SET usuario = ?, WHERE idUsuario = ? AND borrado IS NULL";
                 $query = $this->db->prepare($sql);
                 $query->execute([$data['usuario'],$data['idUsuario']]);
@@ -189,5 +190,22 @@ class Usuario
             $this->response->setResponse(false, $e->getMessage());
             return $this->response;
         }      
+    }
+
+    public function activar($datos)
+    {
+        try 
+        {
+            $query = $this->db->prepare("UPDATE $this->table SET token = NULL, activo = 1 WHERE idUsuario = ? AND token = ?");
+            $query->execute([$data['idUsuario'],$data['token']]);
+            
+            $this->response->setResponse(true);
+            return $this->response;
+        } 
+        catch (Exception $e) 
+        {
+            $this->response->setResponse(false, $e->getMessage());
+            return $this->response;
+        }
     }
 }

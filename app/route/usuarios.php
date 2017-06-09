@@ -136,13 +136,13 @@ $app->group('/usuarios/', function () {
 									'nombre' => $data['usuario']['nombre'],
 									'apellido' => $data['usuario']['apellido'],
 									'email' => $data['usuario']['emailU'],
-									'enlace' => 'localhost/appMascats/confirmar/'.$model_u->get($ru->idInsertado)->result->token,
+									'enlace' => 'localhost/appMascats/confirmar/'.$ru->idInsertado.'/'.$model_u->get($ru->idInsertado)->result->token,
 								];
 
 								$body = $mail->render('confirmacion-cuenta.ml', $datamail);
 
 
-								if($mail->send("Hola desde Mascotas", ["xarias13@gmail.com", "danieljtorres94@gmail.com"])){
+								if($mail->send("Hola desde Mascotas", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $model_u->get($ru->idInsertado)->result->emailU])){
 
 									return $res->withStatus(200)
 									 	->withHeader('Content-type', 'application/json')
@@ -241,23 +241,25 @@ $app->group('/usuarios/', function () {
 
 	});
 
-	$this->get('confirmar/{token}', function ($req, $res, $args) {
+	$this->get('confirmar/{id}/{token}', function ($req, $res, $args) {
 			
 		$model = new Usuario();
 
-		$r = $model->check('token',$args['token']);
+		$data = ['token' => $args['token'], 'idUsuario' => $args['id']];
 
-		if($r->response){
+		$ru = $model->activar($data);
 
-			
+		if($ru->response){
+
 			return $res->withStatus(200)
-				 ->withHeader('Content-type', 'application/json')
-				 ->withJson($r);
+			 	->withHeader('Content-type', 'application/json')
+			 	->withJson($ru);
+
 		}
 
 		return $res->withStatus(401)
 					->withHeader("Content-Type", "application/json")
-					->withJson($r);
+					->withJson($ru);
 
 	});
 
