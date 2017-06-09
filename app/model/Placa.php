@@ -189,11 +189,11 @@ class Placa
         try 
         {
                 $sql = "INSERT INTO mascotas_has_placas
-                            (mascotas_idMascota,placas_idPlaca,forma,modelos_idModelo)
-                            VALUES (?,?,?,?)";
+                            (mascotas_idMascota,placas_idPlaca,modelos_idModelo)
+                            VALUES (?,?,?)";
                 
             $this->db->prepare($sql)
-                     ->execute(array($data["mascotas_idMascota"],$data["placas_idPlaca"],$data["forma"],$data["modelos_idModelo"])); 
+                     ->execute(array($data["mascotas_idMascota"],$data["placas_idPlaca"],$data["modelos_idModelo"])); 
             
             $this->response->setResponse(true);
             return $this->response;
@@ -242,9 +242,9 @@ class Placa
             $stm = $this->db
                         ->prepare("UPDATE mascotas_has_placas SET 
                             borrado = NOW()
-                        WHERE idPlaca = ?");                     
+                        WHERE placas_idPlaca = ?");                     
 
-            $stm->execute(array($id['idPlaca']));
+            $stm->execute(array($id));
             
             $this->response->setResponse(true);
             return $this->response;
@@ -261,9 +261,9 @@ class Placa
             $stm = $this->db
                         ->prepare("UPDATE mascotas_has_placas SET 
                             borrado = NULL
-                        WHERE idPlaca = ?");                     
+                        WHERE placas_idPlaca = ?");                     
 
-            $stm->execute(array($id['idPlaca']));
+            $stm->execute(array($id));
             
             $this->response->setResponse(true);
             return $this->response;
@@ -273,7 +273,7 @@ class Placa
         }
     }
 
-    public function PlacasMascota($datos)
+    public function PlacasMascota($id)
     {
         try
         {
@@ -283,10 +283,10 @@ class Placa
             mascotas_has_placas.borrado, modelo FROM $this->table 
             INNER JOIN mascotas_has_placas on idPlaca = placas_idPlaca 
             INNER JOIN modelos on modelos_idModelo = idModelo
-            WHERE idMascota = ? AND 
-            borrado IS NULL");
+            WHERE mascotas_idMascota = ? AND 
+            mascotas_has_placas.borrado IS NULL");
 
-            $stm->execute(array($id['idMascota']));
+            $stm->execute(array($id));
             
             $this->response->setResponse(true);
             $this->response->result = $stm->fetchAll();
@@ -300,7 +300,7 @@ class Placa
         }
     }
 
-    public function PlacasMascotaBloqueadas($datos)
+    public function PlacasMascotaDesactivadas($id)
     {
         try
         {
@@ -310,10 +310,10 @@ class Placa
             mascotas_has_placas.borrado, modelo FROM $this->table 
             INNER JOIN mascotas_has_placas on idPlaca = placas_idPlaca 
             INNER JOIN modelos on modelos_idModelo = idModelo
-            WHERE idMascota = ? AND 
-            borrado IS NOT NULL");
+            WHERE mascotas_idMascota = ? AND 
+             mascotas_has_placas.borrado IS NOT NULL");
 
-            $stm->execute(array($id['idMascota']));
+            $stm->execute(array($id));
             
             $this->response->setResponse(true);
             $this->response->result = $stm->fetchAll();
