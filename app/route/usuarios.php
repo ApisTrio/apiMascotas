@@ -137,7 +137,7 @@ $app->group('/usuarios/', function () {
 									'apellido' => $data['usuario']['apellido'],
 									'email' => $data['usuario']['emailU'],
 									'enlace' => 'localhost/appMascats/confirmar/'.$model_u->get($ru->idInsertado)->result->token,
-								]
+								];
 
 								$body = $mail->render('confirmacion-cuenta.ml', $datamail);
 
