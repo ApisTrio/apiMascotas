@@ -83,7 +83,7 @@ class Usuario
         {
             $result = array();
 
-            $query = $this->db->prepare("SELECT idUsuario, usuario, token, emailU borrado, creado, actualizado, duenos_idDueno FROM $this->table WHERE idUsuario = ? AND borrado IS NULL LIMIT 1");
+            $query = $this->db->prepare("SELECT idUsuario, usuario, token, emailU, borrado, creado, actualizado, duenos_idDueno FROM $this->table WHERE idUsuario = ? AND borrado IS NULL LIMIT 1");
             $query->execute([$id]);
 
             $this->response->setResponse(true);

@@ -140,7 +140,7 @@ $app->group('/usuarios/', function () {
 							$body = $mail->render('confirmacion-cuenta.ml', $datamail);
 
 
-							if($mail->send("Hola desde Mascotas", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $model_u->get($ru->idInsertado)->result->emailU])){
+							if($mail->send("Hola desde Mascotas", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $model_u->get($ru->idInsertado)->result->emailU ])){
 
 								return $res->withStatus(200)
 								 	->withHeader('Content-type', 'application/json')
