@@ -225,5 +225,58 @@ $movi);
             )
         );
     });
+
+$this->get('mascota/{id}', function ($req, $res, $args) {
+        $um = new Placa();
+        
+        return $res
+           ->withHeader('Content-type', 'application/json')
+           ->getBody()
+           ->write(
+            json_encode(
+                $um->PlacasMascota($args['id'])
+            )
+        );
+    });
+
+$this->get('mascota/desactivadas/{id}', function ($req, $res, $args) {
+        $um = new Placa();
+        
+        return $res
+           ->withHeader('Content-type', 'application/json')
+           ->getBody()
+           ->write(
+            json_encode(
+                $um->PlacasMascotaDesactivadas($args['id'])
+            )
+        );
+    });
+
+$this->get('activar/{id}', function ($req, $res, $args) {
+        $um = new Placa();
+        
+        return $res
+           ->withHeader('Content-type', 'application/json')
+           ->getBody()
+           ->write(
+            json_encode(
+                $um->Activar($args['id'])
+            )
+        );
+    });
+
+$this->get('desactivar/{id}', function ($req, $res, $args) {
+        $um = new Placa();
+        
+        return $res
+           ->withHeader('Content-type', 'application/json')
+           ->getBody()
+           ->write(
+            json_encode(
+                $um->Desactivar($args['id'])
+            )
+        );
+    });
+
     
 });
