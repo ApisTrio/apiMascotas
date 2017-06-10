@@ -188,16 +188,17 @@ class Placa
     {
         try 
         {
-                $sql = "INSERT INTO mascotas_has_placas
-                            (mascotas_idMascota,placas_idPlaca,forma,modelos_idModelo)
-                            VALUES (?,?,?,?)";
+            $sql = "INSERT INTO mascotas_has_placas
+                        (mascotas_idMascota,placas_idPlaca,modelos_idModelo)
+                        VALUES (?,?,?)";
                 
             $this->db->prepare($sql)
-                     ->execute(array($data["mascotas_idMascota"],$data["placas_idPlaca"],$data["forma"],$data["modelos_idModelo"])); 
+                     ->execute(array($data["mascotas_idMascota"],$data["placas_idPlaca"],$data["modelos_idModelo"])); 
             
             $this->response->setResponse(true);
             return $this->response;
-        }catch (Exception $e) 
+        }
+        catch (Exception $e) 
         {
             $this->response->setResponse(false, $e->getMessage());
         }

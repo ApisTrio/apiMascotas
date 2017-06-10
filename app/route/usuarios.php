@@ -111,54 +111,49 @@ $app->group('/usuarios/', function () {
 				$rm = $model_m->Insert($data['mascota']);
 				if ($rm->response) {
 					
-					$rp = $model_p->Insert($data['placa']);
-					if ($rp->response) {
-
-						$data['placa']['placas_idPlaca'] = $rp->idInsertado;
-						$data['placa']['mascotas_idMascota'] = $rm->idInsertado;
-
-						$rmp =  $model_p->Asignar($data['placa']);
-						if($rmp->response){
-
-							$rmd =  $model_d->hasMascota($rd->idInsertado, $rm->idInsertado);
-							if($rmd->response){
-
-								$duenos = $data['duenos'];
-								foreach ($duenos as $dueno) {
-
-									$r	= $model_d->hasMascota($model_d->insertOrUpdate($dueno)->idInsertado, $rm->idInsertado);
-
-								}
-
-								$mail = new Mail;
-
-								$datamail = [
-									'nombre' => $data['usuario']['nombre'],
-									'apellido' => $data['usuario']['apellido'],
-									'email' => $data['usuario']['emailU'],
-									'enlace' => 'localhost/appMascats/confirmar/'.$ru->idInsertado.'/'.$model_u->get($ru->idInsertado)->result->token,
-								];
-
-								$body = $mail->render('confirmacion-cuenta.ml', $datamail);
+					$data['placa']['placas_idPlaca'] = $model_p->Datos($data['placa']['codigo'])->result->idPlaca;
+					$data['placa']['mascotas_idMascota'] = $rm->idInsertado;
 
 
-								if($mail->send("Hola desde Mascotas", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $model_u->get($ru->idInsertado)->result->emailU])){
+					$rmp =  $model_p->Asignar($data['placa']);
+					if($rmp->response){
 
-									return $res->withStatus(200)
-									 	->withHeader('Content-type', 'application/json')
-									 	->withJson($ru);
+						$rmd =  $model_d->hasMascota($rd->idInsertado, $rm->idInsertado);
+						if($rmd->response){
 
-								}
+							$duenos = $data['duenos'];
+							foreach ($duenos as $dueno) {
+
+								$r	= $model_d->hasMascota($model_d->insertOrUpdate($dueno)->idInsertado, $rm->idInsertado);
+
+							}
+
+							$mail = new Mail;
+
+							$datamail = [
+								'nombre' => $data['dueno']['nombre'],
+								'apellido' => $data['dueno']['apellido'],
+								'email' => $data['usuario']['emailU'],
+								'enlace' => 'localhost/appMascats/confirmar/'.$ru->idInsertado.'/'.$model_u->get($ru->idInsertado)->result->token,
+							];
+
+							$body = $mail->render('confirmacion-cuenta.ml', $datamail);
+
+
+							if($mail->send("Hola desde Mascotas", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $model_u->get($ru->idInsertado)->result->emailU])){
+
+								return $res->withStatus(200)
+								 	->withHeader('Content-type', 'application/json')
+								 	->withJson($ru);
 
 							}
 
 						}
 
-						$model_p->Delete($rm->idInsertado);
-
 					}
 
-					$model_m->Delete($rm->idInsertado);
+
+					
 
 				}
 
@@ -256,6 +251,8 @@ $app->group('/usuarios/', function () {
 			 	->withJson($ru);
 
 		}
+
+		https://www.workana.com/job/programador-para-actualizar-2-servidores-cpanel-centos-php-etc-1?ref=projects
 
 		return $res->withStatus(401)
 					->withHeader("Content-Type", "application/json")

@@ -74,7 +74,7 @@ class Dueno
 
                 $values = [$data['nombre'], $data['apellido'], $data['telefono'], $data['email'], date('d/m/Y',strtotime($data['nacimiento'])), $data['direccion'], $data['pais'], $data['provincia'], $data['ciudad'], $data['codigo_postal'], $data['sexo']];
                 $query->execute($values); 
-              		 
+                
                 $this->response->idInsertado = $this->db->lastInsertId();
 
             }
