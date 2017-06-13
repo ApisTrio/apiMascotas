@@ -36,6 +36,32 @@ class Dueno
 		}  
     }
 
+    public function mascotaDuenos($id)
+    {
+        try
+        {
+            $result = [];
+
+            $stm = $this->db->prepare("SELECT dueno.nombre, dueno.apellido, dueno.telefono, dueno.email, dueno.nacimiento, dueno.direccion, dueno.pais, dueno.provincia, dueno.ciudad, dueno.codigo_postal, dueno.sexo
+                FROM duenos
+                INNER JOIN duenos_has_mascotas on duenos_idDueno = idDueno
+                INNER JOIN mascotas on duenos_has_mascotas.mascotas_idMascota = idMascota
+                WHERE  idMascota = ?
+                AND duenos.borrado IS NULL");
+            $stm->execute([$id]);
+            
+            $this->response->setResponse(true);
+            $this->response->result = $stm->fetchAll();
+            
+            return $this->response;
+        }
+        catch(Exception $e)
+        {
+            $this->response->setResponse(false, $e->getMessage());
+            return $this->response;
+        }
+    }
+
     public function get($id)
     {
         try

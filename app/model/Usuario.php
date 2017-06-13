@@ -22,7 +22,7 @@ class Usuario
 		{
 			$result = array();
 
-			$query = $this->db->prepare("SELECT idUsuario, usuario, borrado, creado, actualizado, duenos_idDueno FROM $this->table WHERE usuario = ? LIMIT 1");
+			$query = $this->db->prepare("SELECT idUsuario, usuario, emailU, borrado, creado, actualizado, duenos_idDueno FROM $this->table WHERE usuario = ? LIMIT 1");
 			$query->execute([$data['usuario']]);
 
             $usuario = $query->fetch();
@@ -193,6 +193,23 @@ class Usuario
     }
 
     public function activar($datos)
+    {
+        try 
+        {
+            $query = $this->db->prepare("UPDATE $this->table SET token = NULL, activo = 1 WHERE idUsuario = ? AND token = ?");
+            $query->execute([$data['idUsuario'],$data['token']]);
+            
+            $this->response->setResponse(true);
+            return $this->response;
+        } 
+        catch (Exception $e) 
+        {
+            $this->response->setResponse(false, $e->getMessage());
+            return $this->response;
+        }
+    }
+
+    public function cambiarContrasena($datos)
     {
         try 
         {
