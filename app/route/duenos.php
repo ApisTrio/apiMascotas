@@ -10,7 +10,6 @@ $app->group('/duenos/', function () {
 
 		return $res->withStatus(200)
 			->withHeader('Content-type', 'application/json')
-			->getBody()
 			->withJson($model->mascotaDuenos($args['id']));
 
 	});

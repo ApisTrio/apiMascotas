@@ -42,12 +42,12 @@ class Dueno
         {
             $result = [];
 
-            $stm = $this->db->prepare("SELECT dueno.nombre, dueno.apellido, dueno.telefono, dueno.email, dueno.nacimiento, dueno.direccion, dueno.pais, dueno.provincia, dueno.ciudad, dueno.codigo_postal, dueno.sexo
+            $stm = $this->db->prepare("SELECT duenos.nombre, duenos.apellido, duenos.telefono, duenos.email, duenos.nacimiento, duenos.direccion, duenos.pais, duenos.provincia, duenos.ciudad, duenos.codigo_postal, duenos.sexo
                 FROM duenos
                 INNER JOIN duenos_has_mascotas on duenos_idDueno = idDueno
                 INNER JOIN mascotas on duenos_has_mascotas.mascotas_idMascota = idMascota
                 WHERE  idMascota = ?
-                AND duenos.borrado IS NULL");
+                AND duenos.borrado IS NULL ORDER BY duenos.creado");
             $stm->execute([$id]);
             
             $this->response->setResponse(true);
