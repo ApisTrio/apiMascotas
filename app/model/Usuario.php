@@ -22,27 +22,34 @@ class Usuario
 		{
 			$result = array();
 
-			$query = $this->db->prepare("SELECT idUsuario, usuario, borrado, creado, actualizado, duenos_idDueno FROM $this->table WHERE usuario = ? LIMIT 1");
+			$query = $this->db->prepare("SELECT idUsuario, usuario, pass, borrado, creado, actualizado, duenos_idDueno FROM $this->table WHERE usuario = ? LIMIT 1");
 			$query->execute([$data['usuario']]);
 
             $usuario = $query->fetch();
+            
+            if($usuario){
+             
+                if($usuario->borrado == NULL){
 
-            if($usuario->borrado == NULL){
+                    if( password_verify($data['pass'], $usuario->pass ) ){
 
-                if( password_verify($data['pass'], $usuario->pass ) ){
+                        $query2 = $this->db->prepare("SELECT * FROM duenos WHERE idDueno = ? LIMIT 1");
+                        $query2->execute([$usuario->duenos_idDueno]);
 
-                    $query2 = $this->db->prepare("SELECT * FROM duenos WHERE ususarios_idUsuario = ? LIMIT 1");
-                    $query2->execute([$usuario->idUsuario]);
+                        $dueno = $query2->fetch();
 
-                    $dueno = $query2->fetch();
+                        $this->response->setResponse(true);
+                        $this->response->result = ['usuario' => $usuario, 'dueno' => $dueno];
+                        return $this->response;
 
-                    $this->response->setResponse(true);
-                    $this->response->result = ['usuario' => $usuario, 'dueno' => $dueno];
+                    }
+
+                    $this->response->setResponse(false, 'Clave invalida');
                     return $this->response;
-
+                
                 }
-
-                $this->response->setResponse(false, 'Datos invalidos');
+                
+                $this->response->setResponse(false, 'Usuario borrado');
                 return $this->response;
 
             }
@@ -192,7 +199,7 @@ class Usuario
         }      
     }
 
-    public function activar($datos)
+    public function activar($data)
     {
         try 
         {
