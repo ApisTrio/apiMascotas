@@ -22,7 +22,7 @@ class Usuario
 		{
 			$result = array();
 
-			$query = $this->db->prepare("SELECT idUsuario, usuario, emailU, borrado, creado, actualizado, duenos_idDueno FROM $this->table WHERE usuario = ? LIMIT 1");
+			$query = $this->db->prepare("SELECT idUsuario, pass, usuario, emailU, borrado, creado, actualizado, duenos_idDueno FROM $this->table WHERE usuario = ? LIMIT 1");
 
 			$query->execute([$data['usuario']]);
 
