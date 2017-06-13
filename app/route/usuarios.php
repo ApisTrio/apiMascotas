@@ -258,11 +258,42 @@ $app->group('/usuarios/', function () {
 
 	});
 
+	$this->post('nueva-contrasena', function ($req, $res, $args) {
+			
+		$model = new Usuario();
+
+		$data = $req->getParsedBody();
+
+		$r = $model->cambiarContrasena($data);
+
+		if($r->response){
+
+			$mail = new Mail;
+
+			$body = $mail->render('cambiar-contrasena.ml', $r->result);
+
+
+			if($mail->send("Hola desde Mascotas", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $data['emailU']])){
+
+				return $res->withStatus(200)
+				 	->withHeader('Content-type', 'application/json')
+				 	->withJson($r);
+
+			}
+
+		}
+
+		return $res->withStatus(401)
+					->withHeader("Content-Type", "application/json")
+					->withJson($r);
+
+	});
+
 	$this->get('testmail', function ($req, $res, $args) {
 
 		$mail = new Mail;
 
-		$body = $mail->render('cambiar-contrasena.ml', ['nombre' => 'Daniel', 'apellido' => 'Torres', 'email' => 'danieljtorres94@gmail.com']);
+		$body = $mail->render('alerta-activada.ml', ['nombre' => 'Daniel', 'apellido' => 'Torres', 'nombremascota' => 'Batman']);
 
 		return $res->withStatus(200)->write($body);
 

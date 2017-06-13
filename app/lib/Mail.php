@@ -17,7 +17,7 @@ class Mail
 	public $mailer;
 	public $body;
 
-	private static $from = ['john@doe.com' => 'John Doe'];
+	private static $from = ['john@doe.com' => 'Dinbeat'];
 
 	function __construct()
 	{

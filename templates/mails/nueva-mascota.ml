@@ -32,6 +32,11 @@
 		    background-color: #A5CC93;
 		}
 
+		div.text-purple p{
+			color: #6c709c;
+			font-weight: bold;
+			font-size: 21px;
+		}
 		div.text-left{ text-align: justify; } 
 		div.text-left p{ color: #424242; font-size: 18px; font-weight: 300; }
 		div.padding { padding: 0 70px 0 70px; box-sizing: border-box; }
@@ -61,11 +66,9 @@
 		</div>
 		<div class="block text-left padding">
 			<p>Hola {!nombre!} {!apellido!},</p>
-			<p>¿Has olvidado tu contraseña? No te preocupes, ¡aqui tienes una nueva  <strong>{!pass!}</strong>! Asegurate de cambiarla una vez entres a tu cuenta:</p>
+			<p>Has registrado correctamente a tu mascota {!nombremascota!} en el sistema, ¡felicidades! Ahora solo tienes que colocarle una de nuestras placas para que esté protegida y podáis salir a pasear más tranquilos.</p>
 			<br>
-			<p style="text-align: center; ">
-				<a href="#" class="boton-verde">INICIAR SESION</a>
-			</p>
+			<p>¿Tienes alguna duda sobre el funcionamiento? Revisa nuestra sección de <a src="http://www.dinbeat.com/preguntas-frecuentes">Preguntas frecuentes</a>.</p>
 			<br>
 			<p>Si tienes alguna duda ¡Te ayudamos! Contacta con el servicio de atención al cliente qr@dinbeat.com y te contestaremos lo antes posible. <br> ¡Gracias por confiar en DinbeatQR!</p>
 		</div>

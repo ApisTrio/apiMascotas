@@ -32,6 +32,11 @@
 		    background-color: #A5CC93;
 		}
 
+		div.text-purple p{
+			color: #6c709c;
+			font-weight: bold;
+			font-size: 21px;
+		}
 		div.text-left{ text-align: justify; } 
 		div.text-left p{ color: #424242; font-size: 18px; font-weight: 300; }
 		div.padding { padding: 0 70px 0 70px; box-sizing: border-box; }
@@ -57,17 +62,23 @@
 			<!--<img src="">-->
 		</div>
 		<div class="block padding text-purple">
-			<p>HA REGISTRADO UNA NUEVA MASCOTA</p>
+			<p>Has activado la alerta de mascota perdida</p>
 		</div>
 		<div class="block text-left padding">
 			<p>Hola {!nombre!} {!apellido!},</p>
-			<p>¿Has olvidado tu contraseña? No te preocupes, ¡aqui tienes una nueva  <strong>{!pass!}</strong>! Asegurate de cambiarla una vez entres a tu cuenta:</p>
+			<p>Has activado la ALERTA DE MASCOTA PERDIDA de tu mascota {!nombremascota!}, esperamos que puedas recuperarla pronto. Recuerda que cuando alguien escanee la placa de {!nombremascota!} o acceda a sus datos desde cualquier dispositivo recibirás un e-mail del sistema. Una vez hayas recuperado a {!nombremascota!} recuerda desactivar la alerta, puedes hacerlo desde este botón:</p>
 			<br>
 			<p style="text-align: center; ">
-				<a href="#" class="boton-verde">INICIAR SESION</a>
+				<a href="#" class="boton-verde">DESACTIVAR ALERTA</a>
 			</p>
 			<br>
-			<p>Si tienes alguna duda ¡Te ayudamos! Contacta con el servicio de atención al cliente qr@dinbeat.com y te contestaremos lo antes posible. <br> ¡Gracias por confiar en DinbeatQR!</p>
+			<p>O desde su perfil de mascota en nuestra plataforma</p>
+			<br>
+			<p>Sabemos que cuando una mascota se pierde son momentos duros, si necesitas cualquier cosa puedes contactar con nuestro servicio de atención al cliente en qr@dinbeat.com y te contestaremos lo antes posible.</p>
+			<br>
+			<p>¿Tienes alguna duda sobre el funcionamiento? Revisa nuestra sección de <a src="http://www.dinbeat.com/preguntas-frecuentes">Preguntas frecuentes</a>.</p>
+			<br>
+			<p>Gracias por confiar la identificación de tu mascota a nuestras placas DinbeatQR, esperamos que todo se solucione pronto y {!nombremascota!} vuelva a casa.</p>
 		</div>
 		<div class="block text-left padding" style="margin: 70px 0;">
 			<p>--

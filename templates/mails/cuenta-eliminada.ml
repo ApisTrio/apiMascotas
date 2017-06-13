@@ -32,6 +32,11 @@
 		    background-color: #A5CC93;
 		}
 
+		div.text-purple p{
+			color: #6c709c;
+			font-weight: bold;
+			font-size: 21px;
+		}
 		div.text-left{ text-align: justify; } 
 		div.text-left p{ color: #424242; font-size: 18px; font-weight: 300; }
 		div.padding { padding: 0 70px 0 70px; box-sizing: border-box; }
@@ -57,17 +62,15 @@
 			<!--<img src="">-->
 		</div>
 		<div class="block padding text-purple">
-			<p>HA REGISTRADO UNA NUEVA MASCOTA</p>
+			<p>Has eliminado tu cuenta</p>
 		</div>
 		<div class="block text-left padding">
 			<p>Hola {!nombre!} {!apellido!},</p>
-			<p>¿Has olvidado tu contraseña? No te preocupes, ¡aqui tienes una nueva  <strong>{!pass!}</strong>! Asegurate de cambiarla una vez entres a tu cuenta:</p>
+			<p>Has eliminado correctamente tu cuenta del sistema. Esperamos no haber hecho ninguna cosa que te haya hecho tomar esa decisión, si ha sido así te pedimos disculpas y te invitamos a escribirnos un e-mail a qr@dinbeat.com contándonos tus motivos. Todo el feedback que nos dais nos ayuda a mejorar el servicio. Si nos escribes te contactaremos lo antes posible.</p>
 			<br>
-			<p style="text-align: center; ">
-				<a href="#" class="boton-verde">INICIAR SESION</a>
-			</p>
+			<p>¿Tienes alguna duda sobre el funcionamiento? Revisa nuestra sección de <a src="http://www.dinbeat.com/preguntas-frecuentes">Preguntas frecuentes</a>.</p>
 			<br>
-			<p>Si tienes alguna duda ¡Te ayudamos! Contacta con el servicio de atención al cliente qr@dinbeat.com y te contestaremos lo antes posible. <br> ¡Gracias por confiar en DinbeatQR!</p>
+			<p>Gracias por haber formado parte de DinbeatQR, esperamos volver a verte pronto.</p>
 		</div>
 		<div class="block text-left padding" style="margin: 70px 0;">
 			<p>--

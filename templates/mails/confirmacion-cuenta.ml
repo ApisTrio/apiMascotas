@@ -56,6 +56,9 @@
 			<div style="width: 140px; height: 120px; background-color: #6c709c; color: white; margin: 60px auto;">I</div>
 			<!--<img src="">-->
 		</div>
+		<div class="block padding text-purple">
+			<p>HA REGISTRADO UNA NUEVA MASCOTA</p>
+		</div>
 		<div class="block text-left padding">
 			<p>Hola {!nombre!} {!apellido!},</p>
 			<p>Necesitamos que verifiques tu cuenta</p>

@@ -56,17 +56,12 @@
 			<div style="width: 140px; height: 120px; background-color: #6c709c; color: white; margin: 60px auto;">I</div>
 			<!--<img src="">-->
 		</div>
+		<div class="block padding text-purple">
+			<p>HA OLVIDADO SU USUARIO</p>
+		</div>
 		<div class="block text-left padding">
 			<p>Hola {!nombre!} {!apellido!},</p>
-			<p>¿Has olvidado tu contraseña? No te preocupes, ¡te ayudamos a recuperarla! Pulsa el botón o pega el enlace de abajo en tu navegador para configurar una nueva:</p>
-			<br>
-			<p style="text-align: center; ">
-				<a href="#" class="boton-verde">RECUPERAR CONTRASEÑA</a>
-			</p>
-			<br>
-			<p>
-				<a href="#" style="font-size: 16px;">http://dinbet/qr/cambiar-contrasena/f$232V97vh%b2mp=qwe</a>
-			</p>
+			<p>¿Has olvidado tu usuario? No te preocupes, ¡aqui lo tienes {!usuario!}!</p>
 			<br>
 			<p>Si tienes alguna duda ¡Te ayudamos! Contacta con el servicio de atención al cliente qr@dinbeat.com y te contestaremos lo antes posible. <br> ¡Gracias por confiar en DinbeatQR!</p>
 		</div>

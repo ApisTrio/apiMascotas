@@ -32,6 +32,11 @@
 		    background-color: #A5CC93;
 		}
 
+		div.text-purple p{
+			color: #6c709c;
+			font-weight: bold;
+			font-size: 21px;
+		}
 		div.text-left{ text-align: justify; } 
 		div.text-left p{ color: #424242; font-size: 18px; font-weight: 300; }
 		div.padding { padding: 0 70px 0 70px; box-sizing: border-box; }
@@ -57,17 +62,23 @@
 			<!--<img src="">-->
 		</div>
 		<div class="block padding text-purple">
-			<p>HA REGISTRADO UNA NUEVA MASCOTA</p>
+			<p>Has agregado una placa nueva a la ficha de {!nombremascota!}</p>
 		</div>
 		<div class="block text-left padding">
 			<p>Hola {!nombre!} {!apellido!},</p>
-			<p>¿Has olvidado tu contraseña? No te preocupes, ¡aqui tienes una nueva  <strong>{!pass!}</strong>! Asegurate de cambiarla una vez entres a tu cuenta:</p>
+			<p>Has agregado correctamente una placa DinbeatQR al perfil de {!nombremascota!} con el número de identificación {!codigo!} Recuerda que puedes añadir tantas placas DinbeatQR como desees al perfil de tu mascota, así no solo irá protegida, además irá a la moda. </p>
+			<br>
+			<p>Si tienes otras mascotas puedes añadirlas también desde tu cuenta.</p>
+			<br>
+			<p>¿Quieres ver qué modelos DinbeatQR tenemos disponibles?</p>
 			<br>
 			<p style="text-align: center; ">
-				<a href="#" class="boton-verde">INICIAR SESION</a>
+				<a href="http://www.dinbeat.com/tienda" class="boton-verde">POR SUPUESTO</a>
 			</p>
 			<br>
-			<p>Si tienes alguna duda ¡Te ayudamos! Contacta con el servicio de atención al cliente qr@dinbeat.com y te contestaremos lo antes posible. <br> ¡Gracias por confiar en DinbeatQR!</p>
+			<p>¿Tienes alguna duda sobre el funcionamiento? Revisa nuestra sección de <a src="http://www.dinbeat.com/preguntas-frecuentes">Preguntas frecuentes</a>.</p>
+			<br>
+			<p>Gracias por confiar la identificación de tu mascota a nuestras placas DinbeatQR.</p>
 		</div>
 		<div class="block text-left padding" style="margin: 70px 0;">
 			<p>--

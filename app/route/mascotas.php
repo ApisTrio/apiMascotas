@@ -122,4 +122,21 @@ $app->group('/mascotas/', function () {
         );
     });
     
+
+    $this->post('asignar/duenos', function ($req, $res, $args) {
+        
+        $um = new Dueno();
+
+        $data = $req->getParsedBody();
+
+        foreach ($data['duenos'] as $d) {
+          $um->hasMascota($um->insertOrUpdate($d)->idInsertado, $data['id']);
+        }
+
+        
+        return $res
+           ->withHeader('Content-type', 'application/json')
+           ->withJson( ["response" => true, "result" => false, "message" => "", "idInsertado" => null]);
+    });
+
 });

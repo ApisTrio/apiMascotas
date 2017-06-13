@@ -217,14 +217,32 @@ class Usuario
         }
     }
 
-    public function cambiarContrasena($datos)
+    public function cambiarContrasena($data)
     {
         try 
         {
-            $query = $this->db->prepare("UPDATE $this->table SET token = NULL, activo = 1 WHERE idUsuario = ? AND token = ?");
-            $query->execute([$data['idUsuario'],$data['token']]);
+            $query = $this->db->prepare("SELECT * FROM $this->table WHERE emailU = ? LIMIT 1");
+            $query->execute([$data['emailU']]);
+            $usuario = $query->fetch();
+
+            if($usuario){
+
+                $pass = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 6);
+
+                $query2 = $this->db->prepare("UPDATE $this->table SET pass = ? WHERE idUsuario = ?");
+                $query2->execute([$pass, $usuario->idUsuario]);
+
+                $query3 = $this->db->prepare("SELECT * FROM duenos WHERE idDueno = ? LIMIT 1");
+                $query3->execute([$usuario->duenos_idDueno]);
+                $dueno = $query3->fetch();
+
+                $this->response->setResponse(true);
+                $this->response->result = ['nombre' => $dueno->nombre, 'apellido' => $dueno->apellido, 'pass' => $pass];
+                return $this->response;
+
+            }
             
-            $this->response->setResponse(true);
+            $this->response->setResponse(false);
             return $this->response;
         } 
         catch (Exception $e) 

@@ -32,6 +32,11 @@
 		    background-color: #A5CC93;
 		}
 
+		div.text-purple p{
+			color: #6c709c;
+			font-weight: bold;
+			font-size: 21px;
+		}
 		div.text-left{ text-align: justify; } 
 		div.text-left p{ color: #424242; font-size: 18px; font-weight: 300; }
 		div.padding { padding: 0 70px 0 70px; box-sizing: border-box; }
@@ -57,17 +62,13 @@
 			<!--<img src="">-->
 		</div>
 		<div class="block padding text-purple">
-			<p>HA REGISTRADO UNA NUEVA MASCOTA</p>
+			<p>Has dado de baja una mascota</p>
 		</div>
 		<div class="block text-left padding">
 			<p>Hola {!nombre!} {!apellido!},</p>
-			<p>¿Has olvidado tu contraseña? No te preocupes, ¡aqui tienes una nueva  <strong>{!pass!}</strong>! Asegurate de cambiarla una vez entres a tu cuenta:</p>
+			<p>Has dado de baja correctamente a tu mascota {!nombremascota!} en el sistema, esperamos que todo vaya bien. </p>
 			<br>
-			<p style="text-align: center; ">
-				<a href="#" class="boton-verde">INICIAR SESION</a>
-			</p>
-			<br>
-			<p>Si tienes alguna duda ¡Te ayudamos! Contacta con el servicio de atención al cliente qr@dinbeat.com y te contestaremos lo antes posible. <br> ¡Gracias por confiar en DinbeatQR!</p>
+			<p>Si tienes alguna duda o podemos ayudarte no dudes en contactarnos en nuestra dirección de atención al cliente qr@dinbeat.com Escríbenos y te contestaremos lo antes posible.</p>
 		</div>
 		<div class="block text-left padding" style="margin: 70px 0;">
 			<p>--

@@ -95,10 +95,10 @@ class Dueno
             } else {
 
                 $fields = "nombre, apellido, telefono, email, nacimiento, direccion, pais, provincia, ciudad, codigo_postal, sexo";
-                $sql = "INSERT INTO $this->table ($fields) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                $sql = "INSERT INTO $this->table ($fields) VALUES (?, ?, ?, ?, STR_TO_DATE( ?, '%d/%m/%Y'), ?, ?, ?, ?, ?, ?)";
                 $query = $this->db->prepare($sql);
 
-                $values = [$data['nombre'], $data['apellido'], $data['telefono'], $data['email'], date('d/m/Y',strtotime($data['nacimiento'])), $data['direccion'], $data['pais'], $data['provincia'], $data['ciudad'], $data['codigo_postal'], $data['sexo']];
+                $values = [$data['nombre'], $data['apellido'], $data['telefono'], $data['email'], $data['nacimiento'], $data['direccion'], $data['pais'], $data['provincia'], $data['ciudad'], $data['codigo_postal'], $data['sexo']];
                 $query->execute($values); 
                 
                 $this->response->idInsertado = $this->db->lastInsertId();

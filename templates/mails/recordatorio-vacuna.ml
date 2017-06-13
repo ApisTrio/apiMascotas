@@ -32,6 +32,11 @@
 		    background-color: #A5CC93;
 		}
 
+		div.text-purple p{
+			color: #6c709c;
+			font-weight: bold;
+			font-size: 21px;
+		}
 		div.text-left{ text-align: justify; } 
 		div.text-left p{ color: #424242; font-size: 18px; font-weight: 300; }
 		div.padding { padding: 0 70px 0 70px; box-sizing: border-box; }
@@ -57,17 +62,23 @@
 			<!--<img src="">-->
 		</div>
 		<div class="block padding text-purple">
-			<p>HA REGISTRADO UNA NUEVA MASCOTA</p>
+			<p>Has agregado una placa nueva a la ficha de {!nombremascota!}</p>
 		</div>
 		<div class="block text-left padding">
 			<p>Hola {!nombre!} {!apellido!},</p>
-			<p>¿Has olvidado tu contraseña? No te preocupes, ¡aqui tienes una nueva  <strong>{!pass!}</strong>! Asegurate de cambiarla una vez entres a tu cuenta:</p>
+			<p>Te contactamos desde DINBEAT para informarte de que alguien ha accedido a los datos de la placa identificativa DinbeatQR de {!nombremascota!}.</p>
 			<br>
-			<p style="text-align: center; ">
-				<a href="#" class="boton-verde">INICIAR SESION</a>
+			<p>El acceso ha tenido lugar el {!fecha!} a las {!hora!}.</p>
+			<br>
+			<p>No hemos podido obtener los datos de ubicación del lugar en el que se ha producido el acceso. Esto puede deberse a dos motivos:</p>
+			<br>
+			<p>1.       La persona que realizó la lectura no quiso compartirla <br>
+			   2.       El dispositivo desde el que se accedió no tiene GPS o se encuentra en una zona de mala cobertura.
 			</p>
 			<br>
-			<p>Si tienes alguna duda ¡Te ayudamos! Contacta con el servicio de atención al cliente qr@dinbeat.com y te contestaremos lo antes posible. <br> ¡Gracias por confiar en DinbeatQR!</p>
+			<p>Esperamos que esta información te sea útil y que la persona que encontró a {!nombremascota!} se ponga pronto en contacto contigo. Recuerda que si {!nombremascota!} se ha perdido, puedes activar la alerta de mascota perdida desde tu menú de usuario en <a src="www.dinbeat.com/qr">www.dinbeat.com/qr</a> así el resto de miembros de la plataforma podrán estar informados y ayudarte en la búsqueda.</p>
+			<br>
+			<p>Un saludo y gracias por confiar en DinbeatQR</p>
 		</div>
 		<div class="block text-left padding" style="margin: 70px 0;">
 			<p>--
