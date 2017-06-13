@@ -18,7 +18,7 @@ $app->group('/usuarios/', function () {
 
 		if($r->response){
 
-			$token_data = ['id' => $r->result->idUsuario, 'is_admin' => false];
+			$token_data = ['id' => $r->result['usuario']->idUsuario, 'is_admin' => false];
 			$token = Token::generar($token_data);
 
 			$data['token'] = $token;
@@ -134,7 +134,7 @@ $app->group('/usuarios/', function () {
 								'nombre' => $data['dueno']['nombre'],
 								'apellido' => $data['dueno']['apellido'],
 								'email' => $data['usuario']['emailU'],
-								'enlace' => 'localhost/appMascats/confirmar/'.$ru->idInsertado.'/'.$model_u->get($ru->idInsertado)->result->token,
+								'enlace' => 'localhost/appMascotas/confirmar/'.$ru->idInsertado.'/'.$model_u->get($ru->idInsertado)->result->token,
 							];
 
 							$body = $mail->render('confirmacion-cuenta.ml', $datamail);
@@ -251,8 +251,6 @@ $app->group('/usuarios/', function () {
 			 	->withJson($ru);
 
 		}
-
-		https://www.workana.com/job/programador-para-actualizar-2-servidores-cpanel-centos-php-etc-1?ref=projects
 
 		return $res->withStatus(401)
 					->withHeader("Content-Type", "application/json")

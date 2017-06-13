@@ -210,4 +210,31 @@ class Mascota
             $this->response->setResponse(false, $e->getMessage());
         }
     }
+
+    public function Edad($a,$m)
+      {
+        
+          if ($a == 0 ){
+            $anios = "";
+          }
+          else if ($a == 1 ){
+             $anios = "1 A&ntilde;o";
+          }
+          else if ($a > 1 ){
+            $anios = $a." A&ntilde;os";
+          }
+
+           if ($m == 0 ){
+            $meses = "";
+          }
+          else if ($m == 1 ){
+             $meses = " y 1 mes";
+          }
+          else if ($m > 1 ){
+            $meses = " y ".$m." meses";
+          }
+
+          return $anios.$meses;
+        }
+
 }

@@ -1,5 +1,6 @@
 <?php
 use App\Model\Perdida;
+use App\Model\Mascota;
 
 $app->group('/perdidas/', function () {
     
@@ -9,33 +10,39 @@ $app->group('/perdidas/', function () {
     });
     
     $this->get('lista', function ($req, $res, $args) {
-        $um = new Modelo();
-        
+        $um = new Perdida();
+        $m = new Mascota();
+        $datos = $um->GetAll();
+       
+        for ($i=0; $i < count($datos->result); $i++) { 
+          $datos->result[$i]->edad = $m->Edad($datos->result[$i]->anios,$datos->result[$i]->meses);
+         }
+
         return $res
            ->withHeader('Content-type', 'application/json')
            ->getBody()
            ->write(
             json_encode(
-                $um->GetAll()
+                $datos
             )
         );
     });
 
-    $this->get('dueno', function ($req, $res, $args) {
-        $um = new Modelo();
+    $this->get('dueno/{id}', function ($req, $res, $args) {
+        $um = new Perdida();
         
         return $res
            ->withHeader('Content-type', 'application/json')
            ->getBody()
            ->write(
             json_encode(
-                $um->GetAll()
+                $um->GetDueno($args["id"])
             )
         );
     });
 
     $this->get('encontradas', function ($req, $res, $args) {
-    $um = new Modelo();
+    $um = new Perdida();
     
     return $res
        ->withHeader('Content-type', 'application/json')
@@ -48,7 +55,7 @@ $app->group('/perdidas/', function () {
 });
 
   $this->get('encontradas/dueno', function ($req, $res, $args) {
-    $um = new Modelo();
+    $um = new Perdida();
     
     return $res
        ->withHeader('Content-type', 'application/json')
@@ -61,7 +68,7 @@ $app->group('/perdidas/', function () {
   });
 
   $this->get('aviso', function ($req, $res, $args) {
-    $um = new Modelo();
+    $um = new Perdida();
     
     return $res
        ->withHeader('Content-type', 'application/json')
@@ -74,7 +81,7 @@ $app->group('/perdidas/', function () {
   });
 
   $this->post('aviso/nuevo', function ($req, $res) {
-        $um = new Modelo();
+        $um = new Perdida();
         
         return $res
            ->withHeader('Content-type', 'application/json')
@@ -90,7 +97,7 @@ $app->group('/perdidas/', function () {
    
     
     $this->post('registro', function ($req, $res) {
-        $um = new Modelo();
+        $um = new Perdida();
         
         return $res
            ->withHeader('Content-type', 'application/json')
@@ -105,7 +112,7 @@ $app->group('/perdidas/', function () {
     });
     
     $this->post('borrar', function ($req, $res, $args) {
-        $um = new Modelo();
+        $um = new Perdida();
         
         return $res
            ->withHeader('Content-type', 'application/json')
