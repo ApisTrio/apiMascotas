@@ -174,7 +174,7 @@ $movi);
         );
     });
 /////////////////////////////////////////////////////////////////////////////////////////////
-    $this->get('verificar/{codigo}', function ($req, $res, $args) {
+    $this->get('asignada/{codigo}', function ($req, $res, $args) {
         $um = new Placa();
         
         return $res
@@ -186,6 +186,44 @@ $movi);
             )
         );
     });
+
+    $this->get('creada/{codigo}', function ($req, $res, $args) {
+        $um = new Placa();
+
+        $asignada = $um->VerificarAsignada($args["codigo"]);
+
+        if ($asignada->response){
+          $r =  array('response' => false,'msg'=> 'Placa ya esta asignada');
+        }
+
+        else{
+          $existe = $um->Datos($args["codigo"]);
+            if ($existe->response){
+
+                if($existe->result->bloqueado == NULL){
+                $r =  array('response' => true);
+                }
+
+                else{
+                   $r =  array('response' => false,'msg'=> 'Placa bloqueada');
+                }
+
+            }
+            else{
+              $r =  $existe;
+            }
+        }
+
+        return $res
+           ->withHeader('Content-type', 'application/json')
+           ->getBody()
+           ->write(
+            json_encode(
+                $r
+            )
+        );
+    });
+
 
     $this->post('asignar', function ($req, $res) {
         $um = new Placa();
