@@ -87,6 +87,28 @@ class Informacion
         }
     }
 
+    public function GetAll($id)
+    {
+        try
+        {
+            $result = array();
+
+            $stm = $this->db->prepare("SELECT * FROM $this->table WHERE borrado IS NULL AND mascotas_idMascota = ?");
+
+            $stm->execute(array($id));
+            
+            $this->response->setResponse(true);
+            $this->response->result = $stm->fetchAll();
+            
+            return $this->response;
+        }
+        catch(Exception $e)
+        {
+            $this->response->setResponse(false, $e->getMessage());
+            return $this->response;
+        }
+    }
+
     ////////////////////////
 
     public function InsertVacuna($data,$idMascota)
@@ -151,6 +173,32 @@ class Informacion
         }catch (Exception $e) 
         {
             $this->response->setResponse(false, $e->getMessage());
+        }
+    }
+
+    public function VacunasMascota($id)
+    {
+        try
+        {
+            $result = array();
+
+            $stm = $this->db->prepare("SELECT fecha, recordatorio as fecha_recordatorio,
+            activo as recordatorio_activo, vacuna FROM vacunas_mascotas
+            INNER JOIN vacunas
+            ON vacunas_idVacuna = idVacuna 
+            WHERE vacunas_mascotas.borrado IS NULL AND mascotas_idMascota = ?");
+
+            $stm->execute(array($id));
+            
+            $this->response->setResponse(true);
+            $this->response->result = $stm->fetchAll();
+            
+            return $this->response;
+        }
+        catch(Exception $e)
+        {
+            $this->response->setResponse(false, $e->getMessage());
+            return $this->response;
         }
     }
 }

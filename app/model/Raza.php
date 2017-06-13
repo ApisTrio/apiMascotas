@@ -36,6 +36,27 @@ class Raza
             return $this->response;
 		}
     }
+
+    public function RazasEspecie($id)
+    {
+        try
+        {
+            $result = array();
+
+            $stm = $this->db->prepare("SELECT * FROM $this->table WHERE borrado IS NULL AND especies_idEspecie = ?");
+            $stm->execute(array($id));
+            
+            $this->response->setResponse(true);
+            $this->response->result = $stm->fetchAll();
+            
+            return $this->response;
+        }
+        catch(Exception $e)
+        {
+            $this->response->setResponse(false, $e->getMessage());
+            return $this->response;
+        }
+    }
     
     public function Get($id)
     {

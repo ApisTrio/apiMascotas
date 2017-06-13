@@ -21,6 +21,19 @@ $app->group('/razas/', function () {
         );
     });
 
+    $this->get('lista/{especie}', function ($req, $res, $args) {
+        $um = new Raza();
+        
+        return $res
+           ->withHeader('Content-type', 'application/json')
+           ->getBody()
+           ->write(
+            json_encode(
+                $um->RazasEspecie($args["especie"])
+            )
+        );
+    });
+
     
     $this->get('datos/{id}', function ($req, $res, $args) {
         $um = new Raza();

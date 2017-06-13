@@ -11,13 +11,18 @@ $app->group('/mascotas/', function () {
     
     $this->get('dueno/{id}', function ($req, $res, $args) {
         $um = new Mascota();
+        $datos = $um->DuenoMascotas($args['id']);
+
+        for ($i=0; $i < count($datos->result); $i++) { 
+          $datos->result[$i]->edad = $um->Edad($datos->result[$i]->anios,$datos->result[$i]->meses);
+         }
         
         return $res
            ->withHeader('Content-type', 'application/json')
            ->getBody()
            ->write(
             json_encode(
-                $um->UsuarioMascotas($args['id'])
+                $datos
             )
         );
     });
@@ -25,13 +30,19 @@ $app->group('/mascotas/', function () {
     
     $this->get('datos/{id}', function ($req, $res, $args) {
         $um = new Mascota();
+
+        $datos = $um->DuenoMascotas($args['id']);
+
+         if ($datos->result)
+        $datos->result[0]->edad = $um->Edad($datos->result[0]->anios,$datos->result[0]->meses);
+
         
         return $res
            ->withHeader('Content-type', 'application/json')
            ->getBody()
            ->write(
             json_encode(
-                $um->Get($args['id'])
+               $datos
             )
         );
     });

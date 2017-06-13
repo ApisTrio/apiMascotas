@@ -16,20 +16,31 @@ class Mascota
         $this->response = new Response();
     }
     
-    public function UsuarioMascotas($id)
+    public function DuenoMascotas($id)
     {
         try
         {
             $result = array();
 
-            $stm = $this->db->prepare("SELECT mascotas.nombre, fecha_nacimiento, foto, genero, peso, comentarios, chip, raza, especie
+            $stm = $this->db->prepare("SELECT idMascota, codigo, mascotas.nombre, DATE_FORMAT(fecha_nacimiento,'%d-%m-%Y') as fecha_nacimiento,
+            TIMESTAMPDIFF(YEAR,fecha_nacimiento,CURDATE())  AS anios,
+            (TIMESTAMPDIFF(MONTH,fecha_nacimiento,CURDATE()) - (TIMESTAMPDIFF(YEAR,fecha_nacimiento,CURDATE()) * 12)) AS meses, foto, genero, peso, comentarios, chip, raza, especie, 
+                perdidas.creado as perdida, perdidas.encontrado
                 FROM mascotas
                 INNER JOIN razas on razas_idRaza = idRaza 
                 INNER JOIN especies on especies_idEspecie = idEspecie
                 INNER JOIN duenos_has_mascotas on mascotas_idMascota = idMascota
                 INNER JOIN duenos on duenos_has_mascotas.duenos_idDueno = idDueno
+                INNER JOIN mascotas_has_placas
+                ON mascotas_has_placas.mascotas_idMascota = idMascota
+                INNER JOIN placas
+                ON placas_idPlaca = idPlaca
+                LEFT JOIN perdidas
+                ON perdidas.mascotas_idMascota = idMascota
                 WHERE  idDueno = ?
-                AND mascotas.borrado IS NULL");
+                AND mascotas.borrado IS NULL
+                AND mascotas_has_placas.borrado IS NULL
+                AND placas.bloqueado IS NULL");
             $stm->execute(array($id));
             
             $this->response->setResponse(true);
@@ -50,7 +61,25 @@ class Mascota
 		{
 			$result = array();
 
-			$stm = $this->db->prepare("SELECT * FROM $this->table WHERE idMascota = ? ");
+			$stm = $this->db->prepare("SELECT idMascota, codigo, mascotas.nombre, DATE_FORMAT(fecha_nacimiento,'%d-%m-%Y') as fecha_nacimiento,
+            TIMESTAMPDIFF(YEAR,fecha_nacimiento,CURDATE())  AS anios,
+            (TIMESTAMPDIFF(MONTH,fecha_nacimiento,CURDATE()) - (TIMESTAMPDIFF(YEAR,fecha_nacimiento,CURDATE()) * 12)) AS meses, foto, genero, peso, comentarios, chip, raza, especie, 
+                perdidas.creado as perdida, perdidas.encontrado
+                FROM mascotas
+                INNER JOIN razas on razas_idRaza = idRaza 
+                INNER JOIN especies on especies_idEspecie = idEspecie
+                INNER JOIN duenos_has_mascotas on mascotas_idMascota = idMascota
+                INNER JOIN duenos on duenos_has_mascotas.duenos_idDueno = idDueno
+                INNER JOIN mascotas_has_placas
+                ON mascotas_has_placas.mascotas_idMascota = idMascota
+                INNER JOIN placas
+                ON placas_idPlaca = idPlaca
+                LEFT JOIN perdidas
+                ON perdidas.mascotas_idMascota = idMascota
+                WHERE  idMascota = ?
+                AND mascotas.borrado IS NULL
+                AND mascotas_has_placas.borrado IS NULL
+                AND placas.bloqueado IS NULL ");
 			$stm->execute(array($id));
 
 			$this->response->setResponse(true);
