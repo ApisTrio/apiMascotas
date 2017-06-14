@@ -22,7 +22,7 @@ class Usuario
 		{
 			$result = array();
 
-			$query = $this->db->prepare("SELECT idUsuario, pass, usuario, emailU, borrado, creado, actualizado, duenos_idDueno FROM $this->table WHERE usuario = ? LIMIT 1");
+			$query = $this->db->prepare("SELECT idUsuario, pass, usuario, emailU, borrado, creado, actualizado, duenos_idDueno FROM $this->table WHERE usuario = ? AND activo = 1 LIMIT 1");
 
 			$query->execute([$data['usuario']]);
 
@@ -208,6 +208,36 @@ class Usuario
             $query->execute([$data['idUsuario'],$data['token']]);
             
             $this->response->setResponse(true);
+            return $this->response;
+        } 
+        catch (Exception $e) 
+        {
+            $this->response->setResponse(false, $e->getMessage());
+            return $this->response;
+        }
+    }
+
+    public function recordarUsuario($data)
+    {
+        try 
+        {
+            $query = $this->db->prepare("SELECT * FROM $this->table WHERE emailU = ? LIMIT 1");
+            $query->execute([$data['emailU']]);
+            $usuario = $query->fetch();
+
+            if($usuario){
+
+                $query2 = $this->db->prepare("SELECT * FROM duenos WHERE idDueno = ? LIMIT 1");
+                $query2->execute([$usuario->duenos_idDueno]);
+                $dueno = $query2->fetch();
+
+                $this->response->setResponse(true);
+                $this->response->result = ['nombre' => $dueno->nombre, 'apellido' => $dueno->apellido, 'usuario' => $usuario->usuario];
+                return $this->response;
+
+            }
+            
+            $this->response->setResponse(false);
             return $this->response;
         } 
         catch (Exception $e) 

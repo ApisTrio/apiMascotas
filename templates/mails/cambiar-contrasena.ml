@@ -32,6 +32,11 @@
 		    background-color: #A5CC93;
 		}
 
+		div.text-purple p{
+			color: #6c709c;
+			font-weight: bold;
+			font-size: 21px;
+		}
 		div.text-left{ text-align: justify; } 
 		div.text-left p{ color: #424242; font-size: 18px; font-weight: 300; }
 		div.padding { padding: 0 70px 0 70px; box-sizing: border-box; }

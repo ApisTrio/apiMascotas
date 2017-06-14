@@ -258,6 +258,37 @@ $app->group('/usuarios/', function () {
 
 	});
 
+	$this->post('contactar', function ($req, $res, $args) {
+
+		$data = $req->getParsedBody();
+
+		$mail = new Mail;
+
+		if($data['direccion']){
+
+			$body = $mail->render('placa-escaneada-v1.ml', $data);
+
+		}else{
+
+			$body = $mail->render('placa-escaneada-v2.ml', $data);
+
+		}
+
+		if($mail->send("Dinbeat - Placa escaneada", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $data['emailU']])){
+
+			return $res->withStatus(200)
+			 	->withHeader('Content-type', 'application/json')
+			 	->withJson($data);
+
+		}
+
+
+		return $res->withStatus(401)
+					->withHeader("Content-Type", "application/json")
+					->withJson($data);
+
+	});
+
 	$this->post('nueva-contrasena', function ($req, $res, $args) {
 			
 		$model = new Usuario();
@@ -273,7 +304,7 @@ $app->group('/usuarios/', function () {
 			$body = $mail->render('cambiar-contrasena.ml', $r->result);
 
 
-			if($mail->send("Hola desde Mascotas", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $data['emailU']])){
+			if($mail->send("Dinbeat - Has olvidado tu contraseña?", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $data['emailU']])){
 
 				return $res->withStatus(200)
 				 	->withHeader('Content-type', 'application/json')
@@ -288,6 +319,40 @@ $app->group('/usuarios/', function () {
 					->withJson($r);
 
 	});
+
+	$this->post('recordar-usuario', function ($req, $res, $args) {
+			
+		$model = new Usuario();
+
+		$data = $req->getParsedBody();
+
+		$r = $model->recordarUsuario($data);
+
+		if($r->response){
+
+			$mail = new Mail;
+
+			$body = $mail->render('recordar-usuario.ml', $r->result);
+
+
+			if($mail->send("Dinbeat - Has olvidado tu usuario?", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $data['emailU']])){
+
+				return $res->withStatus(200)
+				 	->withHeader('Content-type', 'application/json')
+				 	->withJson($r);
+
+			}
+
+		}
+
+		return $res->withStatus(401)
+					->withHeader("Content-Type", "application/json")
+					->withJson($r);
+
+	});
+
+
+//-----------------------------------------------------------------------------
 
 	$this->get('testmail', function ($req, $res, $args) {
 

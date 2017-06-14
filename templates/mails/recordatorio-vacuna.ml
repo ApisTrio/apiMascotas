@@ -62,23 +62,17 @@
 			<!--<img src="">-->
 		</div>
 		<div class="block padding text-purple">
-			<p>Has agregado una placa nueva a la ficha de {!nombremascota!}</p>
+			<p>Recordatrio</p>
 		</div>
 		<div class="block text-left padding">
 			<p>Hola {!nombre!} {!apellido!},</p>
-			<p>Te contactamos desde DINBEAT para informarte de que alguien ha accedido a los datos de la placa identificativa DinbeatQR de {!nombremascota!}.</p>
+			<p>Te escribimos porque configuraste una alerta en la plataforma para que te avisásemos de que a {!nombremascota!} le toca el {!fecha!} la vacuna {!vacuna!}. </p>
 			<br>
-			<p>El acceso ha tenido lugar el {!fecha!} a las {!hora!}.</p>
+			<p>Si quieres cancelar el recordatorio entra en el apartado de ‘información médica’ de la ficha de tu mascota. No te olvides de actualizar las fechas de los recordatorios cuando vayas poniéndole las nuevas vacunas a {!nombremascota!}.</p>
 			<br>
-			<p>No hemos podido obtener los datos de ubicación del lugar en el que se ha producido el acceso. Esto puede deberse a dos motivos:</p>
+			<p>¿Tienes alguna duda sobre el funcionamiento? Revisa nuestra sección de <a src="http://www.dinbeat.com/preguntas-frecuentes">Preguntas frecuentes</a>.</p>
 			<br>
-			<p>1.       La persona que realizó la lectura no quiso compartirla <br>
-			   2.       El dispositivo desde el que se accedió no tiene GPS o se encuentra en una zona de mala cobertura.
-			</p>
-			<br>
-			<p>Esperamos que esta información te sea útil y que la persona que encontró a {!nombremascota!} se ponga pronto en contacto contigo. Recuerda que si {!nombremascota!} se ha perdido, puedes activar la alerta de mascota perdida desde tu menú de usuario en <a src="www.dinbeat.com/qr">www.dinbeat.com/qr</a> así el resto de miembros de la plataforma podrán estar informados y ayudarte en la búsqueda.</p>
-			<br>
-			<p>Un saludo y gracias por confiar en DinbeatQR</p>
+			<p>Si tienes alguna otra duda en la que podamos ayudarte no dudes en contactarnos en nuestra dirección de atención al cliente qr@dinbeat.com Escríbenos y te contestaremos lo antes posible.</p>
 		</div>
 		<div class="block text-left padding" style="margin: 70px 0;">
 			<p>--

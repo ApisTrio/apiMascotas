@@ -31,7 +31,7 @@
 		.boton-verde:hover {
 		    background-color: #A5CC93;
 		}
-		
+
 		div.text-purple p{
 			color: #6c709c;
 			font-weight: bold;
@@ -62,13 +62,27 @@
 			<!--<img src="">-->
 		</div>
 		<div class="block padding text-purple">
-			<p>HA OLVIDADO SU USUARIO</p>
+			<p>Has agregado una placa nueva a la ficha de {!nombremascota!}</p>
 		</div>
 		<div class="block text-left padding">
 			<p>Hola {!nombre!} {!apellido!},</p>
-			<p>¿Has olvidado tu usuario? No te preocupes, ¡aqui lo tienes <strong>{!usuario!}</strong>!</p>
+			<p>Te contactamos desde DINBEAT para informarte de que alguien ha accedido a los datos de la placa identificativa DinbeatQR de {!nombremascota!}.</p>
 			<br>
-			<p>Si tienes alguna duda ¡Te ayudamos! Contacta con el servicio de atención al cliente qr@dinbeat.com y te contestaremos lo antes posible. <br> ¡Gracias por confiar en DinbeatQR!</p>
+			<p>El acceso ha tenido lugar el {!fecha!} a las {!hora!}.</p>
+			<br>
+			<p>Y la posición aproximada es {!direccion!}</p>
+			<br>
+			<p>Las coordenadas GPS obtenidas han sido</p>
+			<br>
+			<p> - Latitud : {!latitud!} <br>
+				- Longitud : {!longitud!} 
+			</p>
+			<br>
+			<p>Puedes acceder a la direccion exacta desde Google Maps </p>
+			<br>
+			<p>Esperamos que esta información te sea útil y que la persona que encontró a {!nombremascota!} se ponga pronto en contacto contigo. Recuerda que si {!nombremascota!} se ha perdido, puedes activar la alerta de mascota perdida desde tu menú de usuario en <a src="www.dinbeat.com/qr">www.dinbeat.com/qr</a> así el resto de miembros de la plataforma podrán estar informados y ayudarte en la búsqueda.</p>
+			<br>
+			<p>Un saludo y gracias por confiar en DinbeatQR</p>
 		</div>
 		<div class="block text-left padding" style="margin: 70px 0;">
 			<p>--
