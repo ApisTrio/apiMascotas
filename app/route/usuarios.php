@@ -134,7 +134,7 @@ $app->group('/usuarios/', function () {
 								'nombre' => $data['dueno']['nombre'],
 								'apellido' => $data['dueno']['apellido'],
 								'email' => $data['usuario']['emailU'],
-								'enlace' => 'localhost/appMascotas/confirmar/'.$ru->idInsertado.'/'.$model_u->get($ru->idInsertado)->result->token,
+								'enlace' => 'http://dinbeat.com/qr/usuarios/confirmar/'.$ru->idInsertado.'/'.$model_u->get($ru->idInsertado)->result->token,
 							];
 
 							$body = $mail->render('confirmacion-cuenta.ml', $datamail);

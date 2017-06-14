@@ -141,7 +141,7 @@ class Vacuna
                     INNER JOIN vacunas ON vacunas.idVacuna = vacunas_mascotas.vacunas_idVacuna
                     INNER JOIN mascotas ON mascotas.idMascota = vacunas_mascotas.mascotas_idMascota
                     INNER JOIN duenos_has_mascotas ON duenos_has_mascotas.mascotas_idMascota  = mascotas.idMascota 
-                    INNER JOIN duenos ON duenos.idDueno = duenos_has_mascotas.duenos_idDueno
+                    INNER JOIN duenos ON duenos.idDueno = duenos_has_mascotas.duenos_idDueno  
                     INNER JOIN usuarios ON usuarios.duenos_idDueno = duenos.idDueno
                     WHERE CURDATE() 
                     = DATE_SUB(vacunas_mascotas.recordatorio, INTERVAL 7 DAY) 

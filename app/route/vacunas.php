@@ -89,7 +89,7 @@ $app->group('/vacunas/', function () {
 
           $mail->render('recordatorio-vacuna.ml', $v);
 
-          $mail->send("Dinbeat - Has olvidado tu contraseña?", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $data['emailU']]);
+          $mail->send("Dinbeat - Has olvidado tu contraseña?", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $v->emailU]);
 
         }
 
@@ -98,7 +98,7 @@ $app->group('/vacunas/', function () {
            ->getBody()
            ->write(
             json_encode(
-                $vacunas
+                $vacunas->result
             )
         );
     });
