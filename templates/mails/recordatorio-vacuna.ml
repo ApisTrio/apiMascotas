@@ -66,7 +66,7 @@
 		</div>
 		<div class="block text-left padding">
 			<p>Hola {!nombre!} {!apellido!},</p>
-			<p>Te escribimos porque configuraste una alerta en la plataforma para que te avisásemos de que a {!nombremascota!} le toca el {!fecha!} la vacuna {!vacuna!}. </p>
+			<p>Te escribimos porque configuraste una alerta en la plataforma para que te avisásemos de que a {!nombremascota!} le toca el {!recordatorio!} la vacuna {!vacuna!}. </p>
 			<br>
 			<p>Si quieres cancelar el recordatorio entra en el apartado de ‘información médica’ de la ficha de tu mascota. No te olvides de actualizar las fechas de los recordatorios cuando vayas poniéndole las nuevas vacunas a {!nombremascota!}.</p>
 			<br>

@@ -131,4 +131,31 @@ class Vacuna
             $this->response->setResponse(false, $e->getMessage());
         }
     }
+
+    public function notificables()
+    {
+        try 
+        {
+            $stm = $this->db->prepare("SELECT vacunas.vacuna, vacunas_mascotas.fecha, DATE_FORMAT(vacunas_mascotas.recordatorio,'%d-%m-%Y') as recordatorio, vacunas_mascotas.activo, mascotas.nombre AS nombremascota, duenos.nombre, duenos.apellido, usuarios.emailU
+                    FROM vacunas_mascotas 
+                    INNER JOIN vacunas ON vacunas.idVacuna = vacunas_mascotas.vacunas_idVacuna
+                    INNER JOIN mascotas ON mascotas.idMascota = vacunas_mascotas.mascotas_idMascota
+                    INNER JOIN duenos_has_mascotas ON duenos_has_mascotas.mascotas_idMascota  = mascotas.idMascota 
+                    INNER JOIN duenos ON duenos.idDueno = duenos_has_mascotas.duenos_idDueno
+                    INNER JOIN usuarios ON usuarios.duenos_idDueno = duenos.idDueno
+                    WHERE CURDATE() 
+                    = DATE_SUB(vacunas_mascotas.recordatorio, INTERVAL 7 DAY) 
+                    OR CURDATE() = DATE(vacunas_mascotas.recordatorio)");            
+
+            $stm->execute();
+            
+            $this->response->setResponse(true);
+            $this->response->result = $stm->fetchAll();
+            return $this->response;
+        } 
+        catch (Exception $e) 
+        {
+            $this->response->setResponse(false, $e->getMessage());
+        }
+    }
 }
