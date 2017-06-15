@@ -39,8 +39,13 @@ class Perdida
 
 			$stm->execute();
             
-			$this->response->setResponse(true);
-            $this->response->result = $stm->fetchAll();
+			$this->response->result = $stm->fetchAll();
+
+            if($this->response->result)
+                $this->response->setResponse(true);
+
+            else
+                $this->response->setResponse(false);
             
             return $this->response;
 		}
@@ -78,8 +83,13 @@ class Perdida
 
 			$stm->execute(array($id));
 
-			$this->response->setResponse(true);
-            $this->response->result = $stm->fetch();
+            $this->response->result = $stm->fetchAll();
+
+            if($this->response->result)
+                $this->response->setResponse(true);
+
+            else
+                $this->response->setResponse(false);
             
             return $this->response;
 		}
@@ -113,8 +123,13 @@ class Perdida
 
             $stm->execute();
             
-            $this->response->setResponse(true);
             $this->response->result = $stm->fetchAll();
+
+            if($this->response->result)
+                $this->response->setResponse(true);
+
+            else
+                $this->response->setResponse(false);
             
             return $this->response;
         }
@@ -151,8 +166,13 @@ class Perdida
 
             $stm->execute(array($id));
 
-            $this->response->setResponse(true);
-            $this->response->result = $stm->fetch();
+            $this->response->result = $stm->fetchAll();
+
+            if($this->response->result)
+                $this->response->setResponse(true);
+
+            else
+                $this->response->setResponse(false);
             
             return $this->response;
         }
@@ -216,7 +236,7 @@ class Perdida
             $stm->execute(array($id['idMascota']));
             
             $this->response->setResponse(true);
-             $this->response->result = [];
+             $this->response->result = false;
             return $this->response;
         } catch (Exception $e) 
         {
@@ -273,9 +293,14 @@ class Perdida
             WHERE idDueno = ?");
 
             $stm->execute(array($id));
+            
+            $this->response->result = $stm->fetchAll();
 
-            $this->response->setResponse(true);
-            $this->response->result = $stm->fetch();
+            if($this->response->result)
+                $this->response->setResponse(true);
+
+            else
+                $this->response->setResponse(false);
             
             return $this->response;
         }

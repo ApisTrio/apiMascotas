@@ -33,8 +33,9 @@ $app->group('/perdidas/', function () {
         $m = new Mascota();
           $datos = $um->GetDueno($args["id"]);
 
-           if ($datos->result)
-        $datos->result->edad = $m->Edad($datos->result->anios,$datos->result->meses);
+        for ($i=0; $i < count($datos->result); $i++) { 
+          $datos->result[$i]->edad = $m->Edad($datos->result[$i]->anios,$datos->result[$i]->meses);
+         }
         return $res
            ->withHeader('Content-type', 'application/json')
            ->getBody()
@@ -69,8 +70,9 @@ $app->group('/perdidas/', function () {
         $m = new Mascota();
           $datos = $um->EncontradasDueno($args["id"]);
 
-          if ($datos->result)
-        $datos->result->edad = $m->Edad($datos->result->anios,$datos->result->meses);
+        for ($i=0; $i < count($datos->result); $i++) { 
+          $datos->result[$i]->edad = $m->Edad($datos->result[$i]->anios,$datos->result[$i]->meses);
+         }        
         return $res
            ->withHeader('Content-type', 'application/json')
            ->getBody()
