@@ -44,8 +44,8 @@ class Placa
 		{
 
                 $sql = "INSERT INTO $this->table
-                            (codigo)
-                            VALUES (?,?)";
+                            (codigo )
+                            VALUES (?";
                 
             $this->db->prepare($sql)
                      ->execute(array($codigo)); 
