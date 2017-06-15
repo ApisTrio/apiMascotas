@@ -96,6 +96,7 @@ class Mascota
     
     public function Insert($data)
     {
+        
 		try 
 		{
                 $sql = "INSERT INTO $this->table

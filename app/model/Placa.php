@@ -44,11 +44,11 @@ class Placa
 		{
 
                 $sql = "INSERT INTO $this->table
-                            (activa,codigo)
+                            (codigo)
                             VALUES (?,?)";
                 
             $this->db->prepare($sql)
-                     ->execute(array(0,$codigo)); 
+                     ->execute(array($codigo)); 
               		 
               $this->response->idInsertado = $this->db->lastInsertId();
             
@@ -161,17 +161,26 @@ class Placa
         }  
     }
 
-    public function Inactivas()
+    public function Bloqueadas()
     {
         try
         {
             $result = array();
 
-            $stm = $this->db->prepare("SELECT * FROM $this->table WHERE  activa = 0");
+            $stm = $this->db->prepare("SELECT * FROM $this->table 
+                WHERE  IS NOT NULL");
             $stm->execute();
             
-            $this->response->setResponse(true);
+            
             $this->response->result = $stm->fetchAll();
+
+             if ($this->response->result){
+                $this->response->setResponse(true);
+            } 
+
+            else{
+                $this->response->setResponse(false,"Ninguna placa bloqueada");
+            }
             
             return $this->response;
         }

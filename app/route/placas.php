@@ -23,6 +23,19 @@ $app->group('/placas/', function () {
         );
     });
 
+    $this->get('bloqueadas', function ($req, $res, $args) {
+        $um = new Placa();
+        
+        return $res
+           ->withHeader('Content-type', 'application/json')
+           ->getBody()
+           ->write(
+            json_encode(
+                $um->Bloqueadas()
+            )
+        );
+    });
+
     
     $this->get('datos/{codigo}', function ($req, $res, $args) {
         $um = new Placa();
@@ -239,14 +252,12 @@ $movi);
           $existe = $um->Datos($datos["codigo"]);
             if ($existe->response){
 
-                if($existe->result->bloqueado == NULL){
                 $datos["placas_idPlaca"] = $existe->result->idPlaca;
                 $r = $um->Asignar($datos);
-                    //CAMBIAR ESTADO ACTIVO A LA PLACA
-                }
-
-                else{
-                   $r =  array('response' => false,'msg'=> 'Placa bloqueada');
+                
+                if($r->response){
+                  $datos["idPlaca"] = $existe->result->idPlaca;
+                  $um->Desbloquear($datos);
                 }
 
             }
