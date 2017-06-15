@@ -31,10 +31,10 @@ $app->group('/mascotas/', function () {
     $this->get('datos/{id}', function ($req, $res, $args) {
         $um = new Mascota();
 
-        $datos = $um->DuenoMascotas($args['id']);
+        $datos = $um->Get($args['id']);
 
          if ($datos->result)
-        $datos->result[0]->edad = $um->Edad($datos->result[0]->anios,$datos->result[0]->meses);
+        $datos->result->edad = $um->Edad($datos->result->anios,$datos->result->meses);
 
         
         return $res
@@ -53,15 +53,15 @@ $app->group('/mascotas/', function () {
         $data = $req->getParsedBody();
 
         $mascota = $um->Insert($data);
-
+         $du->hasMascota(
+                    $data['idDueno'], $mascota->idInsertado
+                );
         return $res
            ->withHeader('Content-type', 'application/json')
            ->getBody()
            ->write(
             json_encode(
-                $du->hasMascota(
-                    $data['idDueno'], $mascota->idInsertado
-                )
+               $mascota
             )
         );
     });

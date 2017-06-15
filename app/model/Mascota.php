@@ -247,10 +247,10 @@ class Mascota
             $anios = "";
           }
           else if ($a == 1 ){
-             $anios = "1 A&ntilde;o";
+             $anios = "1 Año";
           }
           else if ($a > 1 ){
-            $anios = $a." A&ntilde;os";
+            $anios = $a." Años";
           }
 
            if ($m == 0 ){

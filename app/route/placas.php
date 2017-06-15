@@ -242,6 +242,7 @@ $movi);
                 if($existe->result->bloqueado == NULL){
                 $datos["placas_idPlaca"] = $existe->result->idPlaca;
                 $r = $um->Asignar($datos);
+                    //CAMBIAR ESTADO ACTIVO A LA PLACA
                 }
 
                 else{
