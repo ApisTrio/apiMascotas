@@ -13,6 +13,6 @@ $app->post('/subir-foto', function ($req, $res, $args) {
     
 	return $res->withStatus(200)
 					->withHeader("Content-Type", "application/json")
-					->withJson($req->getUploadedFiles()['foto']->moveTo(__DIR__.'/public/templates'));
+					->withJson($req->getUploadedFiles()['foto']->moveTo(__DIR__.'/../public'));
 
 });
