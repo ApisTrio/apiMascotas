@@ -13,7 +13,7 @@ class Mail
 	private static $password = "ugbmmdejbszjycdb";
 	private static $host = "smtp.gmail.com";
 	private static $port = 587;
-	private static $encrypt = 'tls';
+	public static $encrypt = 'tls';
 	public $mailer;
 	public $body;
 

@@ -145,7 +145,7 @@ class Vacuna
                     INNER JOIN usuarios ON usuarios.duenos_idDueno = duenos.idDueno
                     WHERE CURDATE() 
                     = DATE_SUB(vacunas_mascotas.recordatorio, INTERVAL 7 DAY) 
-                    OR CURDATE() = DATE(vacunas_mascotas.recordatorio)");            
+                    OR CURDATE() = DATE(vacunas_mascotas.recordatorio) AND vacunas_mascotas.activo = 1 AND vacunas_mascotas.borrado IS NULL");            
 
             $stm->execute();
             

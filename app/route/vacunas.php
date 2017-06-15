@@ -77,30 +77,5 @@ $app->group('/vacunas/', function () {
         );
     });
 
-
-    $this->get('notificar', function ($req, $res, $args) {
-        $um = new Vacuna();
-        
-        $vacunas = $um->notificables();
-
-        foreach ($vacunas->result as $v) {
-          
-          $mail = new Mail;
-
-          $mail->render('recordatorio-vacuna.ml', $v);
-
-          $mail->send("Dinbeat - Has olvidado tu contraseña?", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $v->emailU]);
-
-        }
-
-        return $res
-           ->withHeader('Content-type', 'application/json')
-           ->getBody()
-           ->write(
-            json_encode(
-                $vacunas->result
-            )
-        );
-    });
     
 });

@@ -22,7 +22,7 @@ class Dueno
 		{
 			$result = array();
 
-			$query = $this->db->prepare("SELECT * FROM $this->table");
+			$query = $this->db->prepare("SELECT * FROM $this->table WHERE borrado IS NULL");
 			$query->execute();
 
 			$this->response->setResponse(true);
@@ -68,7 +68,7 @@ class Dueno
         {
             $result = array();
 
-            $query = $this->db->prepare("SELECT * FROM $this->table WHERE idDueno = ? LIMIT 1");
+            $query = $this->db->prepare("SELECT * FROM $this->table WHERE idDueno = ? AND borrado IS NULL LIMIT 1");
             $query->execute([$id]);
 
             $this->response->setResponse(true);
@@ -88,9 +88,10 @@ class Dueno
 		{
             if(isset($data['idDueno'])){
 
-                $sql = "UPDATE $this->table SET campo = ? WHERE idDueno = ?";
+                $sql = "UPDATE $this->table SET nombre = ?, apellido = ?, telefono = ?, email = ?, nacimiento = ?, direccion = ?, pais = ?, provincia = ?, ciudad = ?, codigo_postal = ?, sexo = ? WHERE idDueno = ?";
                 $query = $this->db->prepare($sql);
-                $query->execute([$data['campo'],$data['idDueno']]);
+                $values = [$data['nombre'], $data['apellido'], $data['telefono'], $data['email'], $data['nacimiento'], $data['direccion'], $data['pais'], $data['provincia'], $data['ciudad'], $data['codigo_postal'], $data['sexo'], $data['idDueno']];
+                $query->execute($values);
 
             } else {
 

@@ -128,25 +128,9 @@ $app->group('/usuarios/', function () {
 
 							}
 
-							$mail = new Mail;
-
-							$datamail = [
-								'nombre' => $data['dueno']['nombre'],
-								'apellido' => $data['dueno']['apellido'],
-								'email' => $data['usuario']['emailU'],
-								'enlace' => 'http://dinbeat.com/qr/usuarios/confirmar/'.$ru->idInsertado.'/'.$model_u->get($ru->idInsertado)->result->token,
-							];
-
-							$body = $mail->render('confirmacion-cuenta.ml', $datamail);
-
-
-							if($mail->send("Hola desde Mascotas", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $model_u->get($ru->idInsertado)->result->emailU ])){
-
-								return $res->withStatus(200)
-								 	->withHeader('Content-type', 'application/json')
-								 	->withJson($ru);
-
-							}
+							return $res->withStatus(200)
+							 	->withHeader('Content-type', 'application/json')
+							 	->withJson($ru);
 
 						}
 
@@ -356,16 +340,40 @@ $app->group('/usuarios/', function () {
 
 	$this->get('testmail', function ($req, $res, $args) {
 
-		$mail = new Mail;
+		require __DIR__.'/../../vendor/phpmailer/phpmailer/PHPMailerAutoload.php';
 
-		$body = $mail->render('alerta-activada.ml', ['nombre' => 'Daniel', 'apellido' => 'Torres', 'nombremascota' => 'Batman']);
+		$mail = new PHPMailer;
 
-		return $res->withStatus(200)->write($body);
+		$mail->SMTPDebug = 3;                               // Enable verbose debug output
 
-		if($mail->send("Hola desde Mascotas", ["xarias13@gmail.com", "danieljtorres94@gmail.com"])){
+		$mail->isSMTP();                                      // Set mailer to use SMTP
+		$mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
+		$mail->SMTPAuth = true;                               // Enable SMTP authentication
+		$mail->Username = 'danieljtorres94@gmail.com';                 // SMTP username
+		$mail->Password = 'ugbmmdejbszjycdb';
+		$mail->SMTPSecure = 'tls';                              // Enable TLS encryption, `ssl` also accepted
+		$mail->Port = 587;
 
-			return $res->withStatus(200)->write($body);
+		$mail->setFrom('from@example.com', 'Mailer');
+		$mail->addAddress('joe@example.net', 'Joe User');     // Add a recipient
+		$mail->addAddress('ellen@example.com');               // Name is optional
+		$mail->addReplyTo('info@example.com', 'Information');
+		$mail->addCC('danieljtorres94@gmail.com');
 
+		$mail->isHTML(true);                                  // Set email format to HTML
+
+		$mail->Subject = 'Here is the subject';
+		$mail->Body    = 'This is the HTML message body <b>in bold!</b>';
+		$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+
+		if(!$mail->send()) {
+		    return $res->withStatus(401)
+					->withHeader("Content-Type", "application/json")
+					->withJson('Mailer Error: ' . $mail->ErrorInfo);
+		} else {
+		    return $res->withStatus(200)
+					->withHeader("Content-Type", "application/json")
+					->withJson(["enviado con exito"]);
 		}
 
 	});
