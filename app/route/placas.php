@@ -212,14 +212,8 @@ $movi);
         else{
           $existe = $um->Datos($args["codigo"]);
             if ($existe->response){
-
-                if($existe->result->bloqueado == NULL){
+              
                 $r =  array('response' => true);
-                }
-
-                else{
-                   $r =  array('response' => false,'msg'=> 'Placa bloqueada');
-                }
 
             }
             else{
