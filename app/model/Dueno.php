@@ -84,6 +84,11 @@ class Dueno
     
     public function insertOrUpdate($data)
     {
+
+        function callback($el){ if( is_null($el) ){ $el = NULL; return $el; } }
+
+        $map = array_map( $callback , $data);
+        
 		try 
 		{
             if(isset($data['idDueno'])){
