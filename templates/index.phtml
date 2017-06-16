@@ -28,10 +28,11 @@
     <body>
         <h1>Api Mascotas</h1>
 
-        <?php if (isset($name)) : ?>
-            <h2>Acceso <?= htmlspecialchars($name); ?>!</h2>
-        <?php else: ?>
-            <h2>Acceso Concedido</h2>
-        <?php endif; ?>
+        <form action="http://localhost/apiMascotas/subir-foto" method="POST" enctype="multipart/form-data">
+            <input type="file" name="foto">
+            <input type="submit" value="enviar">
+        </form>
+
+
     </body>
 </html>

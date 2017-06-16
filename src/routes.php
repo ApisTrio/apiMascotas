@@ -1,18 +1,28 @@
 <?php
 // Routes
 
-$app->get('/[{name}]', function ($request, $response, $args) {
-    // Sample log message
-    $this->logger->info("Slim-Skeleton '/' route");
 
-    // Render index view
-    return $this->renderer->render($response, 'index.phtml', $args);
+
+$app->get('/subir-foto', function ($req, $res, $args) {
+    
+	return $this->renderer->render($res, 'index.phtml');
 });
 
-$app->post('/subir-foto', function ($req, $res, $args) {
+$app->post('/subir-imagen', function ($req, $res, $args) {
     
-	return $res->withStatus(200)
-					->withHeader("Content-Type", "application/json")
-					->withJson($req->getUploadedFiles()['foto']->moveTo(__DIR__.'/../public'));
+	$imagenes = $req->getUploadedFiles();
+	$info = $req->getParsedBody();
+	$p = $imagenes['imagen'];
+
+
+	$chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	$nombre = substr(str_shuffle($chars), 0, 6);
+	$p->moveTo( './public/images/'.$info['path'].'/'.$nombre.$info['tipo'] );
+
+
+		return $res->withStatus(200)
+				->withHeader("Content-Type", "application/json")
+				->withJson($nombre.$info['tipo']);
+
 
 });
