@@ -22,7 +22,7 @@ class Perdida
 		{
 			$result = array();
 
-			$stm = $this->db->prepare("SELECT idMascota, codigo, nombre, foto, genero, 
+			$stm = $this->db->prepare("SELECT DISTINCT idMascota, codigo, nombre, foto, genero, 
             TIMESTAMPDIFF(YEAR,fecha_nacimiento,CURDATE())  AS anios,
             (TIMESTAMPDIFF(MONTH,fecha_nacimiento,CURDATE()) - (TIMESTAMPDIFF(YEAR,fecha_nacimiento,CURDATE()) * 12)) AS meses
             FROM mascotas INNER JOIN perdidas
@@ -63,7 +63,7 @@ class Perdida
 		{
 			$result = array();
 
-			$stm = $this->db->prepare("SELECT idMascota, codigo, mascotas.nombre, foto, genero, DATE_FORMAT(fecha_nacimiento,'%d-%m-%Y') as fecha_nacimiento,
+			$stm = $this->db->prepare("SELECT DISTINCT idMascota, codigo, mascotas.nombre, foto, genero, DATE_FORMAT(fecha_nacimiento,'%d-%m-%Y') as fecha_nacimiento,
             TIMESTAMPDIFF(YEAR,fecha_nacimiento,CURDATE())  AS anios,
             (TIMESTAMPDIFF(MONTH,fecha_nacimiento,CURDATE()) - (TIMESTAMPDIFF(YEAR,fecha_nacimiento,CURDATE()) * 12)) AS meses
             FROM mascotas INNER JOIN perdidas
@@ -106,7 +106,7 @@ class Perdida
         {
             $result = array();
 
-            $stm = $this->db->prepare("SELECT idMascota, codigo, nombre, foto, genero, 
+            $stm = $this->db->prepare("SELECT DISTINCT idMascota, codigo, nombre, foto, genero, 
             TIMESTAMPDIFF(YEAR,fecha_nacimiento,CURDATE())  AS anios,
             (TIMESTAMPDIFF(MONTH,fecha_nacimiento,CURDATE()) - (TIMESTAMPDIFF(YEAR,fecha_nacimiento,CURDATE()) * 12)) AS meses
             FROM mascotas INNER JOIN perdidas
@@ -146,7 +146,7 @@ class Perdida
         {
             $result = array();
 
-            $stm = $this->db->prepare("SELECT idMascota, codigo, mascotas.nombre, foto, genero, DATE_FORMAT(fecha_nacimiento,'%d-%m-%Y') as fecha_nacimiento,
+            $stm = $this->db->prepare("SELECT DISTINCT idMascota, codigo, mascotas.nombre, foto, genero, DATE_FORMAT(fecha_nacimiento,'%d-%m-%Y') as fecha_nacimiento,
             TIMESTAMPDIFF(YEAR,fecha_nacimiento,CURDATE())  AS anios,
             (TIMESTAMPDIFF(MONTH,fecha_nacimiento,CURDATE()) - (TIMESTAMPDIFF(YEAR,fecha_nacimiento,CURDATE()) * 12)) AS meses
             FROM mascotas INNER JOIN perdidas
@@ -273,7 +273,7 @@ class Perdida
         {
             $result = array();
 
-            $stm = $this->db->prepare("SELECT idMascota, codigo, mascotas.nombre, foto, genero, DATE_FORMAT(fecha_nacimiento,'%d-%m-%Y') as fecha_nacimiento,
+            $stm = $this->db->prepare("SELECT DISTINCT idMascota, codigo, mascotas.nombre, foto, genero, DATE_FORMAT(fecha_nacimiento,'%d-%m-%Y') as fecha_nacimiento,
             TIMESTAMPDIFF(YEAR,fecha_nacimiento,CURDATE())  AS anios,
             (TIMESTAMPDIFF(MONTH,fecha_nacimiento,CURDATE()) - (TIMESTAMPDIFF(YEAR,fecha_nacimiento,CURDATE()) * 12)) AS meses
             FROM mascotas INNER JOIN perdidas

@@ -97,8 +97,13 @@ class Informacion
 
             $stm->execute(array($id));
             
-            $this->response->setResponse(true);
             $this->response->result = $stm->fetchAll();
+            
+            if($this->response->result)
+                $this->response->setResponse(true);
+
+            else
+                $this->response->setResponse(false);
             
             return $this->response;
         }

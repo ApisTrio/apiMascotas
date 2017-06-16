@@ -25,9 +25,16 @@ class Especie
 			$stm = $this->db->prepare("SELECT * FROM $this->table WHERE borrado IS NULL");
 			$stm->execute();
             
-			$this->response->setResponse(true);
+			
             $this->response->result = $stm->fetchAll();
             
+            if($this->response->result)
+                $this->response->setResponse(true);
+
+            else
+                $this->response->setResponse(false);
+            
+            return $this->response;
             return $this->response;
 		}
 		catch(Exception $e)
@@ -46,8 +53,14 @@ class Especie
 			$stm = $this->db->prepare("SELECT * FROM $this->table WHERE idEspecie = ?");
 			$stm->execute(array($id));
 
-			$this->response->setResponse(true);
+			
             $this->response->result = $stm->fetch();
+
+            if($this->response->result)
+                $this->response->setResponse(true);
+
+            else
+                $this->response->setResponse(false);
             
             return $this->response;
 		}

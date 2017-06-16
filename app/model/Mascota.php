@@ -22,7 +22,7 @@ class Mascota
         {
             $result = array();
 
-            $stm = $this->db->prepare("SELECT idMascota, codigo, mascotas.nombre, DATE_FORMAT(fecha_nacimiento,'%d-%m-%Y') as fecha_nacimiento,
+            $stm = $this->db->prepare("SELECT DISTINCT idMascota, codigo, mascotas.nombre, DATE_FORMAT(fecha_nacimiento,'%d-%m-%Y') as fecha_nacimiento,
             TIMESTAMPDIFF(YEAR,fecha_nacimiento,CURDATE())  AS anios,
             (TIMESTAMPDIFF(MONTH,fecha_nacimiento,CURDATE()) - (TIMESTAMPDIFF(YEAR,fecha_nacimiento,CURDATE()) * 12)) AS meses, foto, genero, peso, comentarios, chip, raza, especie, 
                 perdidas.creado as perdida, perdidas.encontrado
@@ -43,9 +43,15 @@ class Mascota
                 AND placas.bloqueado IS NULL");
             $stm->execute(array($id));
             
-            $this->response->setResponse(true);
+            
             $this->response->result = $stm->fetchAll();
             
+            if($this->response->result)
+                $this->response->setResponse(true);
+
+            else
+                $this->response->setResponse(false);
+
             return $this->response;
         }
         catch(Exception $e)
@@ -61,7 +67,7 @@ class Mascota
 		{
 			$result = array();
 
-			$stm = $this->db->prepare("SELECT idMascota, codigo, mascotas.nombre, DATE_FORMAT(fecha_nacimiento,'%d-%m-%Y') as fecha_nacimiento,
+			$stm = $this->db->prepare("SELECT DISTINCT idMascota, codigo, mascotas.nombre, DATE_FORMAT(fecha_nacimiento,'%d-%m-%Y') as fecha_nacimiento,
             TIMESTAMPDIFF(YEAR,fecha_nacimiento,CURDATE())  AS anios,
             (TIMESTAMPDIFF(MONTH,fecha_nacimiento,CURDATE()) - (TIMESTAMPDIFF(YEAR,fecha_nacimiento,CURDATE()) * 12)) AS meses, foto, genero, peso, comentarios, chip, raza, especie, 
                 perdidas.creado as perdida, perdidas.encontrado
@@ -82,9 +88,14 @@ class Mascota
                 AND placas.bloqueado IS NULL ");
 			$stm->execute(array($id));
 
-			$this->response->setResponse(true);
             $this->response->result = $stm->fetch();
             
+            if($this->response->result)
+                $this->response->setResponse(true);
+
+            else
+                $this->response->setResponse(false);
+                            
             return $this->response;
 		}
 		catch(Exception $e)
