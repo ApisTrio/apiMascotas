@@ -22,7 +22,7 @@ class Perdida
 		{
 			$result = array();
 
-			$stm = $this->db->prepare("SELECT DISTINCT idMascota, codigo, nombre, foto, genero, 
+			$stm = $this->db->prepare("SELECT idMascota, codigo, nombre, foto, genero, 
             TIMESTAMPDIFF(YEAR,fecha_nacimiento,CURDATE())  AS anios,
             (TIMESTAMPDIFF(MONTH,fecha_nacimiento,CURDATE()) - (TIMESTAMPDIFF(YEAR,fecha_nacimiento,CURDATE()) * 12)) AS meses
             FROM mascotas INNER JOIN perdidas
@@ -35,6 +35,7 @@ class Perdida
             AND mascotas_has_placas.borrado IS NULL
             AND placas.bloqueado IS NULL
             AND encontrado IS NULL 
+            GROUP BY idMascota
             LIMIT $limit OFFSET $offset");
 
 			$stm->execute();
@@ -63,7 +64,7 @@ class Perdida
 		{
 			$result = array();
 
-			$stm = $this->db->prepare("SELECT DISTINCT idMascota, codigo, mascotas.nombre, foto, genero, DATE_FORMAT(fecha_nacimiento,'%d-%m-%Y') as fecha_nacimiento,
+			$stm = $this->db->prepare("SELECT idMascota, codigo, mascotas.nombre, foto, genero, DATE_FORMAT(fecha_nacimiento,'%d-%m-%Y') as fecha_nacimiento,
             TIMESTAMPDIFF(YEAR,fecha_nacimiento,CURDATE())  AS anios,
             (TIMESTAMPDIFF(MONTH,fecha_nacimiento,CURDATE()) - (TIMESTAMPDIFF(YEAR,fecha_nacimiento,CURDATE()) * 12)) AS meses
             FROM mascotas INNER JOIN perdidas
@@ -79,7 +80,8 @@ class Perdida
             AND mascotas_has_placas.borrado IS NULL
             AND placas.bloqueado IS NULL
             AND encontrado IS NULL 
-            WHERE idDueno = ?");
+            WHERE idDueno = ?
+            GROUP BY idMascota");
 
 			$stm->execute(array($id));
 
@@ -106,7 +108,7 @@ class Perdida
         {
             $result = array();
 
-            $stm = $this->db->prepare("SELECT DISTINCT idMascota, codigo, nombre, foto, genero, 
+            $stm = $this->db->prepare("SELECT idMascota, codigo, nombre, foto, genero, 
             TIMESTAMPDIFF(YEAR,fecha_nacimiento,CURDATE())  AS anios,
             (TIMESTAMPDIFF(MONTH,fecha_nacimiento,CURDATE()) - (TIMESTAMPDIFF(YEAR,fecha_nacimiento,CURDATE()) * 12)) AS meses
             FROM mascotas INNER JOIN perdidas
@@ -119,6 +121,7 @@ class Perdida
             AND mascotas_has_placas.borrado IS NULL
             AND placas.bloqueado IS NULL
             AND encontrado IS NOT NULL 
+            GROUP BY idMascota
             LIMIT $limit OFFSET $offset");
 
             $stm->execute();
@@ -146,7 +149,7 @@ class Perdida
         {
             $result = array();
 
-            $stm = $this->db->prepare("SELECT DISTINCT idMascota, codigo, mascotas.nombre, foto, genero, DATE_FORMAT(fecha_nacimiento,'%d-%m-%Y') as fecha_nacimiento,
+            $stm = $this->db->prepare("SELECT idMascota, codigo, mascotas.nombre, foto, genero, DATE_FORMAT(fecha_nacimiento,'%d-%m-%Y') as fecha_nacimiento,
             TIMESTAMPDIFF(YEAR,fecha_nacimiento,CURDATE())  AS anios,
             (TIMESTAMPDIFF(MONTH,fecha_nacimiento,CURDATE()) - (TIMESTAMPDIFF(YEAR,fecha_nacimiento,CURDATE()) * 12)) AS meses
             FROM mascotas INNER JOIN perdidas
@@ -162,7 +165,8 @@ class Perdida
             AND mascotas_has_placas.borrado IS NULL
             AND placas.bloqueado IS NULL
             AND encontrado IS NOT NULL 
-            WHERE idDueno = ?");
+            WHERE idDueno = ?
+            GROUP BY idMascota");
 
             $stm->execute(array($id));
 
@@ -273,7 +277,7 @@ class Perdida
         {
             $result = array();
 
-            $stm = $this->db->prepare("SELECT DISTINCT idMascota, codigo, mascotas.nombre, foto, genero, DATE_FORMAT(fecha_nacimiento,'%d-%m-%Y') as fecha_nacimiento,
+            $stm = $this->db->prepare("SELECT idMascota, codigo, mascotas.nombre, foto, genero, DATE_FORMAT(fecha_nacimiento,'%d-%m-%Y') as fecha_nacimiento,
             TIMESTAMPDIFF(YEAR,fecha_nacimiento,CURDATE())  AS anios,
             (TIMESTAMPDIFF(MONTH,fecha_nacimiento,CURDATE()) - (TIMESTAMPDIFF(YEAR,fecha_nacimiento,CURDATE()) * 12)) AS meses
             FROM mascotas INNER JOIN perdidas
@@ -290,7 +294,8 @@ class Perdida
             AND placas.bloqueado IS NULL
             AND encontrado IS NULL 
             AND aviso IS NOT NULL
-            WHERE idDueno = ?");
+            WHERE idDueno = ?
+            GROUP BY idMascota");
 
             $stm->execute(array($id));
             

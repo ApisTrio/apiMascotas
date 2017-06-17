@@ -22,7 +22,7 @@ class Mascota
         {
             $result = array();
 
-            $stm = $this->db->prepare("SELECT DISTINCT idMascota, codigo, mascotas.nombre, DATE_FORMAT(fecha_nacimiento,'%d-%m-%Y') as fecha_nacimiento,
+            $stm = $this->db->prepare("SELECT idMascota, codigo, mascotas.nombre, DATE_FORMAT(fecha_nacimiento,'%d-%m-%Y') as fecha_nacimiento,
             TIMESTAMPDIFF(YEAR,fecha_nacimiento,CURDATE())  AS anios,
             (TIMESTAMPDIFF(MONTH,fecha_nacimiento,CURDATE()) - (TIMESTAMPDIFF(YEAR,fecha_nacimiento,CURDATE()) * 12)) AS meses, foto, genero, peso, comentarios, chip, raza, especie, 
                 perdidas.creado as perdida, perdidas.encontrado
@@ -40,7 +40,8 @@ class Mascota
                 WHERE  idDueno = ?
                 AND mascotas.borrado IS NULL
                 AND mascotas_has_placas.borrado IS NULL
-                AND placas.bloqueado IS NULL");
+                AND placas.bloqueado IS NULL
+                GROUP BY idMascota");
             $stm->execute(array($id));
             
             
@@ -67,7 +68,7 @@ class Mascota
 		{
 			$result = array();
 
-			$stm = $this->db->prepare("SELECT DISTINCT idMascota, codigo, mascotas.nombre, DATE_FORMAT(fecha_nacimiento,'%d-%m-%Y') as fecha_nacimiento,
+			$stm = $this->db->prepare("SELECT idMascota, codigo, mascotas.nombre, DATE_FORMAT(fecha_nacimiento,'%d-%m-%Y') as fecha_nacimiento,
             TIMESTAMPDIFF(YEAR,fecha_nacimiento,CURDATE())  AS anios,
             (TIMESTAMPDIFF(MONTH,fecha_nacimiento,CURDATE()) - (TIMESTAMPDIFF(YEAR,fecha_nacimiento,CURDATE()) * 12)) AS meses, foto, genero, peso, comentarios, chip, raza, especie, 
                 perdidas.creado as perdida, perdidas.encontrado
@@ -85,7 +86,8 @@ class Mascota
                 WHERE  idMascota = ?
                 AND mascotas.borrado IS NULL
                 AND mascotas_has_placas.borrado IS NULL
-                AND placas.bloqueado IS NULL ");
+                AND placas.bloqueado IS NULL
+                GROUP BY idMascota");
 			$stm->execute(array($id));
 
             $this->response->result = $stm->fetch();
