@@ -284,4 +284,30 @@ class Usuario
             return $this->response;
         }
     }
+
+    public function confirmarCuentaDatos($id)
+    {
+        try 
+        {
+            $query = $this->db->prepare("SELECT usuario, nombre, apellido, emailU, token FROM usuarios INNER JOIN duenos ON duenos.idDueno = usuarios.duenos_idDueno WHERE idUsuario = ?");
+            $query->execute([$id]);
+            $usuario = $query->fetch();
+
+            if($usuario){
+
+                $this->response->setResponse(true);
+                $this->response->result = $usuario;
+                return $this->response;
+
+            }
+            
+            $this->response->setResponse(false);
+            return $this->response;
+        } 
+        catch (Exception $e) 
+        {
+            $this->response->setResponse(false, $e->getMessage());
+            return $this->response;
+        }
+    }
 }

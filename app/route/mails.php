@@ -1,7 +1,10 @@
 <?php
-use App\Model\Admin;
+use App\Model\Usuario;
+use App\Model\Dueno;
+use App\Model\Mascota;
+use App\Model\Vacuna;
 
-use App\Lib\Token;
+use App\Lib\Mail;
 
 
 $app->group('/mail/', function () {
@@ -11,22 +14,28 @@ $app->group('/mail/', function () {
 			
 		$mail = new Mail;
 
-		$datamail = $req->getParsedBody();
+		$data = $req->getParsedBody();
+
+		$r = (new Usuario)->confirmarCuentaDatos( $data['id'] );
+
+		$datamail = (array) $r->result;
+		$datamail['enlace'] = 'http://localhost/appMascotas/usuarios/confirmar/'.$datamail['token'];
 
 		$body = $mail->render('confirmacion-cuenta.ml', $datamail);
 
+		$rm = $mail->send("Dinbeat - confirmar cuenta", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $datamail['emailU']])
 
-		if($r = $mail->send("Dinbeat - confirmar cuenta", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $datamail['emailU']])){
+		if($rm){
 
 			return $res->withStatus(200)
 			 	->withHeader('Content-type', 'application/json')
-			 	->withJson($r);
+			 	->withJson($rm);
 
 		}
 
-		return $res->withStatus(404)
+		return $res->withStatus(400)
 					->withHeader("Content-Type", "application/json")
-					->withJson($r);
+					->withJson($rm);
 	
 	});
 

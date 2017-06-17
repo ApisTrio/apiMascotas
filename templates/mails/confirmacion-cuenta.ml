@@ -73,7 +73,7 @@
 				<a href="{!enlace!}" class="boton-verde">CONFIRMAR</a>
 			</p>
 			<br>
-			<p>Gracias por registrarte. Haz click en el botón para confirmar que {!email!} es tu dirección de email y empezar a usar DinbeatQR.</p>
+			<p>Gracias por registrarte. Haz click en el botón para confirmar que {!emailU!} es tu dirección de email y empezar a usar DinbeatQR.</p>
 			<p>¿Tienes problemas con los enlaces de este email? Copia y pega este enlace en tu navegador para verificar tu cuenta:
 			<br>
 			<a href="{!enlace!}" style="font-size: 16px;">{!enlace!}</a>
