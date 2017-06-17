@@ -78,7 +78,7 @@
 				- Longitud : {!longitud!} 
 			</p>
 			<br>
-			<p>Puedes acceder a la direccion exacta desde Google Maps </p>
+			<p>Puedes acceder a la direccion exacta desde <a href="{!enlace!}">Google Maps</a></p>
 			<br>
 			<p>Esperamos que esta información te sea útil y que la persona que encontró a {!nombremascota!} se ponga pronto en contacto contigo. Recuerda que si {!nombremascota!} se ha perdido, puedes activar la alerta de mascota perdida desde tu menú de usuario en <a src="www.dinbeat.com/qr">www.dinbeat.com/qr</a> así el resto de miembros de la plataforma podrán estar informados y ayudarte en la búsqueda.</p>
 			<br>

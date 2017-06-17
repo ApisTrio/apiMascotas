@@ -256,7 +256,7 @@ class Mascota
     }
 
     public function Edad($a,$m)
-      {
+    {
         
           if ($a == 0 ){
             $anios = "";
@@ -279,6 +279,37 @@ class Mascota
           }
 
           return $anios.$meses;
+    }
+
+    public function nuevaMascotaDatos($id)
+    {
+        try 
+        {
+            $query = $this->db->prepare("SELECT mascotas.nombre AS nombremascota, usuario, duenos.nombre, apellido, emailU 
+                FROM mascotas
+                INNER JOIN duenos_has_mascotas on mascotas_idMascota = mascotas.idMascota
+                INNER JOIN duenos ON duenos_has_mascotas.duenos_idDueno = duenos.idDueno 
+                INNER JOIN usuarios ON duenos.idDueno = usuarios.duenos_idDueno 
+                WHERE idMascota = ?");
+            $query->execute([$id]);
+            $datos = $query->fetch();
+
+            if($datos){
+
+                $this->response->setResponse(true);
+                $this->response->result = $datos;
+                return $this->response;
+
+            }
+            
+            $this->response->setResponse(false);
+            return $this->response;
+        } 
+        catch (Exception $e) 
+        {
+            $this->response->setResponse(false, $e->getMessage());
+            return $this->response;
         }
+    }
 
 }

@@ -66,7 +66,7 @@ $app->group('/mail/', function () {
 			
 		$mail = new Mail;
 
-		$datamail = $req->getParsedBody();
+		$data = $req->getParsedBody();
 
 		$body = $mail->render('confirmacion-cuenta.ml', $datamail);
 
@@ -89,12 +89,30 @@ $app->group('/mail/', function () {
 			
 		$mail = new Mail;
 
-		$datamail = $req->getParsedBody();
+		$data = $req->getParsedBody();
 
-		$body = $mail->render('confirmacion-cuenta.ml', $datamail);
+		$r = (new Mascota)->nuevaMascotaDatos( $data['id'] );
+
+		$datamail = ['fecha' => $data['fecha'], 'hora' => $data['hora'], 'enlace' => $data['enlace'] ];
+
+		$datamail['nombremascota'] = $r->result->nombremascota;
+		$datamail['nombre'] = $r->result->nombre;
+		$datamail['apellido'] = $r->result->apellido;
+
+		if( empty($data['ubicacion']) ){
+
+			$datamail['longitud'] = $data['ubicacion']['longitud'];
+			$datamail['latitud'] = $data['ubicacion']['latitud'];
+
+			$body = $mail->render('placa-escaneada-v2.ml', $datamail);
+
+		}else{
+
+			$body = $mail->render('placa-escaneada-v1.ml', $datamail);
+		}
 
 
-		if($r = $mail->send("Dinbeat - confirmar cuenta", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $datamail['emailU']])){
+		if($r = $mail->send("Dinbeat - placa escaneada", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $r->result->emailU])){
 
 			return $res->withStatus(200)
 			 	->withHeader('Content-type', 'application/json')
@@ -204,12 +222,16 @@ $app->group('/mail/', function () {
 			
 		$mail = new Mail;
 
-		$datamail = $req->getParsedBody();
+		$data = $req->getParsedBody();
 
-		$body = $mail->render('confirmacion-cuenta.ml', $datamail);
+		$r = (new Mascota)->nuevaMascotaDatos( $data['id'] );
+
+		$datamail = (array) $r->result;
+
+		$body = $mail->render('nueva-mascota.ml', $datamail);
 
 
-		if($r = $mail->send("Dinbeat - confirmar cuenta", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $datamail['emailU']])){
+		if($r = $mail->send("Dinbeat - nueva mascota", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $datamail['emailU']])){
 
 			return $res->withStatus(200)
 			 	->withHeader('Content-type', 'application/json')
