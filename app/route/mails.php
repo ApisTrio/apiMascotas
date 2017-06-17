@@ -105,7 +105,7 @@ $app->group('/mail/', function () {
 			$datamail['latitud'] = $data['latitud'];
 			$datamail['latitud'] = $data['enlace'];
 
-			$datamail['direccion'] = ($data['direccion']) ? "<p>Y la posición aproximada es "$data['direccion']"</p>" : "";
+			$datamail['direccion'] = ($data['direccion']) ? "<p>Y la posición aproximada es ".$data['direccion']."</p>" : "";
 
 			$body = $mail->render('placa-escaneada-v2.ml', $datamail);
 
