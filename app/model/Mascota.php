@@ -107,6 +107,7 @@ class Mascota
     
     public function Insert($data)
     {
+        $data = array_map( "null" , $data);
         
 		try 
 		{

@@ -23,7 +23,7 @@ $app->group('/mail/', function () {
 
 		$body = $mail->render('confirmacion-cuenta.ml', $datamail);
 
-		$rm = $mail->send("Dinbeat - confirmar cuenta", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $datamail['emailU']])
+		$rm = $mail->send("Dinbeat - confirmar cuenta", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $datamail['emailU']]);
 
 		if($rm){
 

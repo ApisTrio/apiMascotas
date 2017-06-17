@@ -87,7 +87,7 @@ class Dueno
 
         
 
-        $map = array_map( "null" , $data);
+        $data = array_map( "null" , $data);
         
 		try 
 		{
