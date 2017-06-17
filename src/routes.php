@@ -26,3 +26,16 @@ $app->post('/subir-imagen', function ($req, $res, $args) {
 
 
 });
+
+$app->get('/public/images/mascotas/{nombre}', function ($req, $res, $args) {
+    
+	$data = $args['nombre'];    
+	$image = file_get_contents('./public/images/mascotas/'.$data,FILE_USE_INCLUDE_PATH);    
+      
+
+	$res->write($image);    
+
+	return $res->withHeader('Content-Type', FILEINFO_MIME_TYPE);
+
+
+});

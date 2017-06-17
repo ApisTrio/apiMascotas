@@ -53,9 +53,10 @@ $app->group('/mascotas/', function () {
         $data = $req->getParsedBody();
 
         $mascota = $um->Insert($data);
-        $du->hasMascota(
+
+        /*$du->hasMascota(
                     $data['idDueno'], $mascota->idInsertado
-                );
+                );*/
         return $res
            ->withHeader('Content-type', 'application/json')
            ->getBody()
