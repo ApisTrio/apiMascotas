@@ -50,3 +50,4 @@ Temporary Items
 /logs/*
 !/logs/README.md
 /info
+/public/images/
