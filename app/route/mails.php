@@ -93,16 +93,19 @@ $app->group('/mail/', function () {
 
 		$r = (new Mascota)->nuevaMascotaDatos( $data['id'] );
 
-		$datamail = ['fecha' => $data['fecha'], 'hora' => $data['hora'], 'enlace' => $data['enlace'] ];
+		$datamail = ['fecha' => $data['fecha']];
 
 		$datamail['nombremascota'] = $r->result->nombremascota;
 		$datamail['nombre'] = $r->result->nombre;
 		$datamail['apellido'] = $r->result->apellido;
 
-		if( empty($data['ubicacion']) ){
+		if( !empty($data['latitud']) && !empty($data['longitud']) ){
 
-			$datamail['longitud'] = $data['ubicacion']['longitud'];
-			$datamail['latitud'] = $data['ubicacion']['latitud'];
+			$datamail['longitud'] = $data['longitud'];
+			$datamail['latitud'] = $data['latitud'];
+			$datamail['latitud'] = $data['enlace'];
+
+			$datamail['direccion'] = ($data['direccion']) "<p>Y la posición aproximada es "$data['direccion']"</p>" : "";
 
 			$body = $mail->render('placa-escaneada-v2.ml', $datamail);
 

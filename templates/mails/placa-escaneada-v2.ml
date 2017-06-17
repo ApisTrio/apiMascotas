@@ -68,9 +68,9 @@
 			<p>Hola {!nombre!} {!apellido!},</p>
 			<p>Te contactamos desde DINBEAT para informarte de que alguien ha accedido a los datos de la placa identificativa DinbeatQR de {!nombremascota!}.</p>
 			<br>
-			<p>El acceso ha tenido lugar el {!fecha!} a las {!hora!}.</p>
+			<p>El acceso ha tenido lugar el {!fecha!}.</p>
 			<br>
-			<p>Y la posición aproximada es {!direccion!}</p>
+			{!direccion!}
 			<br>
 			<p>Las coordenadas GPS obtenidas han sido</p>
 			<br>
