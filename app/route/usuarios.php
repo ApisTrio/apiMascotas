@@ -172,7 +172,6 @@ $app->group('/usuarios/', function () {
 
 				return $res->withStatus(200)
 					 	->withHeader('Content-type', 'application/json')
-					 	->getBody()
 					 	->withJson($r);
 
 			}
