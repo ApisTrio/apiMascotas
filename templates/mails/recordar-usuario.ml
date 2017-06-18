@@ -68,6 +68,10 @@
 			<p>Hola {!nombre!} {!apellido!},</p>
 			<p>¿Has olvidado tu usuario? No te preocupes, ¡aqui lo tienes <strong>{!usuario!}</strong>!</p>
 			<br>
+			<p style="text-align: center; ">
+				<a href="{!enlace!}" class="boton-verde">INICIAR SESION</a>
+			</p>
+			<br>
 			<p>Si tienes alguna duda ¡Te ayudamos! Contacta con el servicio de atención al cliente qr@dinbeat.com y te contestaremos lo antes posible. <br> ¡Gracias por confiar en DinbeatQR!</p>
 		</div>
 		<div class="block text-left padding" style="margin: 70px 0;">

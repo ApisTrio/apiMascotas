@@ -3,8 +3,10 @@ use App\Model\Usuario;
 use App\Model\Dueno;
 use App\Model\Mascota;
 use App\Model\Vacuna;
+use App\Model\Placa;
 
 use App\Lib\Mail;
+use App\Lib\Token;
 
 
 $app->group('/mail/', function () {
@@ -23,7 +25,7 @@ $app->group('/mail/', function () {
 
 		$body = $mail->render('confirmacion-cuenta.ml', $datamail);
 
-		$rm = $mail->send("Dinbeat - confirmar cuenta", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $datamail['emailU']]);
+		$rm = $mail->send("Dinbeat - Confirmar cuenta", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $datamail['emailU']]);
 
 		if($rm){
 
@@ -43,12 +45,20 @@ $app->group('/mail/', function () {
 			
 		$mail = new Mail;
 
-		$datamail = $req->getParsedBody();
+		$data = $req->getParsedBody();
 
-		$body = $mail->render('confirmacion-cuenta.ml', $datamail);
+		$usuario = (new Usuario)->check('email', $data['email'])->result;
+		$dueno = (new Dueno)->get($usuario->duenos_idDueno)->result;
+
+		$token_data = ['id' => $data['id']];
+		$token = Token::generar($token_data);
+
+		$datamail = ['nombre'=> $dueno->nombre, 'apellido' => $dueno->apellido,'enlace' => 'http://localhost/appMascotas/cambiar-contrasena/'.$token];
+
+		$body = $mail->render('cambiar-contrasena.ml', $datamail);
 
 
-		if($r = $mail->send("Dinbeat - confirmar cuenta", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $datamail['emailU']])){
+		if($r = $mail->send("Dinbeat - Cambiar contraseña", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $datamail['emailU']])){
 
 			return $res->withStatus(200)
 			 	->withHeader('Content-type', 'application/json')
@@ -68,10 +78,17 @@ $app->group('/mail/', function () {
 
 		$data = $req->getParsedBody();
 
-		$body = $mail->render('confirmacion-cuenta.ml', $datamail);
+		$usuario = (new Usuario)->get($data['id'])->result;
+		$dueno = (new Dueno)->get($usuario->duenos_idDueno)->result;
 
+		$token_data = ['id' => $data['id'], 'exp' => strtotime("+1 day")];
+		$token = Token::generar($token_data);
 
-		if($r = $mail->send("Dinbeat - confirmar cuenta", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $datamail['emailU']])){
+		$datamail = ['nombre'=> $dueno->nombre, 'apellido' => $dueno->apellido,'enlace' => 'http://localhost/appMascotas/eliminar-cuenta/'.$token];
+
+		$body = $mail->render('cuenta-eliminada.ml', $datamail);
+
+		if($r = $mail->send("Dinbeat - Cuenta eliminada", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $usuario->emailU])){
 
 			return $res->withStatus(200)
 			 	->withHeader('Content-type', 'application/json')
@@ -115,7 +132,7 @@ $app->group('/mail/', function () {
 		}
 
 
-		if($r = $mail->send("Dinbeat - placa escaneada", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $r->result->emailU])){
+		if($r = $mail->send("Dinbeat - Placa escaneada", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $r->result->emailU])){
 
 			return $res->withStatus(200)
 			 	->withHeader('Content-type', 'application/json')
@@ -143,7 +160,7 @@ $app->group('/mail/', function () {
 		$body = $mail->render('alerta-activada.ml', $datamail);
 
 
-		if($r = $mail->send("Dinbeat - confirmar cuenta", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $datamail['emailU']])){
+		if($r = $mail->send("Dinbeat - Alerta activada", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $datamail['emailU']])){
 
 			return $res->withStatus(200)
 			 	->withHeader('Content-type', 'application/json')
@@ -170,7 +187,7 @@ $app->group('/mail/', function () {
 		$body = $mail->render('alerta-desactivada.ml', $datamail);
 
 
-		if($r = $mail->send("Dinbeat - confirmar cuenta", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $datamail['emailU']])){
+		if($r = $mail->send("Dinbeat - Alerta desactivada", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $datamail['emailU']])){
 
 			return $res->withStatus(200)
 			 	->withHeader('Content-type', 'application/json')
@@ -197,7 +214,7 @@ $app->group('/mail/', function () {
 		$body = $mail->render('baja-mascota.ml', $datamail);
 
 
-		if($r = $mail->send("Dinbeat - baja a mascota", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $datamail['emailU']])){
+		if($r = $mail->send("Dinbeat - Baja a mascota", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $datamail['emailU']])){
 
 			return $res->withStatus(200)
 			 	->withHeader('Content-type', 'application/json')
@@ -215,12 +232,16 @@ $app->group('/mail/', function () {
 			
 		$mail = new Mail;
 
-		$datamail = $req->getParsedBody();
+		$data = $req->getParsedBody();
 
-		$body = $mail->render('confirmacion-cuenta.ml', $datamail);
+		$r = (new Placa)->placaAsignadaDatos($data['id']);
+
+		$datamail = (array) $r->result;
+
+		$body = $mail->render('ficha-agregada.ml', $datamail);
 
 
-		if($r = $mail->send("Dinbeat - confirmar cuenta", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $datamail['emailU']])){
+		if($r = $mail->send("Dinbeat - Placa registrada", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $datamail['emailU']])){
 
 			return $res->withStatus(200)
 			 	->withHeader('Content-type', 'application/json')
@@ -246,7 +267,7 @@ $app->group('/mail/', function () {
 
 		$body = $mail->render('nueva-mascota.ml', $datamail);
 
-		if($r = $mail->send("Dinbeat - nueva mascota", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $datamail['emailU']])){
+		if($r = $mail->send("Dinbeat - Nueva mascota", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $datamail['emailU']])){
 
 			return $res->withStatus(200)
 			 	->withHeader('Content-type', 'application/json')
@@ -264,12 +285,16 @@ $app->group('/mail/', function () {
 			
 		$mail = new Mail;
 
-		$datamail = $req->getParsedBody();
+		$data = $req->getParsedBody();
 
-		$body = $mail->render('confirmacion-cuenta.ml', $datamail);
+		$usuario = (array) (new Usuario)->check('email', $data['email'])->result;
+		$dueno = (array) (new Dueno)->get($usuario->duenos_idDueno)->result;
 
+		$datamail = ['nombre' => $dueno->nombre, 'apellido' => $dueno->apellido, 'usuario' => $usuario->usuario, 'enlace' => 'http://localhost/appMascotas/login']
 
-		if($r = $mail->send("Dinbeat - confirmar cuenta", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $datamail['emailU']])){
+		$body = $mail->render('recordar-usuario.ml', $datamail);
+
+		if($r = $mail->send("Dinbeat - Recordar usuario", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $usuario->emailU])){
 
 			return $res->withStatus(200)
 			 	->withHeader('Content-type', 'application/json')
@@ -283,7 +308,7 @@ $app->group('/mail/', function () {
 	
 	});
 
-	$this->post('recordatorio-vacunas', function ($req, $res, $args) {
+	$this->get('recordatorio-vacunas', function ($req, $res, $args) {
 			
         $um = new Vacuna();
         

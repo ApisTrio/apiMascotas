@@ -42,7 +42,7 @@ class Dueno
         {
             $result = [];
 
-            $stm = $this->db->prepare("SELECT duenos.nombre, duenos.apellido, duenos.telefono, duenos.email, duenos.nacimiento, duenos.direccion, duenos.pais, duenos.provincia, duenos.ciudad, duenos.codigo_postal, duenos.sexo
+            $stm = $this->db->prepare("SELECT duenos.nombre, duenos.apellido, duenos.telefono, duenos.email, DATE_FORMAT(duenos.nacimiento, %d/%m/%Y) AS nacimiento, duenos.direccion, duenos.pais, duenos.provincia, duenos.ciudad, duenos.codigo_postal, duenos.sexo
                 FROM duenos
                 INNER JOIN duenos_has_mascotas on duenos_idDueno = idDueno
                 INNER JOIN mascotas on duenos_has_mascotas.mascotas_idMascota = idMascota

@@ -350,4 +350,38 @@ class Placa
             return $this->response;
         }
     }
+
+    public function placaAsignadaDatos($id)
+    {
+        try
+        {
+            $result = array();
+
+            $stm = $this->db->prepare("SELECT codigo, mascotas.nombre AS nombremascota,
+            duenos.nombre, duenos.apellido, emailU 
+            FROM placas
+            INNER JOIN mascotas_has_placas on mascotas_has_placas.placas_idPlaca = placas.idPlaca 
+            INNER JOIN mascotas on mascotas_has_placas.mascotas_idMascota = mascotas.idMascota
+            INNER JOIN duenos_has_mascotas on duenos_has_mascotas.mascotas_idMascota = mascotas.idMascota
+            INNER JOIN duenos ON duenos_has_mascotas.duenos_idDueno = duenos.idDueno 
+            INNER JOIN usuarios ON duenos.idDueno = usuarios.duenos_idDueno 
+            WHERE idPlaca = ?");
+
+            $stm->execute(array($id));
+            
+            $this->response->result = $stm->fetch();
+            
+            if($this->response->result)
+                $this->response->setResponse(true);
+
+            else
+                $this->response->setResponse(false);
+            return $this->response;
+        }
+        catch(Exception $e)
+        {
+            $this->response->setResponse(false, $e->getMessage());
+            return $this->response;
+        }
+    }
 }

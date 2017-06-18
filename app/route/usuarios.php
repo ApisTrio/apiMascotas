@@ -155,16 +155,18 @@ $app->group('/usuarios/', function () {
 
 	});
 	
-	$this->get('borrar/{id}', function ($req, $res, $args) {
+	$this->get('borrar/{token}', function ($req, $res, $args) {
 
-		$decode = Token::verificar(explode(' ', $req->getHeader('Authorization')[0])[1]);
+		$decode = Token::verificar($args['token']);
 		$data = (array) $decode['data'];
 		
-		if($data['is_admin'] || $data['id' == $args['id']]){
+		$horas = intval( ($data['exp'] - strtotime('now')) /60/60 );
+
+		if($horas > 0){
 			
 			$model = new Usuario();
 			
-			$r = $model->delete($args['id']);
+			$r = $model->softDelete($args['id']);
 
 			if($r->response){
 
@@ -175,29 +177,17 @@ $app->group('/usuarios/', function () {
 
 			}
 
-			return $res->withStatus(401)
+			return $res->withStatus(400)
 					->withHeader("Content-Type", "application/json")
-					->withJson($data);
+					->withJson($r);
 				
 		}
 
-		return $res->withStatus(401)
+		return $res->withStatus(400)
 				->withHeader("Content-Type", "application/json")
-				->withJson($data);
+				->withJson(['response'=> false, 'result'=> 'Han pasado mas de 24 horas']);
 
-	})->add(new \Slim\Middleware\JwtAuthentication([
-			"path" => "/",
-			"secret" => '$&NFJU·deruw23',
-			"passthrough" => "/token",
-			"algorithm" => ["HS256", "HS384"],
-			"error" => function ($request, $response, $arguments) {
-				$data["status"] = "error";
-				$data["message"] = $arguments["message"];
-				return $response->withStatus(401)
-						->withHeader("Content-Type", "application/json")
-						->withJson($data);
-			}
-		]));
+	});
 
 //MISC----------------------------------------------------------------------------
 

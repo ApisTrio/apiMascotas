@@ -66,7 +66,11 @@
 		</div>
 		<div class="block text-left padding">
 			<p>Hola {!nombre!} {!apellido!},</p>
-			<p>Has eliminado correctamente tu cuenta del sistema. Esperamos no haber hecho ninguna cosa que te haya hecho tomar esa decisión, si ha sido así te pedimos disculpas y te invitamos a escribirnos un e-mail a qr@dinbeat.com contándonos tus motivos. Todo el feedback que nos dais nos ayuda a mejorar el servicio. Si nos escribes te contactaremos lo antes posible.</p>
+			<p>Para confirmar la eliminación de tu cuenta pulsa el siguiente boton:</p>
+			<br>
+			<p style="text-align: center; ">
+				<a href="{!enlace!}" class="boton-verde">CONFIRMAR</a>
+			</p>
 			<br>
 			<p>¿Tienes alguna duda sobre el funcionamiento? Revisa nuestra sección de <a src="http://www.dinbeat.com/preguntas-frecuentes">Preguntas frecuentes</a>.</p>
 			<br>

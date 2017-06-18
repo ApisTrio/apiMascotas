@@ -31,7 +31,11 @@ $app->group('/duenos/', function () {
 
 		$model = new Dueno;
 
-		$r = $model->insertOrUpdate($req->getParseBody());
+		$duenos = $req->getParseBody();
+
+		foreach ($duenos as $d) {
+			$r = $model->insertOrUpdate($d);
+		}
 
 		return $res->withStatus(200)
 			->withHeader('Content-type', 'application/json')

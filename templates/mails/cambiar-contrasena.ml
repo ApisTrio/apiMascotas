@@ -69,7 +69,7 @@
 			<p>¿Has olvidado tu contraseña? No te preocupes, ¡aqui tienes una nueva  <strong>{!pass!}</strong>! Asegurate de cambiarla una vez entres a tu cuenta:</p>
 			<br>
 			<p style="text-align: center; ">
-				<a href="#" class="boton-verde">INICIAR SESION</a>
+				<a href="{!enlace!}" class="boton-verde">INICIAR SESION</a>
 			</p>
 			<br>
 			<p>Si tienes alguna duda ¡Te ayudamos! Contacta con el servicio de atención al cliente qr@dinbeat.com y te contestaremos lo antes posible. <br> ¡Gracias por confiar en DinbeatQR!</p>
