@@ -103,7 +103,7 @@ $app->group('/mail/', function () {
 
 			$datamail['longitud'] = $data['longitud'];
 			$datamail['latitud'] = $data['latitud'];
-			$datamail['latitud'] = $data['enlace'];
+			$datamail['enlace'] = $data['enlace'];
 
 			$datamail['direccion'] = ($data['direccion']) ? "<p>Y la posición aproximada es ".$data['direccion']."</p>" : "";
 

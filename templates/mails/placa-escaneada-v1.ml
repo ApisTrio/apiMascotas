@@ -62,7 +62,7 @@
 			<!--<img src="">-->
 		</div>
 		<div class="block padding text-purple">
-			<p>Has agregado una placa nueva a la ficha de {!nombremascota!}</p>
+			<p>Alguien ha escaneado tu placa</p>
 		</div>
 		<div class="block text-left padding">
 			<p>Hola {!nombre!} {!apellido!},</p>
