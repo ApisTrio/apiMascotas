@@ -39,7 +39,7 @@
 		}
 		div.text-left{ text-align: justify; } 
 		div.text-left p{ color: #424242; font-size: 18px; font-weight: 300; }
-		div.padding { padding: 0 70px 0 70px; box-sizing: border-box; }
+		div.padding { padding: 0 30px 0 30px; box-sizing: border-box; }
 
 		div.footer{ background-color: #8084c0; }
 

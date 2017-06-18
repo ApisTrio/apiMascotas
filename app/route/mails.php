@@ -179,12 +179,16 @@ $app->group('/mail/', function () {
 			
 		$mail = new Mail;
 
-		$datamail = $req->getParsedBody();
+		$data = $req->getParsedBody();
 
-		$body = $mail->render('confirmacion-cuenta.ml', $datamail);
+		$r = (new Mascota)->nuevaMascotaDatos( $data['id'] );
+
+		$datamail = (array) $r->result->nombremascota;
+
+		$body = $mail->render('baja-mascota.ml', $datamail);
 
 
-		if($r = $mail->send("Dinbeat - confirmar cuenta", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $datamail['emailU']])){
+		if($r = $mail->send("Dinbeat - baja a mascota", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $datamail['emailU']])){
 
 			return $res->withStatus(200)
 			 	->withHeader('Content-type', 'application/json')
@@ -233,6 +237,10 @@ $app->group('/mail/', function () {
 
 		$body = $mail->render('nueva-mascota.ml', $datamail);
 
+
+		return $res->withStatus(200)
+			 	->withHeader('Content-type', 'application/json')
+			 	->withJson($datamail);
 
 		if($r = $mail->send("Dinbeat - nueva mascota", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $datamail['emailU']])){
 
