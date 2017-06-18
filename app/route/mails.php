@@ -237,11 +237,6 @@ $app->group('/mail/', function () {
 
 		$body = $mail->render('nueva-mascota.ml', $datamail);
 
-
-		return $res->withStatus(200)
-			 	->withHeader('Content-type', 'application/json')
-			 	->withJson($datamail);
-
 		if($r = $mail->send("Dinbeat - nueva mascota", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $datamail['emailU']])){
 
 			return $res->withStatus(200)
