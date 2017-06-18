@@ -133,9 +133,14 @@ $app->group('/mail/', function () {
 			
 		$mail = new Mail;
 
-		$datamail = $req->getParsedBody();
+		$data = $req->getParsedBody();
 
-		$body = $mail->render('confirmacion-cuenta.ml', $datamail);
+		$r = (new Mascota)->nuevaMascotaDatos( $data['id'] );
+
+		$datamail = (array) $r->result;
+		$datamail['enlace'] = 'http://localhost/appMascotas/perfil/desactivar-alerta';
+
+		$body = $mail->render('alerta-activada.ml', $datamail);
 
 
 		if($r = $mail->send("Dinbeat - confirmar cuenta", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $datamail['emailU']])){
@@ -156,9 +161,13 @@ $app->group('/mail/', function () {
 			
 		$mail = new Mail;
 
-		$datamail = $req->getParsedBody();
+		$data = $req->getParsedBody();
 
-		$body = $mail->render('confirmacion-cuenta.ml', $datamail);
+		$r = (new Mascota)->nuevaMascotaDatos( $data['id'] );
+
+		$datamail = (array) $r->result;
+
+		$body = $mail->render('alerta-desactivada.ml', $datamail);
 
 
 		if($r = $mail->send("Dinbeat - confirmar cuenta", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $datamail['emailU']])){
@@ -183,7 +192,7 @@ $app->group('/mail/', function () {
 
 		$r = (new Mascota)->nuevaMascotaDatos( $data['id'] );
 
-		$datamail = (array) $r->result->nombremascota;
+		$datamail = (array) $r->result;
 
 		$body = $mail->render('baja-mascota.ml', $datamail);
 

@@ -69,7 +69,7 @@
 			<p>Has activado la ALERTA DE MASCOTA PERDIDA de tu mascota {!nombremascota!}, esperamos que puedas recuperarla pronto. Recuerda que cuando alguien escanee la placa de {!nombremascota!} o acceda a sus datos desde cualquier dispositivo recibirás un e-mail del sistema. Una vez hayas recuperado a {!nombremascota!} recuerda desactivar la alerta, puedes hacerlo desde este botón:</p>
 			<br>
 			<p style="text-align: center; ">
-				<a href="#" class="boton-verde">DESACTIVAR ALERTA</a>
+				<a href="{!enlace!}" class="boton-verde">DESACTIVAR ALERTA</a>
 			</p>
 			<br>
 			<p>O desde su perfil de mascota en nuestra plataforma</p>
