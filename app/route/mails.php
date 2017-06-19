@@ -21,7 +21,7 @@ $app->group('/mail/', function () {
 		$r = (new Usuario)->confirmarCuentaDatos( $data['id'] );
 
 		$datamail = (array) $r->result;
-		$datamail['enlace'] = 'http://localhost/appMascotas/confirmar/'.$data['id'].'/'$datamail['token'];
+		$datamail['enlace'] = 'http://localhost/appMascotas/confirmar/'.$data['id'].'/'.$datamail['token'];
 
 		$body = $mail->render('confirmacion-cuenta.ml', $datamail);
 
