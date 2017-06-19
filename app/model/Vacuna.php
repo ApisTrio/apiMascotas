@@ -68,6 +68,8 @@ class Vacuna
     
     public function InsertOrUpdate($data)
     {
+        
+         $data = array_map( "null" , $data);
 		try 
 		{
             if(isset($data['idVacuna']))

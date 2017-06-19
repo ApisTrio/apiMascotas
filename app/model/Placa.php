@@ -45,6 +45,7 @@ class Placa
     
     public function Insert($codigo)
     {
+         $data = array_map( "null" , $data);
 		try 
 		{
 

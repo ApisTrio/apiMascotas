@@ -18,6 +18,8 @@ class Informacion
     
     public function Insert($data)
     {
+         $data = array_map( "null" , $data);
+         
 		try 
 		{
             if(isset($data['idInformacion']))
@@ -110,6 +112,7 @@ class Informacion
 
     public function InsertVacuna($data)
     {
+         $data = array_map( "null" , $data);
         try 
         {
             if(isset($data["idVamas"]))

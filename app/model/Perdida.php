@@ -189,6 +189,7 @@ class Perdida
     
     public function Insert($data)
     {
+         $data = array_map( "null" , $data);
 		try 
 		{
                 $sql = "INSERT INTO $this->table
