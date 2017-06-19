@@ -33,14 +33,34 @@ $app->group('/duenos/', function () {
 
 		$duenos = $req->getParseBody();
 
-		foreach ($duenos as $d) {
-			$r = $model->insertOrUpdate($d);
-		}
+		$r = $model->insertOrUpdate($d);
 
 		return $res->withStatus(200)
 			->withHeader('Content-type', 'application/json')
 			->withJson($r);
 
+	});
+
+	$this->post('borrar', function ($req, $res, $args) {
+			
+		$model = new Dueno();
+
+		$data = $req->getParseBody();
+		
+		$r = $model->softDelete($data['id']);
+
+		if($r->response){
+
+			return $res->withStatus(200)
+				 	->withHeader('Content-type', 'application/json')
+				 	->withJson($r);
+
+		}
+
+		return $res->withStatus(400)
+				->withHeader("Content-Type", "application/json")
+				->withJson($r);
+			
 	});
 
 

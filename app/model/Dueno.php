@@ -125,7 +125,7 @@ class Dueno
     {
 		try 
 		{
-			$query = $this->db->prepare("UPDATE $this->table SET borrado = NOW() WHERE idUsuario = ?");
+			$query = $this->db->prepare("UPDATE $this->table SET borrado = NOW() WHERE idDueno = ?");
             $query->execute([$id]);
             
 			$this->response->setResponse(true);
@@ -142,7 +142,7 @@ class Dueno
     {
         try 
         {
-            $query = $this->db->prepare("DELETE FROM $this->table WHERE idUsuario = ?");
+            $query = $this->db->prepare("DELETE FROM $this->table WHERE idDueno = ?");
             $query->execute([$id]);
             
             $this->response->setResponse(true);
