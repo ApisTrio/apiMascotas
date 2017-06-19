@@ -287,8 +287,8 @@ $app->group('/mail/', function () {
 
 		$data = $req->getParsedBody();
 
-		$usuario = (array) (new Usuario)->check('emailU', $data['emailU'])->result;
-		$dueno = (array) (new Dueno)->get($usuario->duenos_idDueno)->result;
+		$usuario = (new Usuario)->check('emailU', $data['emailU'])->result;
+		$dueno = (new Dueno)->get($usuario->duenos_idDueno)->result;
 
 		$datamail = ['nombre' => $dueno->nombre, 'apellido' => $dueno->apellido, 'usuario' => $usuario->usuario, 'enlace' => 'http://localhost/appMascotas/login'];
 
