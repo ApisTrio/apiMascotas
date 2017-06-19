@@ -83,8 +83,8 @@ class Informacion
         {
             $result = array();
 
-            $stm = $this->db->prepare("SELECT DATE_FORMAT(fecha_nacimiento,'%d/%m/%Y') as desparasitacion_i,
-            DATE_FORMAT(fecha_nacimiento,'%d/%m/%Y') as desparasitacion_e,
+            $stm = $this->db->prepare("SELECT DATE_FORMAT(desparasitacion_i,'%d/%m/%Y') as desparasitacion_i,
+            DATE_FORMAT(desparasitacion_e,'%d/%m/%Y') as desparasitacion_e,
             centro, veterinario, direccion_veterinario, telefono_veterinario, mascotas_idMascota FROM $this->table WHERE borrado IS NULL AND mascotas_idMascota = ?");
 
             $stm->execute(array($id));
