@@ -290,7 +290,7 @@ $app->group('/mail/', function () {
 		$usuario = (array) (new Usuario)->check('email', $data['email'])->result;
 		$dueno = (array) (new Dueno)->get($usuario->duenos_idDueno)->result;
 
-		$datamail = ['nombre' => $dueno->nombre, 'apellido' => $dueno->apellido, 'usuario' => $usuario->usuario, 'enlace' => 'http://localhost/appMascotas/login']
+		$datamail = ['nombre' => $dueno->nombre, 'apellido' => $dueno->apellido, 'usuario' => $usuario->usuario, 'enlace' => 'http://localhost/appMascotas/login'];
 
 		$body = $mail->render('recordar-usuario.ml', $datamail);
 

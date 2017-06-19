@@ -116,50 +116,18 @@ class Informacion
 
     ////////////////////////
 
-    public function InsertVacuna($data,$idMascota)
+    public function InsertVacuna($data)
     {
         try 
         {
-                $sql = "INSERT INTO vacunas_mascotas
-                            ( fecha,
-                            recordatorio,
-                            activo,
-                            vacunas_idVacuna,
-                            mascotas_idMascota
-                            )
-                            VALUES (STR_TO_DATE( ?, '%d/%m/%Y'),STR_TO_DATE( ?, '%d/%m/%Y'),?,?,?)";
-                
-            $this->db->prepare($sql)
-                     ->execute(array(
-                            $data['fecha'],
-                            $data['recordatorio'],
-                            $data['activo'],
-                            $data['vacunas_idVacuna'],
-                            $idMascota)); 
-                     
-              $this->response->idInsertado = $this->db->lastInsertId();
-            
-            $this->response->setResponse(true);
-            return $this->response;
-        }catch (Exception $e) 
-        {
-            $this->response->setResponse(false, $e->getMessage());
-        }
-
-    }
-
-    public function UpdateVacuna($data,$idMascota)
-    {
-        try 
-        {
-            if(isset($idMascota))
+            if(isset($data["idVamas"]))
             {
                 $sql = "UPDATE vacunas_mascotas SET 
                             fecha = STR_TO_DATE( ?, '%d/%m/%Y'),
                             recordatorio = STR_TO_DATE( ?, '%d/%m/%Y'),
                             activo = ?,
                             vacunas_idVacuna = ?                     
-                        WHERE mascotas_idMascota = ?";
+                        WHERE idVamas = ?";
                 
                 $this->db->prepare($sql)
                      ->execute(
@@ -168,10 +136,32 @@ class Informacion
                             $data['recordatorio'],
                             $data['activo'],
                             $data['vacunas_idVacuna'],
-                            $idMascota
+                            $data["idVamas"]
                         )
                     );
+               
             }
+            else{
+                $sql = "INSERT INTO vacunas_mascotas
+                            ( fecha,
+                            recordatorio,
+                            activo,
+                            vacunas_idVacuna,
+                            mascotas_idMascota
+                            )
+                            VALUES (STR_TO_DATE( ?, '%d/%m/%Y'),STR_TO_DATE( ?, '%d/%m/%Y'),?,?,?)";
+            
+                
+            $this->db->prepare($sql)
+                     ->execute(array(
+                            $data['fecha'],
+                            $data['recordatorio'],
+                            $data['activo'],
+                            $data['vacunas_idVacuna'],
+                            $data["idMascota"])); 
+
+            $this->response->idInsertado = $this->db->lastInsertId();
+            }         
             
             $this->response->setResponse(true);
             return $this->response;
@@ -179,7 +169,9 @@ class Informacion
         {
             $this->response->setResponse(false, $e->getMessage());
         }
+
     }
+
 
     public function VacunasMascota($id)
     {
@@ -187,7 +179,7 @@ class Informacion
         {
             $result = array();
 
-            $stm = $this->db->prepare("SELECT fecha, recordatorio as fecha_recordatorio,
+            $stm = $this->db->prepare("SELECT idVamas, DATE_FORMAT(fecha,'%d/%m/%Y') as fecha, DATE_FORMAT(recordatorio,'%d/%m/%Y') as fecha_recordatorio,
             activo as recordatorio_activo, vacuna FROM vacunas_mascotas
             INNER JOIN vacunas
             ON vacunas_idVacuna = idVacuna 
@@ -204,6 +196,26 @@ class Informacion
         {
             $this->response->setResponse(false, $e->getMessage());
             return $this->response;
+        }
+    }
+
+    public function Recordatorio($datos)
+    {
+        try 
+        {
+            $stm = $this->db
+                        ->prepare("UPDATE vacunas_mascotas SET 
+                            activo = ?
+                        WHERE idVamas = ?");                     
+
+            $stm->execute(array($datos['activo'],$datos['idVamas']));
+            
+            $this->response->setResponse(true);
+             $this->response->result = false;
+            return $this->response;
+        } catch (Exception $e) 
+        {
+            $this->response->setResponse(false, $e->getMessage());
         }
     }
 }

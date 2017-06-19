@@ -40,9 +40,6 @@ $app->group('/informacion/', function () {
     $this->post('registro', function ($req, $res) {
         $um = new Informacion();
         $datos = $req->getParsedBody();
-        foreach ($datos["vacunas"] as $vacuna) {
-          $um->InsertVacuna($vacuna,$datos["idMascota"]);
-        }   
 
         return $res
            ->withHeader('Content-type', 'application/json')
@@ -57,12 +54,7 @@ $app->group('/informacion/', function () {
     });
 
     $this->post('modificar', function ($req, $res) {
-        $um = new Informacion();
-
-        $datos = $req->getParsedBody();
-        foreach ($datos["vacunas"] as $vacuna) {
-          $um->UpdateVacuna($vacuna,$datos["idMascota"]);
-        }  
+        $um = new Informacion(); 
         
         return $res
            ->withHeader('Content-type', 'application/json')
@@ -70,6 +62,37 @@ $app->group('/informacion/', function () {
            ->write(
             json_encode(
                 $um->Update(
+                    $req->getParsedBody()
+                )
+            )
+        );
+    });
+
+    $this->post('registro-vacuna', function ($req, $res) {
+    $um = new Informacion();
+    $datos = $req->getParsedBody();
+
+    return $res
+       ->withHeader('Content-type', 'application/json')
+       ->getBody()
+       ->write(
+        json_encode(
+            $um->InsertVacuna(
+                $req->getParsedBody()
+            )
+        )
+    );
+});
+
+        $this->post('recordatorio-vacuna', function ($req, $res) {
+        $um = new Informacion(); 
+        
+        return $res
+           ->withHeader('Content-type', 'application/json')
+           ->getBody()
+           ->write(
+            json_encode(
+                $um->Recordatorio(
                     $req->getParsedBody()
                 )
             )
