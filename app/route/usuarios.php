@@ -168,7 +168,7 @@ $app->group('/usuarios/', function () {
 			
 			$model = new Usuario();
 			
-			$r = $model->softDelete($args['id']);
+			$r = $model->softDelete($data['id']);
 
 			if($r->response){
 
