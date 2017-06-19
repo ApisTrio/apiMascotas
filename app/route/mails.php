@@ -47,7 +47,7 @@ $app->group('/mail/', function () {
 
 		$data = $req->getParsedBody();
 
-		$usuario = (new Usuario)->check('email', $data['email'])->result;
+		$usuario = (new Usuario)->check('emailU', $data['emailU'])->result;
 		$dueno = (new Dueno)->get($usuario->duenos_idDueno)->result;
 
 		$token_data = ['id' => $data['id']];
@@ -58,7 +58,7 @@ $app->group('/mail/', function () {
 		$body = $mail->render('cambiar-contrasena.ml', $datamail);
 
 
-		if($r = $mail->send("Dinbeat - Cambiar contraseña", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $datamail['emailU']])){
+		if($r = $mail->send("Dinbeat - Cambiar contraseña", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $usuario->emailU])){
 
 			return $res->withStatus(200)
 			 	->withHeader('Content-type', 'application/json')

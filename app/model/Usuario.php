@@ -189,7 +189,7 @@ class Usuario
         {
             $result = array();
 
-            $query = $this->db->prepare("SELECT idUsuario, usuario, borrado, creado, actualizado, duenos_idDueno FROM $this->table WHERE $field = ? AND borrado IS NULL LIMIT 1");
+            $query = $this->db->prepare("SELECT idUsuario, emailU, usuario, borrado, creado, actualizado, duenos_idDueno FROM $this->table WHERE $field = ? AND borrado IS NULL LIMIT 1");
             $query->execute([$value]);
 
             $this->response->setResponse(true);
