@@ -50,7 +50,7 @@ $app->group('/mail/', function () {
 		$usuario = (new Usuario)->check('emailU', $data['emailU'])->result;
 		$dueno = (new Dueno)->get($usuario->duenos_idDueno)->result;
 
-		$token_data = ['id' => $data['id']];
+		$token_data = ['id' => $usuario->idUsuario];
 		$token = Token::generar($token_data);
 
 		$datamail = ['nombre'=> $dueno->nombre, 'apellido' => $dueno->apellido,'enlace' => 'http://localhost/appMascotas/cambiar-contrasena/'.$token];

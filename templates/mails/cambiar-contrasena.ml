@@ -62,14 +62,14 @@
 			<!--<img src="">-->
 		</div>
 		<div class="block padding text-purple">
-			<p>HA REGISTRADO UNA NUEVA MASCOTA</p>
+			<p>Has olvidado tu contraseña</p>
 		</div>
 		<div class="block text-left padding">
 			<p>Hola {!nombre!} {!apellido!},</p>
-			<p>¿Has olvidado tu contraseña? No te preocupes, ¡aqui tienes una nueva  <strong>{!pass!}</strong>! Asegurate de cambiarla una vez entres a tu cuenta:</p>
+			<p>¿Has olvidado tu contraseña? No te preocupes, ¡te ayudamos a recuperarla! Pulsa el botón o pega el enlace de abajo en tu navegador para configurar una nueva:</p>
 			<br>
 			<p style="text-align: center; ">
-				<a href="{!enlace!}" class="boton-verde">INICIAR SESION</a>
+				<a href="{!enlace!}" class="boton-verde">RECUPERAR MI CONTRASEÑA</a>
 			</p>
 			<br>
 			<p>Si tienes alguna duda ¡Te ayudamos! Contacta con el servicio de atención al cliente qr@dinbeat.com y te contestaremos lo antes posible. <br> ¡Gracias por confiar en DinbeatQR!</p>
