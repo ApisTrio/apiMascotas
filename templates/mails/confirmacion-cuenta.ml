@@ -62,7 +62,7 @@
 			<!--<img src="">-->
 		</div>
 		<div class="block padding text-purple">
-			<p>HA REGISTRADO UNA NUEVA MASCOTA</p>
+			<p>Activa tu cuenta</p>
 		</div>
 		<div class="block text-left padding">
 			<p>Hola {!nombre!} {!apellido!},</p>
