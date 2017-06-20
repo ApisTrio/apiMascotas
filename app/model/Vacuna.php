@@ -144,7 +144,7 @@ class Vacuna
     {
         try 
         {
-            $stm = $this->db->prepare("SELECT vacunas.vacuna, vacunas_mascotas.fecha, DATE_FORMAT(vacunas_mascotas.recordatorio,'%d-%m-%Y') as recordatorio, vacunas_mascotas.activo, mascotas.nombre AS nombremascota, duenos.nombre, duenos.apellido, usuarios.emailU
+            $stm = $this->db->prepare("SELECT vacunas.vacuna, vacunas_mascotas.fecha, DATE_FORMAT(vacunas_mascotas.recordatorio,'%d/%m/%Y') as recordatorio, vacunas_mascotas.activo, mascotas.nombre AS nombremascota, duenos.nombre, duenos.apellido, usuarios.emailU
                     FROM vacunas_mascotas 
                     INNER JOIN vacunas ON vacunas.idVacuna = vacunas_mascotas.vacunas_idVacuna
                     INNER JOIN mascotas ON mascotas.idMascota = vacunas_mascotas.mascotas_idMascota

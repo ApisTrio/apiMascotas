@@ -315,12 +315,16 @@ $app->group('/mail/', function () {
         $vacunas = $um->notificables();
 
         foreach ($vacunas->result as $v) {
+
+        	if ($v->recordatorio == date('d/m/Y')) {
+        		$v->recordatorio = 'hoy';
+        	}
           
-          $mail = new Mail;
+         	$mail = new Mail;
 
-          $mail->render('recordatorio-vacuna.ml', $v);
+          	$mail->render('recordatorio-vacuna.ml', $v);
 
-          $mail->send("Dinbeat - Has olvidado tu contraseña?", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $v->emailU]);
+          	$mail->send("Dinbeat - Has olvidado tu contraseña?", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $v->emailU]);
 
         }
 
