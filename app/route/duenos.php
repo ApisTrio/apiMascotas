@@ -33,7 +33,7 @@ $app->group('/duenos/', function () {
 
 		$duenos = $req->getParseDBody();
 
-		$r = $model->insertOrUpdate($d);
+		$r = $model->insertOrUpdate($duenos);
 
 		return $res->withStatus(200)
 			->withHeader('Content-type', 'application/json')
