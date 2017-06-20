@@ -31,7 +31,7 @@ $app->group('/duenos/', function () {
 
 		$model = new Dueno;
 
-		$duenos = $req->getParseBody();
+		$duenos = $req->getParseDBody();
 
 		$r = $model->insertOrUpdate($d);
 
