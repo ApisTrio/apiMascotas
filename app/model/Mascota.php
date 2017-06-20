@@ -152,7 +152,6 @@ class Mascota
             {
                 $sql = "UPDATE $this->table SET 
                             nombre = ?,
-                            foto = ?,
                             genero = ?,
                             peso = ?,
                             comentarios = ?,
@@ -165,7 +164,6 @@ class Mascota
                      ->execute(
                         array(
                             $data['nombre'],
-                            $data['foto'],
                             $data['genero'],
                             $data['peso'],
                             $data['comentarios'],
