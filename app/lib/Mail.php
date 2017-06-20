@@ -42,6 +42,22 @@ class Mail
 		return $result;
 	}
 
+
+	public function sendMail($subject = "", $to)
+	{
+
+		$headers = "MIME-Version: 1.0\r\n"; 
+		$headers .= "Content-type: text/html; charset=iso-8859-1\r\n"; 
+		//dirección del remitente 
+		$headers .= "From: Dinbeat <qr@dinbeat.com>\r\n ";
+		//Enviamos el mensaje a tu_dirección_email
+		foreach($to as $t){
+			$bool = mail($t,$subject,$this->body,$headers);
+		}
+		
+		return $bool;
+	}
+
 	public function render($tpl = "", $data = [])
 	{
 

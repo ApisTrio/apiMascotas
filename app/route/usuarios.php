@@ -268,24 +268,19 @@ $app->group('/usuarios/', function () {
 			
 		$model = new Usuario();
 
-		$data = $req->getParsedBody();
+		$datos = $req->getParsedBody();
+
+		$decode = Token::verificar($datos['token']);
+		$data = (array) $decode['data'];
+		$data['pass'] = $datos['pass'];
 
 		$r = $model->cambiarContrasena($data);
 
 		if($r->response){
 
-			$mail = new Mail;
-
-			$body = $mail->render('cambiar-contrasena.ml', $r->result);
-
-
-			if($mail->send("Dinbeat - Has olvidado tu contraseña?", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $data['emailU']])){
-
-				return $res->withStatus(200)
-				 	->withHeader('Content-type', 'application/json')
-				 	->withJson($r);
-
-			}
+			return $res->withStatus(200)
+			 	->withHeader('Content-type', 'application/json')
+			 	->withJson($r);
 
 		}
 
