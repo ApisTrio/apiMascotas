@@ -155,7 +155,7 @@ $app->group('/mail/', function () {
 		$r = (new Mascota)->nuevaMascotaDatos( $data['id'] );
 
 		$datamail = (array) $r->result;
-		$datamail['enlace'] = 'http://localhost/appMascotas/perfil/desactivar-alerta';
+		$datamail['enlace'] = 'http://localhost/appMascotas/perfil/desactivar-alerta?idMascota='.$data['id'];
 
 		$body = $mail->render('alerta-activada.ml', $datamail);
 
