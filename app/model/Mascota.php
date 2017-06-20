@@ -312,4 +312,35 @@ class Mascota
         }
     }
 
+    public function asignarFoto($id, $nombreimg)
+    {
+        try 
+        {
+            $query = $this->db->prepare("SELECT * FROM $this->table WHERE idMascota = ?");
+            $query->execute([$id]);
+            $datos = $query->fetch();
+
+            if($datos){
+
+                unlink('./public/images/mascotas/'.$datos->foto);
+
+                $query2 = $this->db->prepare("UPDATE $this->table SET foto = ? WHERE idMascota = ?");
+                $query2->execute([$nombreimg, $id]);
+
+                $this->response->setResponse(true);
+                $this->response->result = $datos;
+                return $this->response;
+
+            }
+            
+            $this->response->setResponse(false);
+            return $this->response;
+        } 
+        catch (Exception $e) 
+        {
+            $this->response->setResponse(false, $e->getMessage());
+            return $this->response;
+        }
+    }
+
 }

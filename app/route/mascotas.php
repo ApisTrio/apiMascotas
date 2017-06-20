@@ -140,4 +140,17 @@ $app->group('/mascotas/', function () {
            ->withJson( ["response" => true, "result" => false, "message" => "", "idInsertado" => null]);
     });
 
+    $this->post('asignar/foto', function ($req, $res, $args) {
+        
+        $um = new Mascota();
+
+        $data = $req->getParsedBody();
+
+        $r = $um->asignarFoto($data['id'], $data['nombreimg']);
+        
+        return $res
+           ->withHeader('Content-type', 'application/json')
+           ->withJson($r);
+    });
+
 });
