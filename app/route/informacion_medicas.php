@@ -53,20 +53,6 @@ $app->group('/informacion/', function () {
         );
     });
 
-    $this->post('modificar', function ($req, $res) {
-        $um = new Informacion(); 
-        
-        return $res
-           ->withHeader('Content-type', 'application/json')
-           ->getBody()
-           ->write(
-            json_encode(
-                $um->Update(
-                    $req->getParsedBody()
-                )
-            )
-        );
-    });
 
     $this->post('registro-vacuna', function ($req, $res) {
     $um = new Informacion();

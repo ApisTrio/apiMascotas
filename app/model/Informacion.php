@@ -20,6 +20,31 @@ class Informacion
     {
 		try 
 		{
+            if(isset($data['idInformacion']))
+            {
+                $sql = "UPDATE $this->table SET 
+                            desparasitacion_i = STR_TO_DATE( ?, '%d/%m/%Y'),
+                            desparasitacion_e = STR_TO_DATE( ?, '%d/%m/%Y'),
+                            centro = ?,
+                            veterinario = ?,
+                            direccion_veterinario = ?,
+                            telefono_veterinario = ?                     
+                        WHERE idInformacion = ?";
+                
+                $this->db->prepare($sql)
+                     ->execute(
+                        array(
+                            $data['desparasitacion_i'],
+                            $data['desparasitacion_e'],
+                            $data['centro'],
+                            $data['veterinario'],
+                            $data['direccion_veterinario'],
+                            $data['telefono_veterinario'],
+                            $data['idInformacion']
+                        )
+                    );
+            }
+            else{
                 $sql = "INSERT INTO $this->table
                             (desparasitacion_i,
                             desparasitacion_e,
@@ -29,6 +54,7 @@ class Informacion
                             telefono_veterinario,
                             mascotas_idMascota)
                             VALUES (STR_TO_DATE( ?, '%d/%m/%Y'),STR_TO_DATE( ?, '%d/%m/%Y'),?,?,?,?,?)";
+            
                 
             $this->db->prepare($sql)
                      ->execute(array(
@@ -41,50 +67,14 @@ class Informacion
                             $data['idMascota'])); 
               		 
               $this->response->idInsertado = $this->db->lastInsertId();
-            
+            }
+
 			$this->response->setResponse(true);
             return $this->response;
 		}catch (Exception $e) 
 		{
             $this->response->setResponse(false, $e->getMessage());
 		}
-    }
-
-    public function Update($data)
-    {
-        try 
-        {
-            if(isset($data['idMascota']))
-            {
-                $sql = "UPDATE $this->table SET 
-                            desparasitacion_i = STR_TO_DATE( ?, '%d/%m/%Y'),
-                            desparasitacion_e = STR_TO_DATE( ?, '%d/%m/%Y'),
-                            centro = ?,
-                            veterinario = ?,
-                            direccion_veterinario = ?,
-                            telefono_veterinario = ?                     
-                        WHERE mascotas_idMascota = ?";
-                
-                $this->db->prepare($sql)
-                     ->execute(
-                        array(
-                            $data['desparasitacion_i'],
-                            $data['desparasitacion_e'],
-                            $data['centro'],
-                            $data['veterinario'],
-                            $data['direccion_veterinario'],
-                            $data['telefono_veterinario'],
-                            $data['idMascota']
-                        )
-                    );
-            }
-            
-            $this->response->setResponse(true);
-            return $this->response;
-        }catch (Exception $e) 
-        {
-            $this->response->setResponse(false, $e->getMessage());
-        }
     }
 
     public function GetAll($id)
