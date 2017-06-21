@@ -169,7 +169,7 @@ class Mascota
                             $data['comentarios'],
                             $data['fecha_nacimiento'],
                             $data['chip'],
-                            $data['razas_idRaza'],
+                            $data['idRaza'],
                             $data['idMascota']
                         )
                     );
