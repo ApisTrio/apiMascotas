@@ -93,7 +93,7 @@ class Dueno
 		{
             if(isset($data['idDueno'])){
 
-                $sql = "UPDATE $this->table SET nombre = ?, apellido = ?, telefono = ?, email = ?, nacimiento = ?, direccion = ?, pais = ?, provincia = ?, ciudad = ?, codigo_postal = ?, sexo = ? WHERE idDueno = ?";
+                $sql = "UPDATE $this->table SET nombre = ?, apellido = ?, telefono = ?, email = ?, nacimiento = STR_TO_DATE( ?, '%d/%m/%Y'), direccion = ?, pais = ?, provincia = ?, ciudad = ?, codigo_postal = ?, sexo = ? WHERE idDueno = ?";
                 $query = $this->db->prepare($sql);
                 $values = [$data['nombre'], $data['apellido'], $data['telefono'], $data['email'], $data['nacimiento'], $data['direccion'], $data['pais'], $data['provincia'], $data['ciudad'], $data['codigo_postal'], $data['sexo'], $data['idDueno']];
                 $query->execute($values);

@@ -264,6 +264,25 @@ $app->group('/usuarios/', function () {
 
 	});
 
+
+	$this->post('modificar', function($req, $res, $args){
+
+		$model = new Dueno;
+
+		$duenos = $req->getParseDBody();
+
+		$r = $model->insertOrUpdate($duenos);
+
+		if( isset($duenos['idMascota']) ){
+			$rmd =  $model->hasMascota( $r->idInsertado, $duenos['idMascota'] );
+		}
+
+		return $res->withStatus(200)
+			->withHeader('Content-type', 'application/json')
+			->withJson($r);
+
+	});
+
 	$this->post('cambiar-contrasena', function ($req, $res, $args) {
 			
 		$model = new Usuario();
