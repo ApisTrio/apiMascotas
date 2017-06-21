@@ -155,7 +155,7 @@ class Mascota
                             genero = ?,
                             peso = ?,
                             comentarios = ?,
-                            fecha_nacimiento = ?,
+                            fecha_nacimiento = STR_TO_DATE( ?, '%d/%m/%Y'),
                             chip = ?,
                             razas_idRaza = ?
                         WHERE idMascota = ?";
