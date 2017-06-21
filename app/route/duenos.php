@@ -35,6 +35,10 @@ $app->group('/duenos/', function () {
 
 		$r = $model->insertOrUpdate($duenos);
 
+		if( isset($duenos['idMascota']) ){
+			$rmd =  $model->hasMascota( $r->idInsertado, $duenos['idMascota'] );
+		}
+
 		return $res->withStatus(200)
 			->withHeader('Content-type', 'application/json')
 			->withJson($r);
