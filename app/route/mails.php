@@ -58,17 +58,17 @@ $app->group('/mail/', function () {
 		$body = $mail->render('cambiar-contrasena.ml', $datamail);
 
 
-		if($r = $mail->sendMail("Dinbeat - Cambiar contraseña", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $usuario->emailU])){
+		if($rm = $mail->sendMail("Dinbeat - Cambiar contraseña", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $usuario->emailU])){
 
 			return $res->withStatus(200)
 			 	->withHeader('Content-type', 'application/json')
-			 	->withJson($r);
+			 	->withJson($rm);
 
 		}
 
 		return $res->withStatus(404)
 					->withHeader("Content-Type", "application/json")
-					->withJson($r);
+					->withJson($rm);
 	
 	});
 
@@ -88,17 +88,17 @@ $app->group('/mail/', function () {
 
 		$body = $mail->render('cuenta-eliminada.ml', $datamail);
 
-		if($r = $mail->sendMail("Dinbeat - Cuenta eliminada", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $usuario->emailU])){
+		if($rm = $mail->sendMail("Dinbeat - Cuenta eliminada", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $usuario->emailU])){
 
 			return $res->withStatus(200)
 			 	->withHeader('Content-type', 'application/json')
-			 	->withJson($r);
+			 	->withJson($rm);
 
 		}
 
 		return $res->withStatus(404)
 					->withHeader("Content-Type", "application/json")
-					->withJson($r);
+					->withJson($rm);
 	
 	});
 
@@ -132,17 +132,17 @@ $app->group('/mail/', function () {
 		}
 
 
-		if($r = $mail->sendMail("Dinbeat - Placa escaneada", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $r->result->emailU])){
+		if($rm = $mail->sendMail("Dinbeat - Placa escaneada", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $r->result->emailU])){
 
 			return $res->withStatus(200)
 			 	->withHeader('Content-type', 'application/json')
-			 	->withJson($r);
+			 	->withJson($rm);
 
 		}
 
 		return $res->withStatus(404)
 					->withHeader("Content-Type", "application/json")
-					->withJson($r);
+					->withJson($rm);
 	
 	});
 
@@ -160,17 +160,17 @@ $app->group('/mail/', function () {
 		$body = $mail->render('alerta-activada.ml', $datamail);
 
 
-		if($r = $mail->sendMail("Dinbeat - Alerta activada", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $datamail['emailU']])){
+		if($rm = $mail->sendMail("Dinbeat - Alerta activada", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $datamail['emailU']])){
 
 			return $res->withStatus(200)
 			 	->withHeader('Content-type', 'application/json')
-			 	->withJson($r);
+			 	->withJson($rm);
 
 		}
 
 		return $res->withStatus(404)
 					->withHeader("Content-Type", "application/json")
-					->withJson($r);
+					->withJson($rm);
 	
 	});
 
@@ -187,17 +187,17 @@ $app->group('/mail/', function () {
 		$body = $mail->render('alerta-desactivada.ml', $datamail);
 
 
-		if($r = $mail->sendMail("Dinbeat - Alerta desactivada", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $datamail['emailU']])){
+		if($rm = $mail->sendMail("Dinbeat - Alerta desactivada", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $datamail['emailU']])){
 
 			return $res->withStatus(200)
 			 	->withHeader('Content-type', 'application/json')
-			 	->withJson($r);
+			 	->withJson($rm);
 
 		}
 
 		return $res->withStatus(404)
 					->withHeader("Content-Type", "application/json")
-					->withJson($r);
+					->withJson($rm);
 	
 	});
 
@@ -214,17 +214,17 @@ $app->group('/mail/', function () {
 		$body = $mail->render('baja-mascota.ml', $datamail);
 
 
-		if($r = $mail->sendMail("Dinbeat - Baja a mascota", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $datamail['emailU']])){
+		if($rm = $mail->sendMail("Dinbeat - Baja a mascota", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $datamail['emailU']])){
 
 			return $res->withStatus(200)
 			 	->withHeader('Content-type', 'application/json')
-			 	->withJson($r);
+			 	->withJson($rm);
 
 		}
 
 		return $res->withStatus(404)
 					->withHeader("Content-Type", "application/json")
-					->withJson($r);
+					->withJson($rm);
 	
 	});
 	
@@ -241,17 +241,17 @@ $app->group('/mail/', function () {
 		$body = $mail->render('ficha-agregada.ml', $datamail);
 
 
-		if($r = $mail->sendMail("Dinbeat - Placa registrada", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $datamail['emailU']])){
+		if($rm = $mail->sendMail("Dinbeat - Placa registrada", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $datamail['emailU']])){
 
 			return $res->withStatus(200)
 			 	->withHeader('Content-type', 'application/json')
-			 	->withJson($r);
+			 	->withJson($rm);
 
 		}
 
 		return $res->withStatus(404)
 					->withHeader("Content-Type", "application/json")
-					->withJson($r);
+					->withJson($rm);
 	
 	});
 
@@ -267,17 +267,17 @@ $app->group('/mail/', function () {
 
 		$body = $mail->render('nueva-mascota.ml', $datamail);
 
-		if($r = $mail->sendMail("Dinbeat - Nueva mascota", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $datamail['emailU']])){
+		if($rm = $mail->sendMail("Dinbeat - Nueva mascota", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $datamail['emailU']])){
 
 			return $res->withStatus(200)
 			 	->withHeader('Content-type', 'application/json')
-			 	->withJson($r);
+			 	->withJson($rm);
 
 		}
 
 		return $res->withStatus(404)
 					->withHeader("Content-Type", "application/json")
-					->withJson($r);
+					->withJson($rm);
 	
 	});
 
@@ -294,17 +294,17 @@ $app->group('/mail/', function () {
 
 		$body = $mail->render('recordar-usuario.ml', $datamail);
 
-		if($r = $mail->sendMail("Dinbeat - Recordar usuario", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $usuario->emailU])){
+		if($rm = $mail->sendMail("Dinbeat - Recordar usuario", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $usuario->emailU])){
 
 			return $res->withStatus(200)
 			 	->withHeader('Content-type', 'application/json')
-			 	->withJson($r);
+			 	->withJson($rm);
 
 		}
 
 		return $res->withStatus(404)
 					->withHeader("Content-Type", "application/json")
-					->withJson($r);
+					->withJson($rm);
 	
 	});
 

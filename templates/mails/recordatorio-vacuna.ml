@@ -43,6 +43,10 @@
 
 		div.footer{ background-color: #8084c0; }
 
+		.social li{
+		    margin: 4px -12px 0;
+		}
+
 	</style>
 </head>
 <body>
@@ -58,8 +62,7 @@
 			</ul>
 		</div>
 		<div class="block">
-			<div style="width: 140px; height: 120px; background-color: #6c709c; color: white; margin: 60px auto;">I</div>
-			<img src="../../public/images/icons/recordatorio.png">
+			<img src="https://dinbeat.com/qr/api/public/images/icons/recordatorio.png">
 		</div>
 		<div class="block padding text-purple">
 			<p>Recordatrio</p>
@@ -91,10 +94,10 @@
 			<p style="color: #afb2b6; font-size: 15px;">Este mensaje de correo electrónico está dirigido exclusivamente al destinatario o destinatarios indicados en el mismo. La información en él contenida puede ser confidencial y/o privada por lo que está totalmente prohibida su difusión o reproducción. Si usted no es el destinatario de este mensaje, por favor devuélvalo inmediatamente a la dirección de envío y destrúyalo.</p>
 		</div>
 		<div class="block footer">
-			<ul class="list">
-				<li><a href="#"><img src="../../public/images/icons/fb.png"></a></li>
-				<li><a href="#"><img src="../../public/images/icons/tw.png"></a></li>
-				<li><a href="#"><img src="../../public/images/icons/g+.png"></a></li>
+			<ul class="list social">
+				<li><a href="#"><img src="https://dinbeat.com/qr/api/public/images/icons/fb.png"></a></li>
+				<li><a href="#"><img src="https://dinbeat.com/qr/api/public/images/icons/tw.png"></a></li>
+				<li><a href="#"><img src="https://dinbeat.com/qr/api/public/images/icons/g.png"></a></li>
 			</ul>	
 		</div>
 	</div>

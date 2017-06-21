@@ -39,3 +39,30 @@ $app->get('/public/images/mascotas/{nombre}', function ($req, $res, $args) {
 
 
 });
+
+$app->get('/public/images/icons/{nombre}', function ($req, $res, $args) {
+    
+	$data = $args['nombre'];    
+	$image = file_get_contents('./public/images/icons/'.$data,FILE_USE_INCLUDE_PATH);    
+      
+
+	$res->write($image);    
+
+	return $res->withHeader('Content-Type', FILEINFO_MIME_TYPE);
+
+
+});
+
+$app->get('/public/images/corbatas/{forma}/{nombre}', function ($req, $res, $args) {
+    
+	$nombre = $args['nombre'];    
+	$forma = $args['forma'];    
+	$image = file_get_contents('./public/images/corbatas/'.$forma.'/'.$data,FILE_USE_INCLUDE_PATH);    
+      
+
+	$res->write($image);    
+
+	return $res->withHeader('Content-Type', FILEINFO_MIME_TYPE);
+
+
+});
