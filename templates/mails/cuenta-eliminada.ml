@@ -58,8 +58,7 @@
 			</ul>
 		</div>
 		<div class="block">
-			<div style="width: 140px; height: 120px; background-color: #6c709c; color: white; margin: 60px auto;">I</div>
-			<!--<img src="">-->
+			<img src="../../public/images/icons/lost_dog2.png">
 		</div>
 		<div class="block padding text-purple">
 			<p>Has eliminado tu cuenta</p>

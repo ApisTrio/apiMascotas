@@ -320,8 +320,6 @@ class Mascota
 
             if($datos){
 
-                unlink('./public/images/mascotas/'.$datos->foto);
-
                 $query2 = $this->db->prepare("UPDATE $this->table SET foto = ? WHERE idMascota = ?");
                 $query2->execute([$nombreimg, $id]);
 
