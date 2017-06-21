@@ -93,9 +93,9 @@
 		</div>
 		<div class="block footer">
 			<ul class="list">
-				<li><a href="#">FB</a></li>
-				<li><a href="#">TW</a></li>
-				<li><a href="#">IG</a></li>
+				<li><a href="#"><img src="../../public/images/icons/fb.png"></a></li>
+				<li><a href="#"><img src="../../public/images/icons/tw.png"></a></li>
+				<li><a href="#"><img src="../../public/images/icons/g+.png"></a></li>
 			</ul>	
 		</div>
 	</div>
