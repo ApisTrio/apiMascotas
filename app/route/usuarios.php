@@ -118,7 +118,7 @@ $app->group('/usuarios/', function () {
 					$rmp =  $model_p->Asignar($data['placa']);
 					if($rmp->response){
 		      
-		                $$model_p->Desbloquear($data['placa']['placas_idPlaca']);
+		                $model_p->Desbloquear($data['placa']['placas_idPlaca']);
 
 						$rmd =  $model_d->hasMascota($rd->idInsertado, $rm->idInsertado);
 						if($rmd->response){

@@ -251,7 +251,7 @@ $movi);
                 
                 if($r->response){
                   $datos["idPlaca"] = $existe->result->idPlaca;
-                  $um->Desbloquear($datos);
+                  $um->Desbloquear($datos["idPlaca"]);
                 }
 
             }

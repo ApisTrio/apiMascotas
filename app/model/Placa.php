@@ -111,7 +111,7 @@ class Placa
                             bloqueado = NULL
                         WHERE idPlaca = ?");                     
 
-            $stm->execute(array($id['idPlaca']));
+            $stm->execute(array($id));
             
             $this->response->setResponse(true);
             return $this->response;
