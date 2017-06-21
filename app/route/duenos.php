@@ -49,7 +49,7 @@ $app->group('/duenos/', function () {
 			
 		$model = new Dueno();
 
-		$data = $req->getParseBody();
+		$data = $req->getParsedBody();
 		
 		$r = $model->softDelete($data['id']);
 
