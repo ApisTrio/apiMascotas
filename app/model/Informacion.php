@@ -175,7 +175,7 @@ class Informacion
             $result = array();
 
             $stm = $this->db->prepare("SELECT idVamas, DATE_FORMAT(fecha,'%d/%m/%Y') as fecha, DATE_FORMAT(recordatorio,'%d/%m/%Y') as fecha_recordatorio,
-            activo as recordatorio_activo, vacuna FROM vacunas_mascotas
+            activo as recordatorio_activo, idVacuna, vacuna FROM vacunas_mascotas
             INNER JOIN vacunas
             ON vacunas_idVacuna = idVacuna 
             WHERE vacunas_mascotas.borrado IS NULL AND mascotas_idMascota = ?");
