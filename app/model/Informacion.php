@@ -213,4 +213,21 @@ class Informacion
             $this->response->setResponse(false, $e->getMessage());
         }
     }
+
+    public function Delete($id)
+    {
+        try 
+        {
+            $stm = $this->db
+                        ->prepare("DELETE FROM vacunas_mascotas WHERE idVamas = $id");                    
+
+            $stm->execute();
+            
+            $this->response->setResponse(true);
+            return $this->response;
+        } catch (Exception $e) 
+        {
+            $this->response->setResponse(false, $e->getMessage());
+        }
+    }
 }

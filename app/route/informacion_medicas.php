@@ -70,7 +70,7 @@ $app->group('/informacion/', function () {
     );
 });
 
-        $this->post('recordatorio-vacuna', function ($req, $res) {
+      $this->post('recordatorio-vacuna', function ($req, $res) {
         $um = new Informacion(); 
         
         return $res
@@ -84,5 +84,21 @@ $app->group('/informacion/', function () {
             )
         );
     });
+
+    $this->get('borrar-vacuna/{idVamas}', function ($req, $res, $args) {
+    $um = new Informacion();
+
+    return $res
+       ->withHeader('Content-type', 'application/json')
+       ->getBody()
+       ->write(
+        json_encode(
+            $um->Delete(
+                $args["idVamas"]
+            )
+        )
+    );
+});
+
         
 });
