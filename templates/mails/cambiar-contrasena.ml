@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8">
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
 	<style type="text/css">
 		
@@ -51,15 +52,16 @@
 <body>
 	<div class="bodymail">
 		<div class="block">
-			<img src="http://dinbeat.com/wp-content/uploads/2016/11/Logo-dinbeat-web.jpg" width="100px">
+			<img src="https://dinbeat.com/qr/api/public/images/icons/logo_dinbeat.png" width="100px">
 		</div>
 		<div class="block">
 			<ul class="list">
-				<li><a href="#">Placas QR</a></li>
-				<li><a href="#">Tienda</a></li>
-				<li><a href="#">Blog</a></li>
+				<li><a href="https:/www.dinbeat.com/qr/">Placas QR</a></li>
+				<li><a href="https:/www.dinbeat.com/tienda/">Tienda</a></li>
+				<li><a href="https:/www.dinbeat.com/blog/">Blog</a></li>
 			</ul>
 		</div>
+		<hr>
 		<div class="block">
 			<img src="https://dinbeat.com/qr/api/public/images/icons/candado.png">
 		</div>
@@ -94,9 +96,9 @@
 		</div>
 		<div class="block footer">
 			<ul class="list social">
-				<li><a href="#"><img src="https://dinbeat.com/qr/api/public/images/icons/fb.png"></a></li>
-				<li><a href="#"><img src="https://dinbeat.com/qr/api/public/images/icons/tw.png"></a></li>
-				<li><a href="#"><img src="https://dinbeat.com/qr/api/public/images/icons/g.png"></a></li>
+				<li><a href="https://www.facebook.com/dinbeatofficial/" target="_blank"><img src="https://dinbeat.com/qr/api/public/images/icons/fb.png"></a></li>
+				<li><a href="https://twitter.com/DinbeatOfficial" target="_blank"><img src="https://dinbeat.com/qr/api/public/images/icons/tw.png"></a></li>
+				<li><a href="https://www.instagram.com/dinbeatofficial/" target="_blank"><img src="https://dinbeat.com/qr/api/public/images/icons/g.png"></a></li>
 			</ul>	
 		</div>
 	</div>
