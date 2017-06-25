@@ -25,7 +25,7 @@ $app->group('/mail/', function () {
 
 		$body = $mail->render('confirmacion-cuenta.ml', $datamail);
 
-		$rm = $mail->sendMail("Dinbeat - Confirmar cuenta", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $datamail['emailU']]);
+		$rm = $mail->sendMail("Dinbeat - Confirmar cuenta", [$datamail['emailU']]);
 
 		if($rm){
 
@@ -58,7 +58,7 @@ $app->group('/mail/', function () {
 		$body = $mail->render('cambiar-contrasena.ml', $datamail);
 
 
-		if($rm = $mail->sendMail("Dinbeat - Cambiar contraseña", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $usuario->emailU])){
+		if($rm = $mail->sendMail("Dinbeat - Cambiar contraseña", [$usuario->emailU])){
 
 			return $res->withStatus(200)
 			 	->withHeader('Content-type', 'application/json')
@@ -88,7 +88,7 @@ $app->group('/mail/', function () {
 
 		$body = $mail->render('cuenta-eliminada.ml', $datamail);
 
-		if($rm = $mail->sendMail("Dinbeat - Cuenta eliminada", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $usuario->emailU])){
+		if($rm = $mail->sendMail("Dinbeat - Cuenta eliminada", [$usuario->emailU])){
 
 			return $res->withStatus(200)
 			 	->withHeader('Content-type', 'application/json')
@@ -132,7 +132,7 @@ $app->group('/mail/', function () {
 		}
 
 
-		if($rm = $mail->sendMail("Dinbeat - Placa escaneada", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $r->result->emailU])){
+		if($rm = $mail->sendMail("Dinbeat - Placa escaneada", [$r->result->emailU])){
 
 			return $res->withStatus(200)
 			 	->withHeader('Content-type', 'application/json')
@@ -160,7 +160,7 @@ $app->group('/mail/', function () {
 		$body = $mail->render('alerta-activada.ml', $datamail);
 
 
-		if($rm = $mail->sendMail("Dinbeat - Alerta activada", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $datamail['emailU']])){
+		if($rm = $mail->sendMail("Dinbeat - Alerta activada", [$datamail['emailU']])){
 
 			return $res->withStatus(200)
 			 	->withHeader('Content-type', 'application/json')
@@ -187,7 +187,7 @@ $app->group('/mail/', function () {
 		$body = $mail->render('alerta-desactivada.ml', $datamail);
 
 
-		if($rm = $mail->sendMail("Dinbeat - Alerta desactivada", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $datamail['emailU']])){
+		if($rm = $mail->sendMail("Dinbeat - Alerta desactivada", [$datamail['emailU']])){
 
 			return $res->withStatus(200)
 			 	->withHeader('Content-type', 'application/json')
@@ -214,7 +214,7 @@ $app->group('/mail/', function () {
 		$body = $mail->render('baja-mascota.ml', $datamail);
 
 
-		if($rm = $mail->sendMail("Dinbeat - Baja a mascota", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $datamail['emailU']])){
+		if($rm = $mail->sendMail("Dinbeat - Baja a mascota", [$datamail['emailU']])){
 
 			return $res->withStatus(200)
 			 	->withHeader('Content-type', 'application/json')
@@ -241,7 +241,7 @@ $app->group('/mail/', function () {
 		$body = $mail->render('ficha-agregada.ml', $datamail);
 
 
-		if($rm = $mail->sendMail("Dinbeat - Placa registrada", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $datamail['emailU']])){
+		if($rm = $mail->sendMail("Dinbeat - Placa registrada", [$datamail['emailU']])){
 
 			return $res->withStatus(200)
 			 	->withHeader('Content-type', 'application/json')
@@ -267,7 +267,7 @@ $app->group('/mail/', function () {
 
 		$body = $mail->render('nueva-mascota.ml', $datamail);
 
-		if($rm = $mail->sendMail("Dinbeat - Nueva mascota", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $datamail['emailU']])){
+		if($rm = $mail->sendMail("Dinbeat - Nueva mascota", [$datamail['emailU']])){
 
 			return $res->withStatus(200)
 			 	->withHeader('Content-type', 'application/json')
@@ -294,7 +294,7 @@ $app->group('/mail/', function () {
 
 		$body = $mail->render('recordar-usuario.ml', $datamail);
 
-		if($rm = $mail->sendMail("Dinbeat - Recordar usuario", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $usuario->emailU])){
+		if($rm = $mail->sendMail("Dinbeat - Recordar usuario", [$usuario->emailU])){
 
 			return $res->withStatus(200)
 			 	->withHeader('Content-type', 'application/json')
@@ -324,7 +324,7 @@ $app->group('/mail/', function () {
 
           	$mail->render('recordatorio-vacuna.ml', $v);
 
-          	$mail->sendMail("Dinbeat - Has olvidado tu contraseña?", ["xarias13@gmail.com", "danieljtorres94@gmail.com", $v->emailU]);
+          	$mail->sendMail("Dinbeat - Has olvidado tu contraseña?", [$v->emailU]);
 
         }
 
