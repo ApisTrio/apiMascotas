@@ -22,36 +22,44 @@ class Usuario
 		{
 			$result = array();
 
-			$query = $this->db->prepare("SELECT idUsuario, pass, usuario, emailU, borrado, creado, actualizado, duenos_idDueno FROM $this->table WHERE usuario = ? AND activo = 1 LIMIT 1");
+			$query = $this->db->prepare("SELECT idUsuario, pass, usuario, emailU, borrado, creado, activo, actualizado, duenos_idDueno FROM $this->table WHERE usuario = ? LIMIT 1");
 
 			$query->execute([$data['usuario']]);
 
             $usuario = $query->fetch();
             
             if($usuario){
-             
-                if($usuario->borrado == NULL){
 
-                    if( password_verify($data['pass'], $usuario->pass ) ){
+                if ($usuario->activo) {
 
-                        $query2 = $this->db->prepare("SELECT * FROM duenos WHERE idDueno = ? LIMIT 1");
-                        $query2->execute([$usuario->duenos_idDueno]);
+                    if($usuario->borrado == NULL){
 
-                        $dueno = $query2->fetch();
+                        if( password_verify($data['pass'], $usuario->pass ) ){
 
-                        $this->response->setResponse(true);
-                        $this->response->result = ['usuario' => $usuario, 'dueno' => $dueno];
+                            $query2 = $this->db->prepare("SELECT * FROM duenos WHERE idDueno = ? LIMIT 1");
+                            $query2->execute([$usuario->duenos_idDueno]);
+
+                            $dueno = $query2->fetch();
+
+                            $this->response->setResponse(true);
+                            $this->response->result = ['usuario' => $usuario, 'dueno' => $dueno];
+                            return $this->response;
+
+                        }
+
+                        $this->response->setResponse(false, 'Clave invalida');
                         return $this->response;
-
+                    
                     }
+                    
+                    $this->response->setResponse(false, 'Usuario borrado');
+                    return $this->response; 
 
-                    $this->response->setResponse(false, 'Clave invalida');
-                    return $this->response;
-                
                 }
-                
-                $this->response->setResponse(false, 'Usuario borrado');
-                return $this->response;
+             
+                $this->response->setResponse(false, 'Usuario inactivo');
+                return $this->response; 
+
 
             }
 
