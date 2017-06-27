@@ -65,10 +65,10 @@
 		</div>
 		<hr>
 		<div class="block">
-			<img src="https://www.dinbeat.com/qr/api/public/images/icons/recordatorio.png">
+			<img src="https://www.dinbeat.com/qr/api/public/images/icons/escanea_qr.png">
 		</div>
 		<div class="block padding text-purple">
-			<p>Recordatrio</p>
+			<p>Han encontrado a tu mascota!</p>
 		</div>
 		<div class="block text-left padding">
 			<p>Hola {!nombre!} {!apellido!},</p>
