@@ -115,9 +115,9 @@ class Usuario
             if(isset($data['idUsuario'])){
 
                 $fields = "usuario, pass, emailU, token, duenos_idDueno";
-                $sql = "UPDATE $this->table SET usuario = ?, WHERE idUsuario = ? AND borrado IS NULL";
+                $sql = "UPDATE $this->table SET usuario = ? , emailU = ? WHERE idUsuario = ? AND borrado IS NULL";
                 $query = $this->db->prepare($sql);
-                $query->execute([$data['usuario'],$data['idUsuario']]);
+                $query->execute([$data['usuario'],$data['emailU']]);
 
             } else {
 

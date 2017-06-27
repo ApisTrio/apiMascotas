@@ -45,25 +45,26 @@
 		div.footer{ background-color: #8084c0; }
 
 		.social li{
-		    margin: 4px -12px 0;
+		    margin: 4px -12px 0px;
 		}
 	</style>
 </head>
 <body>
 	<div class="bodymail">
 		<div class="block">
-			<img src="https://dinbeat.com/qr/api/public/images/icons/logo_dinbeat.png" width="100px">
+			<a href="https://www.dinbeat.com/qr/" target="_blank">
+				<img src="https://www.dinbeat.com/qr/api/public/images/icons/logo.png" width="100px">
 		</div>
 		<div class="block">
 			<ul class="list">
-				<li><a href="https:/www.dinbeat.com/qr/">Placas QR</a></li>
-				<li><a href="https:/www.dinbeat.com/tienda/">Tienda</a></li>
-				<li><a href="https:/www.dinbeat.com/blog/">Blog</a></li>
+				<li><a target="_blank" href="https:/www.dinbeat.com/qr/">Placas QR</a></li>
+				<li><a target="_blank" href="https:/www.dinbeat.com/tienda/">Tienda</a></li>
+				<li><a target="_blank" href="https:/www.dinbeat.com/blog/">Blog</a></li>
 			</ul>
 		</div>
 		<hr>
 		<div class="block">
-			<img src="https://dinbeat.com/qr/api/public/images/icons/usuario.png">
+			<img src="https://www.dinbeat.com/qr/api/public/images/icons/usuario.png">
 		</div>
 		<div class="block padding text-purple">
 			<p>HA OLVIDADO SU USUARIO</p>
@@ -96,9 +97,9 @@
 		</div>
 		<div class="block footer">
 			<ul class="list social">
-				<li><a href="https://www.facebook.com/dinbeatofficial/" target="_blank"><img src="https://dinbeat.com/qr/api/public/images/icons/fb.png"></a></li>
-				<li><a href="https://twitter.com/DinbeatOfficial" target="_blank"><img src="https://dinbeat.com/qr/api/public/images/icons/tw.png"></a></li>
-				<li><a href="https://www.instagram.com/dinbeatofficial/" target="_blank"><img src="https://dinbeat.com/qr/api/public/images/icons/g.png"></a></li>
+				<li><a href="https://www.facebook.com/dinbeatofficial/" target="_blank"><img src="https://www.dinbeat.com/qr/api/public/images/icons/fb.png"></a></li>
+				<li><a href="https://twitter.com/DinbeatOfficial" target="_blank"><img src="https://www.dinbeat.com/qr/api/public/images/icons/tw.png"></a></li>
+				<li><a href="https://www.instagram.com/dinbeatofficial/" target="_blank"><img src="https://www.dinbeat.com/qr/api/public/images/icons/g.png"></a></li>
 			</ul>	
 		</div>
 	</div>

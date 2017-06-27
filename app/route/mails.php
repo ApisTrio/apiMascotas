@@ -21,7 +21,7 @@ $app->group('/mail/', function () {
 		$r = (new Usuario)->confirmarCuentaDatos( $data['id'] );
 
 		$datamail = (array) $r->result;
-		$datamail['enlace'] = 'http://localhost/appMascotas/confirmar/'.$data['id'].'/'.$datamail['token'];
+		$datamail['enlace'] = 'https://www.dinbeat.com/qr/confirmar/'.$data['id'].'/'.$datamail['token'];
 
 		$body = $mail->render('confirmacion-cuenta.ml', $datamail);
 
@@ -53,7 +53,7 @@ $app->group('/mail/', function () {
 		$token_data = ['id' => $usuario->idUsuario];
 		$token = Token::generar($token_data);
 
-		$datamail = ['nombre'=> $dueno->nombre, 'apellido' => $dueno->apellido,'enlace' => 'http://localhost/appMascotas/cambiar-contrasena/'.$token];
+		$datamail = ['nombre'=> $dueno->nombre, 'apellido' => $dueno->apellido,'enlace' => 'https://www.dinbeat.com/qr/cambiar-contrasena/'.$token];
 
 		$body = $mail->render('cambiar-contrasena.ml', $datamail);
 
@@ -84,7 +84,7 @@ $app->group('/mail/', function () {
 		$token_data = ['id' => $data['id'], 'exp' => strtotime("+1 day")];
 		$token = Token::generar($token_data);
 
-		$datamail = ['nombre'=> $dueno->nombre, 'apellido' => $dueno->apellido,'enlace' => 'http://localhost/appMascotas/eliminar-cuenta/'.$token];
+		$datamail = ['nombre'=> $dueno->nombre, 'apellido' => $dueno->apellido,'enlace' => 'https://www.dinbeat.com/qr/eliminar-cuenta/'.$token];
 
 		$body = $mail->render('cuenta-eliminada.ml', $datamail);
 
@@ -155,7 +155,7 @@ $app->group('/mail/', function () {
 		$r = (new Mascota)->nuevaMascotaDatos( $data['id'] );
 
 		$datamail = (array) $r->result;
-		$datamail['enlace'] = 'http://localhost/appMascotas/perfil/desactivar-alerta?idMascota='.$data['id'];
+		$datamail['enlace'] = 'https://www.dinbeat.com/qr/perfil/desactivar-alerta?idMascota='.$data['id'];
 
 		$body = $mail->render('alerta-activada.ml', $datamail);
 
@@ -290,7 +290,7 @@ $app->group('/mail/', function () {
 		$usuario = (new Usuario)->check('emailU', $data['emailU'])->result;
 		$dueno = (new Dueno)->get($usuario->duenos_idDueno)->result;
 
-		$datamail = ['nombre' => $dueno->nombre, 'apellido' => $dueno->apellido, 'usuario' => $usuario->usuario, 'enlace' => 'http://localhost/appMascotas/login'];
+		$datamail = ['nombre' => $dueno->nombre, 'apellido' => $dueno->apellido, 'usuario' => $usuario->usuario, 'enlace' => 'https://www.dinbeat.com/qr/login'];
 
 		$body = $mail->render('recordar-usuario.ml', $datamail);
 
@@ -333,6 +333,35 @@ $app->group('/mail/', function () {
            ->getBody()
            ->write(json_encode($vacunas->result));
 
+	});
+
+	$this->post('contacto', function ($req, $res, $args) {
+			
+		$mail = new Mail;
+
+		$data = $req->getParsedBody();
+
+		$r = (array) (new Mascota)->nuevaMascotaDatos( $data['id'] )->result;
+
+		$data['nombre'] =  $r['nombre'];
+		$data['apellido'] =  $r['apellido'];
+		$data['nombremascota'] =  $r['nombremascota'];
+
+		$body = $mail->render('formulario-contacto.ml', $data);
+
+
+		if($rm = $mail->sendMail("Dinbeat - Han encontrado tu mascota", [$r['emailU']])){
+
+			return $res->withStatus(200)
+			 	->withHeader('Content-type', 'application/json')
+			 	->withJson($rm);
+
+		}
+
+		return $res->withStatus(404)
+					->withHeader("Content-Type", "application/json")
+					->withJson($rm);
+	
 	});
 
 });

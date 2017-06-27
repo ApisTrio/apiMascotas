@@ -47,6 +47,7 @@
 		.social li{
 		    margin: 4px -12px 0px;
 		}
+
 	</style>
 </head>
 <body>
@@ -64,18 +65,24 @@
 		</div>
 		<hr>
 		<div class="block">
-			<img src="https://www.dinbeat.com/qr/api/public/images/icons/nueva_mascota.png">
+			<img src="https://www.dinbeat.com/qr/api/public/images/icons/recordatorio.png">
 		</div>
 		<div class="block padding text-purple">
-			<p>HAS REGISTRADO UNA MASCOTA</p>
+			<p>Recordatrio</p>
 		</div>
 		<div class="block text-left padding">
 			<p>Hola {!nombre!} {!apellido!},</p>
-			<p>Has registrado correctamente a tu mascota {!nombremascota!} en el sistema, ¡felicidades! Ahora solo tienes que colocarle una de nuestras placas para que esté protegida y podáis salir a pasear más tranquilos.</p>
 			<br>
-			<p>¿Tienes alguna duda sobre el funcionamiento? Revisa nuestra sección de <a src="http://www.dinbeat.com/preguntas-frecuentes">Preguntas frecuentes</a>.</p>
+			<p>Te contactamos desde DINBEAT para informarte de que {!nombreform!} ha encontrado a {!nombremascota!}</p>
 			<br>
-			<p>Si tienes alguna duda ¡Te ayudamos! Contacta con el servicio de atención al cliente qr@dinbeat.com y te contestaremos lo antes posible. <br> ¡Gracias por confiar en DinbeatQR!</p>
+			<p>Para que os pongáis en contacto, y puedas reunirte con tu mascota, por favor llámalo al {!telefonoform!} o escríbele a su correo electrónico {!emailform!}. Además de esto {!nombreform!} te ha escrito:</p>
+			<br>
+			<p>{!mensajeform!}</p>
+			<br>
+			<p>Esperamos que esta información te sea útil, recuerda desactivar la alerta de mascota perdida desde tu menú de usuario en <a href="https://www.dinbeat.com/qr">www.dinbeat.com/qr</a> cuando recuperes a {!nombremascota!}
+			</p>
+			<br>
+			<p>Un saludo y gracias por conﬁar en DinbeatQR</p>
 		</div>
 		<div class="block text-left padding" style="margin: 70px 0;">
 			<p>--
