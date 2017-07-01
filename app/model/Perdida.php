@@ -36,6 +36,7 @@ class Perdida
             AND placas.bloqueado IS NULL
             AND encontrado IS NULL 
             GROUP BY idMascota
+            ORDER BY idMascota DESC 
             LIMIT $limit OFFSET $offset");
 
 			$stm->execute();
@@ -122,6 +123,7 @@ class Perdida
             AND placas.bloqueado IS NULL
             AND encontrado IS NOT NULL 
             GROUP BY idMascota
+            ORDER BY idMascota DESC 
             LIMIT $limit OFFSET $offset");
 
             $stm->execute();
