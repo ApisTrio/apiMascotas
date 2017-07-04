@@ -47,7 +47,7 @@ class Mail
 	{
 
 		$headers = "MIME-Version: 1.0\r\n"; 
-		$headers .= "Content-type: text/html; charset=iso-8859-1\r\n"; 
+		$headers .= "Content-type: text/html; charset=UTF-8\r\n"; 
 		//dirección del remitente 
 		$headers .= "From: Dinbeat <qr@dinbeat.com>\r\n ";
 		//Enviamos el mensaje a tu_dirección_email
