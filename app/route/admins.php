@@ -27,7 +27,7 @@ $app->group('/admin/', function () {
 
 		return $res->withStatus(404)
 					->withHeader("Content-Type", "application/json")
-					->withJson($result);
+					->withJson($r);
 	
 	});
 
