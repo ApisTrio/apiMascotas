@@ -27,23 +27,32 @@ class Admin
 
             $usuario = $query->fetch();
 
-            if($usuario->borrado == NULL){
+            if ($usuario) {
 
-                if( password_verify($args['pass'], $usuario->pass ) ){
 
-                    $this->response->setResponse(true);
-                    $this->response->result = $usuario;
+                if($usuario->borrado == NULL){
+
+                    if( password_verify($args['pass'], $usuario->pass ) ){
+
+                        $this->response->setResponse(true);
+                        $this->response->result = $usuario;
+                        return $this->response;
+
+                    }
+
+                    $this->response->setResponse(false, 'Datos invalidos');
                     return $this->response;
 
                 }
 
-                $this->response->setResponse(false, 'Datos invalidos');
+                $this->response->setResponse(false, 'Su usuario no existe');
                 return $this->response;
 
             }
 
+      
             $this->response->setResponse(false, 'Su usuario no existe');
-            return $this->response;
+            return $this->response;  
 
             
         }
