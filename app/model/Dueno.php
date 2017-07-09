@@ -68,7 +68,7 @@ class Dueno
         {
             $result = array();
 
-            $query = $this->db->prepare("SELECT * FROM $this->table WHERE idDueno = ? AND borrado IS NULL LIMIT 1");
+            $query = $this->db->prepare("SELECT nombre, apellido, telefono, email, DATE_FORMAT(nacimiento, '%d/%m/%Y'), direccion, pais, provincia, ciudad, codigo_postal, sexo FROM $this->table WHERE idDueno = ? AND borrado IS NULL LIMIT 1");
             $query->execute([$id]);
 
             $this->response->setResponse(true);
