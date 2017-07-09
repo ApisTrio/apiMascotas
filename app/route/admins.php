@@ -40,15 +40,15 @@ $app->group('/admin/', function () {
 
 	});
 	
-	$this->post('registro', function ($req, $res) {
+
+	$this->get('todos-los-registros', function ($req, $res) {
 			
-		$model = new PruebaModel();
+		$model = new Admin();
 		
 		return $res->withStatus(200)
 			->withHeader('Content-type', 'application/json')
-			->getBody()
-			->withJson($model->insertOrUpdate($req->getParsedBody()));
+			->withJson($model->duenosMascotasPlacas());
 
 	});
-	
+
 });

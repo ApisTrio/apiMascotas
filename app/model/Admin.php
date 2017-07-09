@@ -118,4 +118,34 @@ class Admin
 		}
     }
 
+    public function duenosMascotasPlacas()
+    {
+        try
+        {
+            $result = array();
+
+            $query = $this->db->prepare("SELECT usuarios.idusuario, usuarios.usuario, duenos.nombre, duenos.apellido, duenos.telefono, duenos.pais, duenos.provincia, duenos.ciudad, duenos.codigo_postal, usuarios.emailU FROM usuarios INNER JOIN duenos ON usuarios.duenos_idDueno = duenos.idDueno");
+            $query->execute();
+
+            $usuarios = $query->fetchAll();
+
+            foreach ($usuarios as $usuario) {
+                
+                $query = $this->db->prepare("SELECT mascotas.nombre, mascotas.fecha_nacimiento FROM usuarios INNER JOIN duenos ON usuarios.duenos_idDueno = duenos.idDueno");
+                $query->execute();                
+            }
+
+
+            $this->response->setResponse(true);
+            $this->response->result = $usuarios;
+            return $this->response;
+        }
+        catch(Exception $e)
+        {
+            $this->response->setResponse(false, $e->getMessage());
+            return $this->response;
+        }  
+    }
+    
+
 }

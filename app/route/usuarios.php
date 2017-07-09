@@ -314,9 +314,7 @@ $app->group('/usuarios/', function () {
 			
 		$model = new Usuario();
 
-		$datos = $req->getParsedBody();
-
-		$data['pass'] = $datos['pass'];
+		$data = $req->getParsedBody();
 
 		$r = $model->cambiarContrasena($data);
 
