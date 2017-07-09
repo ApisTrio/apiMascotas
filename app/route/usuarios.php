@@ -211,6 +211,7 @@ $app->group('/usuarios/', function () {
 
 	});
 
+
 	$this->get('confirmar/{id}/{token}', function ($req, $res, $args) {
 			
 		$model = new Usuario();
