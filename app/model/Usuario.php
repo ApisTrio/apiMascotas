@@ -276,6 +276,8 @@ class Usuario
         }
     }
 
+    
+
     public function confirmarCuentaDatos($id)
     {
         try 

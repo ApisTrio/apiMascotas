@@ -309,6 +309,30 @@ $app->group('/usuarios/', function () {
 
 	});
 
+	$this->post('cambiar-contrasena-admin', function ($req, $res, $args) {
+			
+		$model = new Usuario();
+
+		$datos = $req->getParsedBody();
+
+		$data['pass'] = $datos['pass'];
+
+		$r = $model->cambiarContrasena($data);
+
+		if($r->response){
+
+			return $res->withStatus(200)
+			 	->withHeader('Content-type', 'application/json')
+			 	->withJson($r);
+
+		}
+
+		return $res->withStatus(401)
+					->withHeader("Content-Type", "application/json")
+					->withJson($r);
+
+	});
+
 	$this->post('recordar-usuario', function ($req, $res, $args) {
 			
 		$model = new Usuario();
