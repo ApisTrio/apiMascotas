@@ -194,7 +194,7 @@ $app->group('/usuarios/', function () {
 			
 		$model = new Usuario();
 		
-		$r = $model->softDelete($req->getParsedBody());
+		$r = $model->softDelete($req->getParsedBody()['id']);
 
 		if($r->response){
 
