@@ -190,6 +190,27 @@ $app->group('/usuarios/', function () {
 
 	});
 
+	$this->post('borrar', function ($req, $res, $args) {
+			
+		$model = new Usuario();
+		
+		$r = $model->softDelete($data['id']);
+
+		if($r->response){
+
+			return $res->withStatus(200)
+				 	->withHeader('Content-type', 'application/json')
+				 	->withJson($r);
+
+		}
+
+		return $res->withStatus(400)
+				->withHeader("Content-Type", "application/json")
+				->withJson($r);
+				
+
+	});
+
 //MISC----------------------------------------------------------------------------
 
 	$this->get('check/{field}/{value}', function ($req, $res, $args) {
