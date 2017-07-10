@@ -51,4 +51,15 @@ $app->group('/admin/', function () {
 
 	});
 
+	$this->post('super-busqueda', function ($req, $res) {
+			
+		$model = new Admin();
+		
+		return $res->withStatus(200)
+			->withHeader('Content-type', 'application/json')
+			->withJson($model->superBusqueda($req->getParsedBody()));
+
+	});
+
+
 });
