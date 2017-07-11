@@ -184,7 +184,7 @@ class Admin
             $result = array();
 
             $nexo = "";
-            $sql_usuarios = "SELECT usuarios.idusuario, usuarios.usuario, usuarios.activo, duenos.nombre, duenos.apellido, duenos.telefono, duenos.pais, duenos.provincia, duenos.ciudad, duenos.codigo_postal, usuarios.emailU, usuarios.duenos_idDueno FROM usuarios INNER JOIN duenos ON usuarios.duenos_idDueno = duenos.idDueno";
+            $sql_usuarios = "SELECT usuarios.idusuario, usuarios.usuario, usuarios.activo, duenos.nombre, duenos.apellido, duenos.telefono, duenos.pais, duenos.provincia, duenos.ciudad, duenos.codigo_postal, usuarios.emailU, usuarios.duenos_idDueno FROM usuarios INNER JOIN duenos ON usuarios.duenos_idDueno = duenos.idDueno WHERE usuario.borrado IS NULL";
 
             if ( isset($args['usuario']) or !empty($args['usuario']) ) {
                 if ($nexo == "") { $sql_usuarios .= " WHERE"; $nexo = " WHERE"; }
