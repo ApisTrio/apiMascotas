@@ -124,7 +124,7 @@ class Admin
         {
             $result = array();
 
-            $query = $this->db->prepare("SELECT usuarios.idusuario, usuarios.usuario, usuarios.activo, duenos.nombre, duenos.apellido, duenos.telefono, duenos.pais, duenos.provincia, duenos.ciudad, duenos.codigo_postal, usuarios.emailU, usuarios.duenos_idDueno FROM usuarios INNER JOIN duenos ON usuarios.duenos_idDueno = duenos.idDueno");
+            $query = $this->db->prepare("SELECT usuarios.idusuario, usuarios.usuario, usuarios.activo, duenos.nombre, duenos.apellido, duenos.telefono, duenos.pais, duenos.provincia, duenos.ciudad, duenos.codigo_postal, usuarios.emailU, usuarios.duenos_idDueno FROM usuarios INNER JOIN duenos ON usuarios.duenos_idDueno = duenos.idDueno WHERE usuarios.borrado IS NULL");
             $query->execute();
 
             $usuarios = $query->fetchAll();
