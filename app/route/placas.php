@@ -79,7 +79,7 @@ $app->group('/placas/', function () {
 
         for ($i=1; $i <= $datos; $i++) 
         { 
-          $continue = True;
+          $continue = true;
 
           while ($continue) 
             {
@@ -98,7 +98,7 @@ $app->group('/placas/', function () {
                   $um->Insert($codigoNuevo);
                   array_push($codigoPlacas, $codigoNuevo);
                   array_push($codigosGenerados, $codigoNuevo);
-                  $continue =False;
+                  $continue =false;
                 }
             }
                        
@@ -155,7 +155,7 @@ $movi);
             header ('Pragma: public'); // HTTP/1.0
             $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
             $objWriter->save('excel/'.$titulo.'.xls');
-            $um->InsertExcel($id);
+            $um->InsertExcel($datos);
 
             //$objWriter->save('php://output');
            return $res
