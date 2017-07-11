@@ -384,4 +384,51 @@ class Placa
             return $this->response;
         }
     }
+
+    public function ExcelGet()
+    {
+        try
+        {
+            $result = array();
+
+            $stm = $this->db->prepare("SELECT idExcel, DATE_FORMAT(fecha,'%d-%m-%Y') as fecha, cantidad  FROM excel ORDER BY idExcel DESC ");
+            $stm->execute();
+            
+            $this->response->result = $stm->fetchAll();
+            
+            if($this->response->result)
+                $this->response->setResponse(true);
+
+            else
+                $this->response->setResponse(false);
+
+            return $this->response;
+        }
+        catch(Exception $e)
+        {
+            $this->response->setResponse(false, $e->getMessage());
+            return $this->response;
+        }
+    }
+
+    public function InsertExcel($cantidad)
+    {
+        try 
+        {
+                $sql = "INSERT INTO excel
+                            (cantidad )
+                            VALUES (?)";
+                
+            $this->db->prepare($sql)
+                     ->execute(array($cantidad)); 
+                     
+              $this->response->idInsertado = $this->db->lastInsertId();
+            
+            $this->response->setResponse(true);
+            return $this->response;
+        }catch (Exception $e) 
+        {
+            $this->response->setResponse(false, $e->getMessage());
+        }
+    }
 }

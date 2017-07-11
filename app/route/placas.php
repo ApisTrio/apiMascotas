@@ -50,6 +50,19 @@ $app->group('/placas/', function () {
         );
     });
 
+    $this->get('excel/lista', function ($req, $res, $args) {
+        $um = new Placa();
+        
+        return $res
+           ->withHeader('Content-type', 'application/json')
+           ->getBody()
+           ->write(
+            json_encode(
+                $um->ExcelGet()    
+            )
+        );
+    });
+
     $this->get('generar/{cantidad}', function ($req, $res, $args) {
         $um = new Placa();
         $datos = $args['cantidad'];
@@ -81,18 +94,20 @@ $app->group('/placas/', function () {
                }
 
                if (!in_array($codigoNuevo,  $codigoPlacas) )
-               {
+                {
                   $um->Insert($codigoNuevo);
                   array_push($codigoPlacas, $codigoNuevo);
                   array_push($codigosGenerados, $codigoNuevo);
                   $continue =False;
-               }
+                }
             }
                        
         }
 
         ////////////////
-            $titulo = 'Placas Generadas';
+        $idE =  $um->ExcelGet();
+        $id = $idE->result[0]->idExcel+1;
+        $titulo = 'Placas Generadas - '.$id;
              /** Error reporting */
             error_reporting(E_ALL);
             ini_set('display_errors', TRUE);
@@ -140,25 +155,27 @@ $movi);
             header ('Pragma: public'); // HTTP/1.0
             $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
             $objWriter->save('excel/'.$titulo.'.xls');
-            $objWriter->save('php://output');
-          /* return $res
+            $um->InsertExcel($id);
+
+            //$objWriter->save('php://output');
+           return $res
            ->withHeader('Content-type', 'application/json')
            ->getBody()
            ->write(
-            json_encode(array('response' => true, 'link' => 'excel/'.$titulo.'.xls'))
-            );*/
+            json_encode(array('response' => true, 'archivo' => $titulo.'.xls'))
+            );
             
             exit; 
 
         //////////////////
 
 
-        return $res
+       /* return $res
            ->withHeader('Content-type', 'application/json')
            ->getBody()
            ->write(
             json_encode($Response = array('response' => "True" ) )
-        );
+        );*/
     });
 
 
