@@ -66,3 +66,16 @@ $app->get('/public/images/corbatas/{forma}/{nombre}', function ($req, $res, $arg
 
 
 });
+
+$app->get('/excel/{nombre}', function ($req, $res, $args) {
+    
+	$nombre = $args['nombre'];   
+	$excel = file_get_contents('./excel/'.$nombre,FILE_USE_INCLUDE_PATH);    
+      
+
+	$res->write($excel);    
+
+	return $res->withHeader('Content-Type', FILEINFO_MIME_TYPE);
+
+
+});
