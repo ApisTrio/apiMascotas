@@ -183,11 +183,11 @@ class Admin
         {
             $result = array();
 
-            $nexo = "";
+            $nexo = " WHERE";
             $sql_usuarios = "SELECT usuarios.idusuario, usuarios.usuario, usuarios.activo, duenos.nombre, duenos.apellido, duenos.telefono, duenos.pais, duenos.provincia, duenos.ciudad, duenos.codigo_postal, usuarios.emailU, usuarios.duenos_idDueno FROM usuarios INNER JOIN duenos ON usuarios.duenos_idDueno = duenos.idDueno WHERE usuarios.borrado IS NULL";
 
             if ( isset($args['usuario']) or !empty($args['usuario']) ) {
-                if ($nexo == "") { $sql_usuarios .= " WHERE"; $nexo = " WHERE"; }
+                if ($nexo == "") { $sql_usuarios .= " WHERE"; } else if ($nexo == " WHERE") { $sql_usuarios .= " AND"; $nexo = " AND"; }
                 $sql_usuarios .= " usuarios.usuario LIKE '%".$args['usuario']."%'";
             }
             if ( isset($args['telefono']) or !empty($args['telefono']) ) {
@@ -226,9 +226,8 @@ class Admin
                     INNER JOIN duenos ON duenos.idDueno = duenos_has_mascotas.duenos_idDueno";
                 
 
-                if ( isset($args['perdida']) and $args['perdida'] == false or !empty($args['perdida']) and $args['perdida'] == false) {
-                    $sql_mascotas .= " INNER JOIN perdidas ON perdidas.mascotas_idMascota = idMascota WHERE duenos.idDueno = ? AND mascotas.borrado IS NULL AND perdidas.encontrado IS NOT NULL";
-                }else if ( isset($args['perdida']) and $args['perdida'] == true or !empty($args['perdida']) and $args['perdida'] == true) {
+                    
+                if ( isset($args['perdida']) and $args['perdida'] == true or !empty($args['perdida']) and $args['perdida'] == true) {
                     $sql_mascotas .= " INNER JOIN perdidas ON perdidas.mascotas_idMascota = idMascota WHERE duenos.idDueno = ? AND mascotas.borrado IS NULL AND perdidas.encontrado IS NULL";
                 }
                 if ( !isset($args['perdida']) or empty($args['perdida']) ){
@@ -256,32 +255,113 @@ class Admin
 
                 foreach ($mascotas as $keym => $mascota) {
 
-                    $sql_placas = "SELECT placas.idPlaca, placas.codigo, modelos.modelo, modelos.forma FROM placas 
-                        INNER JOIN mascotas_has_placas on placas.idPlaca = mascotas_has_placas.placas_idPlaca 
-                        INNER JOIN modelos on mascotas_has_placas.modelos_idModelo = modelos.idModelo
-                        WHERE mascotas_has_placas.mascotas_idMascota = ? AND 
-                        mascotas_has_placas.borrado IS NULL";
+                    if ( isset($args['perdida']) and $args['perdida'] == false or !empty($args['perdida']) and $args['perdida'] == false) {
+                        
+                        $sql_perdida = "SELECT * FROM perdidas 
+                            WHERE mascotas_idMascota = ?";
 
-                    if ( isset($args['id']) or !empty($args['id']) ) {
-                        $sql_placas .= " AND placas.codigo LIKE '%".$args['id']."%'";
-                    }                    
-                    if ( isset($args['forma']) or !empty($args['forma']) ) {
-                        $sql_placas .= " AND modelos.forma = '".$args['forma']."'";
-                    }  
+                        $query_perdida = $this->db->prepare($sql_perdida);
 
-                    $query3 = $this->db->prepare($sql_placas);
+                        $query_perdida->execute([$mascota->idMascota]);
 
-                    $query3->execute([$mascota->idMascota]);
+                        $perdida = $query_perdida->fetchAll();                       
 
-                    $placas = $query3->fetchAll();
+                        if ( count($perdida) > 0 ) {
+                        
+                            if ( $perdida[0]->encontrado == NULL ) {
 
-                    if ( count($placas) > 0 ) {
-                        $mascotas[$keym]->placas = $placas; 
-                    }else{
-                        unset($mascotas[$keym]);
- 
-                    }                   
-               
+                                unset($mascotas[$keym]);
+                        
+                            }else {
+
+                                $sql_placas = "SELECT placas.idPlaca, placas.codigo, modelos.modelo, modelos.forma FROM placas 
+                                    INNER JOIN mascotas_has_placas on placas.idPlaca = mascotas_has_placas.placas_idPlaca 
+                                    INNER JOIN modelos on mascotas_has_placas.modelos_idModelo = modelos.idModelo
+                                    WHERE mascotas_has_placas.mascotas_idMascota = ? AND 
+                                    mascotas_has_placas.borrado IS NULL";
+
+                                if ( isset($args['id']) or !empty($args['id']) ) {
+                                    $sql_placas .= " AND placas.codigo LIKE '%".$args['id']."%'";
+                                }                    
+                                if ( isset($args['forma']) or !empty($args['forma']) ) {
+                                    $sql_placas .= " AND modelos.forma = '".$args['forma']."'";
+                                }  
+
+                                $query3 = $this->db->prepare($sql_placas);
+
+                                $query3->execute([$mascota->idMascota]);
+
+                                $placas = $query3->fetchAll();
+
+                                if ( count($placas) > 0 ) {
+                                    $mascotas[$keym]->placas = $placas; 
+                                }else{
+                                    unset($mascotas[$keym]);
+             
+                                }   
+
+                            }
+
+                        }else {
+
+                            $sql_placas = "SELECT placas.idPlaca, placas.codigo, modelos.modelo, modelos.forma FROM placas 
+                                INNER JOIN mascotas_has_placas on placas.idPlaca = mascotas_has_placas.placas_idPlaca 
+                                INNER JOIN modelos on mascotas_has_placas.modelos_idModelo = modelos.idModelo
+                                WHERE mascotas_has_placas.mascotas_idMascota = ? AND 
+                                mascotas_has_placas.borrado IS NULL";
+
+                            if ( isset($args['id']) or !empty($args['id']) ) {
+                                $sql_placas .= " AND placas.codigo LIKE '%".$args['id']."%'";
+                            }                    
+                            if ( isset($args['forma']) or !empty($args['forma']) ) {
+                                $sql_placas .= " AND modelos.forma = '".$args['forma']."'";
+                            }  
+
+                            $query3 = $this->db->prepare($sql_placas);
+
+                            $query3->execute([$mascota->idMascota]);
+
+                            $placas = $query3->fetchAll();
+
+                            if ( count($placas) > 0 ) {
+                                $mascotas[$keym]->placas = $placas; 
+                            }else{
+                                unset($mascotas[$keym]);
+         
+                            }   
+
+                        }
+
+                    } else {
+
+                        $sql_placas = "SELECT placas.idPlaca, placas.codigo, modelos.modelo, modelos.forma FROM placas 
+                            INNER JOIN mascotas_has_placas on placas.idPlaca = mascotas_has_placas.placas_idPlaca 
+                            INNER JOIN modelos on mascotas_has_placas.modelos_idModelo = modelos.idModelo
+                            WHERE mascotas_has_placas.mascotas_idMascota = ? AND 
+                            mascotas_has_placas.borrado IS NULL";
+
+                        if ( isset($args['id']) or !empty($args['id']) ) {
+                            $sql_placas .= " AND placas.codigo LIKE '%".$args['id']."%'";
+                        }                    
+                        if ( isset($args['forma']) or !empty($args['forma']) ) {
+                            $sql_placas .= " AND modelos.forma = '".$args['forma']."'";
+                        }  
+
+                        $query3 = $this->db->prepare($sql_placas);
+
+                        $query3->execute([$mascota->idMascota]);
+
+                        $placas = $query3->fetchAll();
+
+                        if ( count($placas) > 0 ) {
+                            $mascotas[$keym]->placas = $placas; 
+                        }else{
+                            unset($mascotas[$keym]);
+     
+                        }   
+
+                    }
+
                 }
 
                 $mascotas = array_values($mascotas); 

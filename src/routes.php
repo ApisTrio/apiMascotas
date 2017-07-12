@@ -79,3 +79,16 @@ $app->get('/excel/{nombre}', function ($req, $res, $args) {
 
 
 });
+
+$app->get('/public/pdf/{nombre}', function ($req, $res, $args) {
+    
+	$nombre = $args['nombre'];   
+	$pdf = file_get_contents('./public/pdf/'.$nombre,FILE_USE_INCLUDE_PATH);    
+      
+
+	$res->write($pdf);    
+
+	return $res->withHeader('Content-Type', 'application/pdf');
+
+
+});
