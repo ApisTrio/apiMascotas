@@ -263,7 +263,7 @@ class Usuario
         try 
         {
             $query = $this->db->prepare("UPDATE $this->table SET pass = ? WHERE idUsuario = ?");
-            $query->execute([$data['pass'], $data['id']]);
+            $query->execute([password_hash($data['pass'], PASSWORD_DEFAULT), $data['id']]);
 
             
             $this->response->setResponse(true);
