@@ -305,6 +305,29 @@ $app->group('/usuarios/', function () {
 
 	});
 
+
+	$this->post('token-cambiar-contrasena', function ($req, $res, $args) {
+			
+		$datos = $req->getParsedBody();
+
+		$decode = Token::verificar($datos['token']);
+
+
+		if($decode){
+
+			return $res->withStatus(200)
+			 	->withHeader('Content-type', 'application/json')
+			 	->withJson($decode);
+
+		}
+
+		return $res->withStatus(401)
+					->withHeader("Content-Type", "application/json")
+					->withJson($decode);
+
+	});
+
+
 	$this->post('cambiar-contrasena', function ($req, $res, $args) {
 			
 		$model = new Usuario();
