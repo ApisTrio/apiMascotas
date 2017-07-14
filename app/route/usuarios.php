@@ -178,7 +178,7 @@ $app->group('/usuarios/', function () {
 
 			}
 
-			return $res->withStatus(400)
+			return $res->withStatus(404)
 					->withHeader("Content-Type", "application/json")
 					->withJson($r);
 				

@@ -55,10 +55,12 @@ $app->group('/mail/', function () {
 
 		$datamail = ['nombre'=> $dueno->nombre, 'apellido' => $dueno->apellido,'enlace' => 'https://www.dinbeat.com/qr/cambiar-contrasena/'.$token];
 
+
 		$body = $mail->render('cambiar-contrasena.ml', $datamail);
 
+		$email = $usuario->emailU;
 
-		if($rm = $mail->sendMail("Dinbeat - Cambiar contraseña", [$usuario->emailU])){
+		if($rm = $mail->sendMail("Dinbeat - Cambiar clave", [$email])){
 
 			return $res->withStatus(200)
 			 	->withHeader('Content-type', 'application/json')
