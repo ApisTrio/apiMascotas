@@ -203,6 +203,19 @@ $movi);
             )
         );
     });
+
+    $this->post('borrar-bloquear', function ($req, $res, $args) {
+        $um = new Placa();
+        $um->Delete( $req->getParsedBody());
+        return $res
+           ->withHeader('Content-type', 'application/json')
+           ->getBody()
+           ->write(
+            json_encode(
+                $um->Bloquear( $req->getParsedBody())
+            )
+        );
+    });
 /////////////////////////////////////////////////////////////////////////////////////////////
     $this->get('asignada/{codigo}', function ($req, $res, $args) {
         $um = new Placa();
