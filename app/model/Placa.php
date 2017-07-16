@@ -97,7 +97,7 @@ class Placa
 		try 
 		{
 			$stm = $this->db
-			            ->prepare("DELETE FROM $this->table WHERE idPlaca = ?");			          
+			            ->prepare("DELETE FROM mascotas_has_placas WHERE placas_idPlaca = ?");			          
 
 			$stm->execute(array($id['idPlaca']));
             
