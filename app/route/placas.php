@@ -23,6 +23,19 @@ $app->group('/placas/', function () {
         );
     });
 
+    $this->get('lista-completa', function ($req, $res, $args) {
+        $um = new Placa();
+        
+        return $res
+           ->withHeader('Content-type', 'application/json')
+           ->getBody()
+           ->write(
+            json_encode(
+                $um->GetAllAll()
+            )
+        );
+    });
+
     $this->get('bloqueadas', function ($req, $res, $args) {
         $um = new Placa();
         

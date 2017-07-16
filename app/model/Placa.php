@@ -42,6 +42,33 @@ class Placa
 		}
     }
     
+    public function GetAllAll()
+    {
+        try
+        {
+            $result = array();
+
+            $stm = $this->db->prepare("SELECT placas.idPlaca, placas.codigo, placas.bloqueado, placas.actualizado, mascotas_has_placas.creado, mascotas_has_placas.borrado, modelos.modelo, modelos.forma FROM $this->table 
+                LEFT JOIN mascotas_has_placas ON mascotas_has_placas.placas_idPlaca = placas.idPlaca
+                LEFT JOIN modelos ON modelos.idModelo = mascotas_has_placas.modelos_idModelo");
+            $stm->execute();
+        
+            $this->response->result = $stm->fetchAll();
+            
+            if($this->response->result)
+                $this->response->setResponse(true);
+
+            else
+                $this->response->setResponse(false);
+
+            return $this->response;
+        }
+        catch(Exception $e)
+        {
+            $this->response->setResponse(false, $e->getMessage());
+            return $this->response;
+        }
+    }
     
     public function Insert($codigo)
     {
