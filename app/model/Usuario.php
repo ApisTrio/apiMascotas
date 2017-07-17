@@ -276,6 +276,23 @@ class Usuario
         }
     }
 
+    public function cambiarEmail($data)
+    {
+        try 
+        {
+            $query = $this->db->prepare("UPDATE $this->table SET emailU = ? WHERE idUsuario = ?");
+            $query->execute([$data['email'], $data['id']]);
+
+            $this->response->setResponse(true);
+            return $this->response;
+        } 
+        catch (Exception $e) 
+        {
+            $this->response->setResponse(false, $e->getMessage());
+            return $this->response;
+        }
+    }
+
     public function confirmarCuentaDatos($id)
     {
         try 

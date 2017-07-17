@@ -328,6 +328,29 @@ $app->group('/usuarios/', function () {
 	});
 
 
+	$this->post('cambiar-email', function ($req, $res, $args) {
+			
+		$model = new Usuario();
+
+		$datos = $req->getParsedBody();
+
+		$r = $model->cambiarEmail($datos);
+
+		if($r->response){
+
+			return $res->withStatus(200)
+			 	->withHeader('Content-type', 'application/json')
+			 	->withJson($r);
+
+		}
+
+		return $res->withStatus(401)
+					->withHeader("Content-Type", "application/json")
+					->withJson($r);
+
+	});
+
+
 	$this->post('cambiar-contrasena', function ($req, $res, $args) {
 			
 		$model = new Usuario();

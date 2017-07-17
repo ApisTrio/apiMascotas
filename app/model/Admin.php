@@ -146,7 +146,7 @@ class Admin
 
                 foreach ($mascotas as $keym => $mascota) {
 
-                    $query3 = $this->db->prepare("SELECT placas.idPlaca, placas.codigo, modelos.modelo, modelos.forma FROM placas 
+                    $query3 = $this->db->prepare("SELECT placas.idPlaca, placas.codigo, modelos.modelo, modelos.forma, modelos.nombre FROM placas 
                         INNER JOIN mascotas_has_placas on placas.idPlaca = mascotas_has_placas.placas_idPlaca 
                         INNER JOIN modelos on mascotas_has_placas.modelos_idModelo = modelos.idModelo
                         WHERE mascotas_has_placas.mascotas_idMascota = ? AND 
@@ -274,7 +274,7 @@ class Admin
                         
                             }else {
 
-                                $sql_placas = "SELECT placas.idPlaca, placas.codigo, modelos.modelo, modelos.forma FROM placas 
+                                $sql_placas = "SELECT placas.idPlaca, placas.codigo, modelos.modelo, modelos.forma, modelos.nombre FROM placas 
                                     INNER JOIN mascotas_has_placas on placas.idPlaca = mascotas_has_placas.placas_idPlaca 
                                     INNER JOIN modelos on mascotas_has_placas.modelos_idModelo = modelos.idModelo
                                     WHERE mascotas_has_placas.mascotas_idMascota = ? AND 
