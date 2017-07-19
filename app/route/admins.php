@@ -311,6 +311,9 @@ $app->group('/admin/', function () {
             	if (!$placa["bloqueado"] && !$placa["borrado"] ){
             		$activa = "SI";
             	}
+            	elseif (!$placa["bloqueado"] && $placa["borrado"] ){
+            		$activa = "N/A";
+            	}
             	else{
             		$activa = "NO";
             	}
