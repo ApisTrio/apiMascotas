@@ -48,7 +48,7 @@ class Placa
         {
             $result = array();
 
-            $stm = $this->db->prepare("SELECT placas.idPlaca, placas.codigo, placas.bloqueado, placas.actualizado, mascotas_has_placas.creado, mascotas_has_placas.borrado, modelos.modelo, modelos.forma FROM $this->table 
+            $stm = $this->db->prepare("SELECT placas.idPlaca, placas.codigo, placas.bloqueado, placas.actualizado, mascotas_has_placas.creado, mascotas_has_placas.borrado, modelos.modelo, modelos.nombre, modelos.forma FROM $this->table 
                 LEFT JOIN mascotas_has_placas ON mascotas_has_placas.placas_idPlaca = placas.idPlaca
                 LEFT JOIN modelos ON modelos.idModelo = mascotas_has_placas.modelos_idModelo");
             $stm->execute();
