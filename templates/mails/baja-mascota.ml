@@ -64,8 +64,7 @@
 		</div>
 		<hr>
 		<div class="block">
-			<div style="width: 140px; height: 120px; background-color: #6c709c; color: white; margin: 60px auto;">I</div>
-			<!--<img src="">-->
+			<img src="https://www.dinbeat.com/qr/api/public/images/icons/baja-icon.png">
 		</div>
 		<div class="block padding text-purple">
 			<p>Has dado de baja una mascota</p>
