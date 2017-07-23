@@ -270,10 +270,28 @@ class Mascota
             $meses = "";
           }
           else if ($m == 1 ){
-             $meses = " y 1 mes";
+              
+              if($a){
+                  
+                  $meses = " y 1 mes";
+                  
+              } else{
+                  
+                  $meses = "1 mes";
+                  
+              }
+            
           }
           else if ($m > 1 ){
-            $meses = " y ".$m." meses";
+              
+              if($a){
+                  
+                $meses = " y ".$m." meses";
+                  
+              } else{
+                  
+                  $meses = $m." meses";
+              }
           }
 
           return $anios.$meses;
