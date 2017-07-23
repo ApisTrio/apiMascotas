@@ -197,7 +197,7 @@ $app->group('/admin/', function () {
                         ->setCellValue('K1', 'MASCOTA')
                         ->setCellValue('L1', 'ESPECIE')
                         ->setCellValue('M1', 'RAZA')
-                        ->setCellValue('N1', 'FECHA NACIMIENTO')
+                        ->setCellValue('N1', 'FECHA')
 
                         ->setCellValue('O1', 'ID')
                         ->setCellValue('P1', 'FORMA')
@@ -210,6 +210,9 @@ $app->group('/admin/', function () {
             foreach ($datos as $usuario) {
 		    		foreach ($usuario["mascotas"] as $mascota) {
 		    			foreach ($mascota["placas"] as $placa) {
+                            
+                            $url_imagen_placa = ($placa["forma"] and $placa["modelo"]) ? 'dinbeat.com/qr/assets/images/placas/'.$placa["forma"].'/'.$placa["modelo"] : null;
+                            
 			    			$objPHPExcel->setActiveSheetIndex(0)
 			    			->setCellValue('A'.$y, $usuario["usuario"])
 				    		->setCellValue('B'.$y, $usuario["nombre"])
@@ -224,10 +227,10 @@ $app->group('/admin/', function () {
 				    		->setCellValue('K'.$y, $mascota["nombre"])
 				    		->setCellValue('L'.$y, $mascota["especie"])
 				    		->setCellValue('M'.$y, $mascota["raza"])
-				    		->setCellValue('N'.$y, $mascota["fecha_nacimiento"])
+				    		->setCellValue('N'.$y, $placa["creado"])
 				    		->setCellValue('O'.$y, $placa["codigo"])
 				    		->setCellValue('P'.$y, $placa["forma"])
-				    		->setCellValue('Q'.$y, 'dinbeat.com/qr/assets/images/placas/'.$placa["forma"].'/'.$placa["modelo"])
+				    		->setCellValue('Q'.$y, $url_imagen_placa)
 				    		->setCellValue('R'.$y, $placa["nombre"]);
 				    		$y++;
 		    		}
@@ -324,13 +327,16 @@ $app->group('/admin/', function () {
             	else{
             		$borrado = "NO";
             	}
+                
+                $url_imagen_placa = ($placa["forma"] and $placa["modelo"]) ? 'dinbeat.com/qr/assets/images/placas/'.$placa["forma"].'/'.$placa["modelo"] : null;
+                
 			    $objPHPExcel->setActiveSheetIndex(0)
 			    			->setCellValue('A'.$y, $placa["codigo"])
 				    		->setCellValue('B'.$y, $activa)
 				    		->setCellValue('C'.$y, $borrado)
 				    		->setCellValue('D'.$y, $placa["forma"])
 				    		->setCellValue('E'.$y, $placa["nombre"])
-				    		->setCellValue('F'.$y, 'dinbeat.com/qr/assets/images/placas/'.$placa["forma"].'/'.$placa["modelo"]);
+				    		->setCellValue('F'.$y, $url_imagen_placa);
 				    		$y++;
 
             }
